@@ -8,15 +8,7 @@ Open terminal in root directory of the project. Run the following command.
 ./run.sh
 ```
 
-## Running the code
-
-Open terminal in root directory of the project. Run the following command.
-
-```bash
-cd backend/
-npm run dev
-```
-
+## Running frontend
 Open terminal in root directory of the project. Run the following command.
 
 ```bash
