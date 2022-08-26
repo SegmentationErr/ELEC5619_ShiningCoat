@@ -7,6 +7,7 @@ class TestPage extends Component {
 
         axios.get('http://localhost:8080/users/all')
         .then((res) => {
+            console.log(res.data)
             if (res.status === 200) {
                 this.setState({
                     users: res.data
@@ -29,6 +30,7 @@ class TestPage extends Component {
                     return <li key={key}>
                             <i>{user.id}</i>,
                             <i>{user.username}</i>,
+                            <i>{user.email}</i>,
                             <i>{user.password}</i>,
                             <i>{user.role}</i>
                            </li>
