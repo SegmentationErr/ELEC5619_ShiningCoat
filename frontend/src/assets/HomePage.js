@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd';
-import axios from 'axios'
+import { Row, Col, Input, Menu } from 'antd';
+import axios from 'axios';
+import NavBar from './NavBar';
+import showAlert from './Alert';
 
 class HomePage extends Component {
     constructor(props) {
@@ -8,10 +10,14 @@ class HomePage extends Component {
     }
 
     state = {
+        isModalVisible: false
     }
 
     render() {
-        return (<h1 style={{ marginTop: 20 }}>This is homepage</h1>);
+        return (
+            <Row>
+                <NavBar />
+            </Row>);
     }
 }
 

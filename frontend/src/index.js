@@ -3,17 +3,22 @@ import ReactDOM from 'react-dom/client';
 
 import './css/index.css'
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './assets/HomePage';
-import NavBar from './assets/NavBar';
+import SignInPage from './assets/SignInPage';
 
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route exact path="/signIn" element={<SignInPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <Router>
-    <Routes>
-      <Route exact path="/" element={<NavBar />} />
-      <Route exact path="/" element={<HomePage />} />
-    </Routes>
-  </Router>
-);
+
+root.render(<App />);
