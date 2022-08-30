@@ -15,9 +15,13 @@ class HomePage extends Component {
 
     render() {
         return (
-            <Row>
-                <NavBar />
-            </Row>);
+            <div>
+                
+            </div>
+            // <Row>
+            //     <NavBar />
+            // </Row>
+        );
     }
 }
 

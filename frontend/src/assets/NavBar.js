@@ -5,6 +5,7 @@ import cookie from 'react-cookies';
 import showAlert from './Alert';
 
 import '../css/navBar.css'
+import { withRouter } from './withRouter';
 
 const { Search } = Input;
 
@@ -21,14 +22,14 @@ class NavBar extends Component {
     handleSearch = (e) => {
         let input = e;
         console.log(input);
-        if (input == "") {
+        if (input === "") {
             showAlert('warning', "Invalid Input", "Please enter some text");
         }
         //TODO: adapt to backend search
     }
 
     handleLogin = (e) => {
-        this.props.history.push('/signIn');
+        this.props.navigate('/signIn');
     }
 
     render() {
@@ -48,4 +49,4 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar);
