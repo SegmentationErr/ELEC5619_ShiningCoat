@@ -16,7 +16,7 @@ class NavBar extends Component {
     }
 
     handleBackToHomePage = (e) => {
-        this.props.history.push('/')
+        this.props.navigate('/')
     }
 
     handleSearch = (e) => {
