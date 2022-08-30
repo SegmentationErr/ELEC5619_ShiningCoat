@@ -1,0 +1,23 @@
+/* #mainContentDiv {
+    text-align: center;
+} */
+
+#signUpForm {
+    text-align: center;
+    margin-top: 5%;
+}
+
+#signUpButton {
+    background-color: black;
+    width: 150px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+#cancelButton {
+    color: white;
+    background-color: black;
+    width: 150px;
+    border-radius: 20px;
+    font-weight: bold;
+}

@@ -1,0 +1,14 @@
+#signInButton {
+    background-color: black;
+    width: 10%;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+#backButton {
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    width: 10%;
+    border-radius: 20px;
+}
