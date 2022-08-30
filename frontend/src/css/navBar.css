@@ -1,0 +1,46 @@
+#navBarDiv {
+    width: 100%;
+}
+
+#navbar {
+    background-color: #FFA500;
+    height: 100px;
+    position: relative;
+}
+
+#websiteName {
+    font-weight: bold;
+    font-size: 50px;
+    top: 50%;
+    margin: 0;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    display: inline-block;
+}
+
+#search {
+    top: 50%;
+    left: 40%;
+    margin: 0;
+    position: absolute;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    display: inline-block;
+}
+
+#searchInput {
+    width: 300px;
+}
+
+#login {
+    font-weight: bold;
+    font-size: 20px;
+    top: 50%;
+    left: 90%;
+    margin: 0;
+    position: absolute;
+    -ms-transform: translateY(50%);
+    transform: translateY(-50%);
+    display: inline-block;
+}
