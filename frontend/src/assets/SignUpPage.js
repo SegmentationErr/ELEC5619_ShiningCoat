@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { message } from 'antd';
 import axios from 'axios';
 import { withRouter } from './withRouter';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import '../css/signUpPage.css'
 
 
@@ -17,19 +17,15 @@ const { Option } = Select;
 
 class SignUpPage extends Component {
 
-
     render() {
         return (
-            <div >
+            <div id="mainContentDiv">
                 <Form id="signUpForm"
                     name="register"
                     scrollToFirstError
-                    labelCol={{ span: 8 }}
-                    wrapperCol={{ span: 8 }}
                 >
                     <Form.Item
                         name="username"
-                        label="Username"
                         rules={[
                             {
                                 required: true,
@@ -42,12 +38,14 @@ class SignUpPage extends Component {
                             },
                         ]}
                     >
-                        <Input style={{ maxWidth: 400 }} />
+                        <Input
+                            placeholder='Username'
+                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            style={{ maxWidth: 400 }} />
                     </Form.Item>
 
                     <Form.Item
                         name="email"
-                        label="Email"
                         rules={[
                             {
                                 type: 'email',
@@ -59,12 +57,14 @@ class SignUpPage extends Component {
                             },
                         ]}
                     >
-                        <Input style={{ maxWidth: 400 }} />
+                        <Input
+                            placeholder='Email'
+                            prefix={<MailOutlined className="site-form-item-icon" />}
+                            style={{ maxWidth: 400 }} />
                     </Form.Item>
 
                     <Form.Item
                         name="password"
-                        label="Password"
                         rules={[
                             {
                                 required: true,
@@ -73,12 +73,14 @@ class SignUpPage extends Component {
                         ]}
                         hasFeedback
                     >
-                        <Input.Password style={{ maxWidth: 400 }} />
+                        <Input.Password
+                            placeholder='Password'
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            style={{ maxWidth: 400 }} />
                     </Form.Item>
 
                     <Form.Item
                         name="confirmPassword"
-                        label="Confirm Password"
                         rules={[
                             {
                                 required: true,
@@ -87,28 +89,36 @@ class SignUpPage extends Component {
                         ]}
                         hasFeedback
                     >
-                        <Input.Password style={{ maxWidth: 400 }} />
+                        <Input.Password
+                            placeholder='Confirm Password'
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            style={{ maxWidth: 400 }} />
                     </Form.Item>
 
-                    <Form.Item name="role" label="Role" rules={[{ required: true }]}>
-                        <Select style={{ maxWidth: 400 }}
-                            allowClear
-                        >
+                    <Form.Item name="role" rules={[{ required: true }]}>
+                        <Select
+                            placeholder="Choose your role"
+                            style={{ maxWidth: 400 }}
+                            allowClear>
                             <Option value="0">Customer</Option>
                             <Option value="1">Business</Option>
                         </Select>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button id="signUpButton" type="primary" htmlType="submit" style={{ marginLeft: '120%' }}>
+                        <Button id="signUpButton" type="primary" htmlType="submit" style={{}}>
                             Sign Up
                         </Button>
                     </Form.Item>
+
+                    <Form.Item>
+                        <Button id="cancelButton" onClick={() => { this.props.navigate(-1) }} style={{}} >
+                            Cancel
+                        </Button>
+                    </Form.Item>
                 </Form>
-                <Button id="cancelButton" onClick={() => { this.props.navigate(-1) }} style={{ marginLeft: "40vw" }} >
-                    Cancel
-                </Button>
-            </div>
+
+            </div >
         );
     }
 }

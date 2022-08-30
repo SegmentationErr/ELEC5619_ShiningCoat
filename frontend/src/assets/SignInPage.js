@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import cookie from 'react-cookies';
 import { withRouter } from './withRouter';
@@ -29,7 +29,7 @@ class SignInPage extends Component {
                     >
                         <Input
                             style={{ width: 400, }}
-                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            prefix={<MailOutlined className="site-form-item-icon" />}
                             placeholder="Email"
                         />
                     </Form.Item>

@@ -16,11 +16,10 @@ class HomePage extends Component {
     render() {
         return (
             <div>
-                
+                <Row>
+
+                </Row>
             </div>
-            // <Row>
-            //     <NavBar />
-            // </Row>
         );
     }
 }
