@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import cookie from 'react-cookies';
+import { withRouter } from './withRouter';
+import '../css/signInPage.css'
 
 
 class SignInPage extends Component {
@@ -15,7 +17,6 @@ class SignInPage extends Component {
                     className="login-form"
                     initialValues={{
                     }}
-                    onFinish={this.onFinish}
                 >
                     <Form.Item
                         name="email"
@@ -28,7 +29,7 @@ class SignInPage extends Component {
                     >
                         <Input
                             style={{ width: 400, }}
-                            prefix={<UserOutlined className="site-form-item-icon" />}
+                            prefix={<MailOutlined className="site-form-item-icon" />}
                             placeholder="Email"
                         />
                     </Form.Item>
@@ -41,28 +42,29 @@ class SignInPage extends Component {
                             },
                         ]}
                     >
-                        <Input
+                        <Input.Password
                             style={{ width: 400, }}
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             type="password"
                             placeholder="Password"
                         />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: 400 }}>
-                            Sign in
-                        </Button>
-                        <div style={{ marginTop: 24 }}>
+                        {/* <div style={{ marginTop: 24 }}>
                             Forget password?
                             <a href="/forgetPassword"> Reset your password</a>
-                        </div>
+                        </div> */}
                         <div style={{ marginTop: 24 }}>
-                            New to SellPhone?
+                            New to PetDaily?
                             <a href="/signUp"> Register now!</a>
                         </div>
                     </Form.Item>
+                    <Form.Item>
+                        <Button
+                            id="signInButton" type="primary" htmlType="submit" className="login-form-button">
+                            Sign in
+                        </Button>
+                    </Form.Item>
                 </Form>
-                <Button style={{ width: 400 }} onClick={() => { this.props.history.goBack() }}>
+                <Button id="backButton" onClick={() => this.props.navigate(-1)}>
                     Back
                 </Button>
             </div>
@@ -70,4 +72,4 @@ class SignInPage extends Component {
     }
 }
 
-export default SignInPage;
+export default withRouter(SignInPage);
