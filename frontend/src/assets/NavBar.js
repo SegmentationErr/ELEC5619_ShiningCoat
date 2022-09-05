@@ -7,12 +7,14 @@ import showAlert from './Alert';
 import '../css/navBar.css'
 import { withRouter } from './withRouter';
 
+
 const { Search } = Input;
 const { Option } = Select;
 
 
 
 class NavBar extends Component {
+
 
     state = {
         searchInput: ""
@@ -36,8 +38,10 @@ class NavBar extends Component {
             return;
         }
 
-        //nav to search page
-        this.props.navigate('/search');
+
+
+        this.props.navigate('/search/' + input + '/' + searchMethod);
+
     }
 
     handleLogin = (e) => {

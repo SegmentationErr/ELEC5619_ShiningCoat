@@ -32,7 +32,7 @@ class ResultCard extends Component {
                     src={this.props.imgSrc}
                 />
                 <p>{this.props.name}</p>
-                <p>{this.props.rating}</p>
+                <p>Rating: {this.props.rating}</p>
                 <p>{this.props.location}</p>
                 <p>{this.props.time}</p>
             </div>
