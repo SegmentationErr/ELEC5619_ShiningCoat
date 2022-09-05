@@ -2,15 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './css/index.css';
+import './css/app.css'
 
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './assets/HomePage';
 import SignInPage from './assets/SignInPage';
 import NavBar from './assets/NavBar';
 import SignUpPage from './assets/SignUpPage';
+import SearchResultPage from './assets/SearchResultPage';
+import ServiceDetailPage from './assets/ServiceDetailPage';
+import ShopDetailPage from './assets/ShopDetailPage';
 
 
 export default function App() {
+
   return (
     <BrowserRouter>
       <NavBar />
@@ -19,6 +24,15 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />
+        <Route path="/search/" element={<SearchResultPage />}>
+          <Route path=":name/:method" element={<SearchResultPage />} />
+        </Route>
+        <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
+          <Route path=":id" element={<ServiceDetailPage />} />
+        </Route>
+        <Route path="/shopDetailPage/" element={<ShopDetailPage />}>
+          <Route path=":id" element={<ShopDetailPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

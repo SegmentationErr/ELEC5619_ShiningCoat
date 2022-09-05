@@ -6,6 +6,7 @@
     background-color: #FFA500;
     height: 100px;
     position: relative;
+    width: 100%;
 }
 
 #websiteName {

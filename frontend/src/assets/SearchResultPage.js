@@ -1,45 +1,56 @@
 import React, { Component } from 'react';
-import { Row, Col, Image } from 'antd';
-import axios from 'axios';
+import { Menu, Row, Col, Button, Space, Input, Slider } from 'antd';
+import cookie from 'react-cookies';
+import axios from 'axios'
+import { UserOutlined } from '@ant-design/icons';
+import { Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import showAlert from './Alert';
-import ResultCard from './ResultCard';
-
-
-import '../css/homePage.css'
 import { withRouter } from './withRouter';
+import ResultCard from './ResultCard';
+import '../css/searchResultPage.css'
 
 
-class HomePage extends Component {
+
+const { Search } = Input;
+
+
+class SearchPhonePage extends Component {
+
     constructor(props) {
         super(props);
+
+        console.log(this.state.name);
+        console.log(this.state.method);
     }
 
     state = {
-        isModalVisible: false,
-        data: [
+        name: this.props.params.name,
+        method: this.props.params.method,
+        searchResults: [
             {
-                name: "service1",
+                name: "this is the serach result",
                 location: "service1 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
                 isService: true
             },
             {
-                name: "service2",
+                name: "this is test shop",
                 location: "service2 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
-                isService: true
+                isService: false
             },
             {
                 name: "service3",
                 location: "service3 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
                 isService: true
@@ -48,7 +59,7 @@ class HomePage extends Component {
                 name: "service4",
                 location: "service4 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
                 isService: true
@@ -57,7 +68,7 @@ class HomePage extends Component {
                 name: "service5",
                 location: "service1 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId", rating: 4,
                 isService: true
             },
@@ -65,7 +76,7 @@ class HomePage extends Component {
                 name: "service6",
                 location: "service2 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId", rating: 4,
                 isService: true
             },
@@ -73,7 +84,7 @@ class HomePage extends Component {
                 name: "service7",
                 location: "service3 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId", rating: 4,
                 isService: true
             },
@@ -81,19 +92,20 @@ class HomePage extends Component {
                 name: "service8",
                 location: "service4 location",
                 time: "9-17pm",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
                 isService: true
             }
-        ],
+        ]
     }
 
     render() {
+
         return (
-            <div id="homePageMainDiv">
-                <Row id="homePageMainRow">
-                    {this.state.data.map((service, key) => {
+            <div id="searchResultMainDiv">
+                <Row id="searchResultMainRow">
+                    {this.state.searchResults.map((service, key) => {
                         return (
                             <Col span={6}>
                                 <ResultCard
@@ -114,5 +126,4 @@ class HomePage extends Component {
         );
     }
 }
-
-export default withRouter(HomePage);
+export default withRouter(SearchPhonePage);
