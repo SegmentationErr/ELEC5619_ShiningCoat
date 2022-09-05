@@ -10,16 +10,12 @@ class ResultCard extends Component {
     }
 
     checkDetail = (e) => {
-        console.log("Nav to service detial page");
-        console.log(this.props.id);
         if (this.props.isService) {
-            console.log("This is a service, go to service detail page");
+            this.props.navigate('/serviceDetailPage/' + this.props.id);
         }
         else {
-            console.log("This is a shop, go to shop details page");
+            this.props.navigate('/shopDetailPage/' + this.props.id);
         }
-        // this.props.navigate('/signIn/' + this.props.serviceId);
-        //TODO nav to detial page
     }
 
     render() {

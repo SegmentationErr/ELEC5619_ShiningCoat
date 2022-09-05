@@ -38,13 +38,13 @@ class SearchPhonePage extends Component {
                 isService: true
             },
             {
-                name: "service2",
+                name: "this is test shop",
                 location: "service2 location",
                 time: "9-17pm",
                 imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
                 _id: "serviceTestId",
                 rating: 4,
-                isService: true
+                isService: false
             },
             {
                 name: "service3",
