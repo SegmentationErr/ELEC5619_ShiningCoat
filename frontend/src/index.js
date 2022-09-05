@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './css/index.css';
 import './css/app.css'
 
-import { BrowserRouter, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './assets/HomePage';
 import SignInPage from './assets/SignInPage';
 import NavBar from './assets/NavBar';
@@ -13,8 +13,6 @@ import SearchResultPage from './assets/SearchResultPage';
 
 
 export default function App() {
-
-  const { name, method } = useParams();
 
   return (
     <BrowserRouter>
