@@ -8,6 +8,14 @@ Open terminal in root directory of the project. Run the following command.
 ./run.sh
 ```
 
+## Running backend
+Open terminal in root directory of the project. Run the following command.
+
+```bash
+cd backend/
+./gradlew bootRun 
+```
+
 ## Running frontend
 Open terminal in root directory of the project. Run the following command.
 
