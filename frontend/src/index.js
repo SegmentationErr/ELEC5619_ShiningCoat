@@ -14,6 +14,7 @@ import ServiceDetailPage from './assets/ServiceDetailPage';
 import ShopDetailPage from './assets/ShopDetailPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
+import ManageShopsPage from './assets/ManageShopsPage';
 
 
 export default function App() {
@@ -24,8 +25,9 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={<NavBar />} /> */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/business/" element={<BusinessNavBar />} >
+        <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
+          <Route path="shops" element={<ManageShopsPage />} />
         </Route>
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />

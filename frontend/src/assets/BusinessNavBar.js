@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Outlet } from 'react-router-dom';
 import '../css/BusinessNavBar.css'
+import { withRouter } from './withRouter';
 
 class BusinessNavBar extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ class BusinessNavBar extends Component {
         this.setState({
             currSelected: selection
         })
+        this.props.navigate('/business/'+selection);
     }
 
     render() { 
@@ -29,9 +32,10 @@ class BusinessNavBar extends Component {
                 >
                     <p>Manage Shops</p>
                 </div>
+                <Outlet />
             </div>
         );
     }
 }
  
-export default BusinessNavBar;
+export default withRouter(BusinessNavBar);
