@@ -24,9 +24,9 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={<NavBar />} /> */}
         <Route path="/" element={<HomePage />} />
-        <Route path="business" element={<BusinessNavBar />} >
+        <Route path="/business/" element={<BusinessNavBar />} >
+          <Route path="profile" element={<ManageProfilePage />} />
         </Route>
-          <Route path="/business/profile" element={<ManageProfilePage />} />
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />
         <Route path="/search/" element={<SearchResultPage />}>
