@@ -1,0 +1,17 @@
+/* #shopProfileRow {
+    
+} */
+
+#shopProfilePage{
+    text-align: center;
+    background-color: rgb(243, 227, 207);
+}
+.title{
+    font-size: 40px;
+    line-height: 300%
+}
+
+#profileTextlines{
+    font-size: 20px;
+    line-height: 180%
+}
