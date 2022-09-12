@@ -19,9 +19,6 @@ class SearchPhonePage extends Component {
 
     constructor(props) {
         super(props);
-
-        console.log(this.state.name);
-        console.log(this.state.method);
     }
 
     state = {
@@ -104,6 +101,9 @@ class SearchPhonePage extends Component {
 
         return (
             <div id="searchResultMainDiv">
+                <div>
+                    {this.state.method}
+                </div>
                 <Row id="searchResultMainRow">
                     {this.state.searchResults.map((service, key) => {
                         return (

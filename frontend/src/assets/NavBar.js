@@ -38,9 +38,12 @@ class NavBar extends Component {
             return;
         }
 
+        let route = '/search/' + input + '/' + searchMethod;
 
+        this.props.navigate(route);
 
-        this.props.navigate('/search/' + input + '/' + searchMethod);
+        //reload the page after search in order to reset the state variables in search result
+        window.location.reload(false);
 
     }
 
