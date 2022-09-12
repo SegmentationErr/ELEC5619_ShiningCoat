@@ -16,6 +16,7 @@ import AllBookingsPage from './assets/AllBookingsPage';
 
 
 export default function App() {
+  document.body.style.backgroundColor = "#F3E3CF";
 
   return (
     <BrowserRouter>
@@ -28,8 +29,8 @@ export default function App() {
         <Route path="/search/" element={<SearchResultPage />}>
           <Route path=":name/:method" element={<SearchResultPage />} />
         </Route>
-        <Route path="/user/getAllBookings/" element={<AllBookingsPage />}>
-          <Route path=":userId" element={<AllBookingsPage />} />
+        <Route path="/user/">
+          <Route path="getAllBookings/:userId" element={<AllBookingsPage />} />
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />

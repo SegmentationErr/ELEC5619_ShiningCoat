@@ -1,0 +1,23 @@
+#mainContentRow {
+    text-align: left;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 35px;
+}
+
+#incomingBookingsCol {
+    padding-left: 10%;
+}
+
+#pastBookingsCol {
+    padding-left: 10%;
+}
+
+.serviceCard {
+    width: 80%;
+    height: 80px;
+    border-radius: 25px;
+    background-color: white;
+}
