@@ -92,3 +92,21 @@
     font-weight: bold;
     color: black;
 }
+
+#commentInputTextArea {
+    width: 80%;
+    height: 70%;
+}
+
+#commentRatingRow {
+    text-align: center;
+    width: 100%;
+}
+
+#rating {
+    background-color: grey;
+    text-align: center;
+    width: 30%;
+    border-radius: 10px;
+    margin: auto;
+}

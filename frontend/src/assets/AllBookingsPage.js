@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Select, Row, Col, Button, Input, Slider } from 'antd';
+import { Select, Row, Col, Button, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
-import '../css/cancelBookingConfirmation.css';
+import '../css/allBookingsValidationCard.css';
 
 import '../css/allBookingsPage.css';
 import showAlert from './Alert';
@@ -107,43 +107,59 @@ class AllBookingsPage extends Component {
         return (
             <div className='cover'>
                 <div className='validationCardComment'>
-                    <p>Leave your comments and rating for {this.state.pendingCommentService.name}?</p>
-                    <Row>
-                        <p>Please select your rating for this service</p>
-                        <Select
-                            defaultValue="5"
-                        >
-                            <Option value="5">5</Option>
-                            <Option value="4">4</Option>
-                            <Option value="3">3</Option>
-                            <Option value="2">2</Option>
-                            <Option value="1">1</Option>
-                        </Select>
-                        <p>Please leave your comment: </p>
-                        <TextArea rows={4} />
-                    </Row>
-                    <Row id="leaveCommentConfirmRow">
-                        <Col span={12}>
-                            <Button
-                                id="confirCommentSubmit"
-                                shape="round"
-                                type="primary"
-                                onClick={(e) => this.confirmLeaveComment()}
-                            >
-                                Submit Comment
-                            </Button>
-                        </Col>
-                        <Col span={12}>
-                            <Button
-                                id="cancelComment"
-                                shape="round"
-                                type="danger"
-                                onClick={(e) => this.doNotLeaveComment()}
-                            >
-                                Cancel
-                            </Button>
-                        </Col>
-                    </Row>
+                    <p>Leave your comments and rating for {this.state.pendingCommentService.name}</p>
+
+                    <Form onFinish={this.confirmLeaveComment.bind(this)}>
+                        <Row >
+                            <Row id="commentRatingRow">
+                                <Col span={24}><p>Please select your rating for this service</p></Col>
+                                <Col span={24}>
+                                    <div id="rating">
+                                        <Form.Item
+                                            name="rating"
+                                            rules={[{ required: true, message: 'Please select a rating!' }]}>
+                                            <Rate id="serviceRating" defaultValue={0} name="rating" />
+                                        </Form.Item>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                            <Col span={24} class="commentCardCol">
+                                <p>Please leave your comment: </p>
+                                <Form.Item
+                                    name="comment"
+                                    rules={[{ required: true, message: 'Please input your comment!' }]}
+                                >
+                                    <TextArea rows={4} id="commentInputTextArea" name="comment" />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row id="leaveCommentConfirmRow">
+                            <Col span={12}>
+                                <Form.Item>
+                                    <Button
+                                        id="confirCommentSubmit"
+                                        shape="round"
+                                        type="primary"
+                                        htmlType="submit"
+                                    // onClick={(e) => this.confirmLeaveComment()}
+                                    >
+                                        Submit Comment
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12}>
+                                <Button
+                                    id="cancelComment"
+                                    shape="round"
+                                    type="danger"
+                                    onClick={(e) => this.doNotLeaveComment()}
+                                >
+                                    Cancel
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
                 </div>
             </div>
         );
@@ -186,19 +202,27 @@ class AllBookingsPage extends Component {
         });
     }
 
-    confirmLeaveComment = (e) => {
+    confirmLeaveComment = (para) => {
         console.log("confirm leave a comment");
         let service = this.state.pendingCommentService;
         if (service === null) {
             showAlert('error', 'Please select a booking first');
         }
         else {
-            console.log(service);
-            // showAlert('success', 'Successfully deleted this booking');
-            // this.setState({
-            //     openCancelConfirm: false,
-            //     pendingDelteService: null
-            // });
+            console.log(para);
+
+            let rating = para.rating;
+
+            let comment = para.comment;
+
+            console.log(rating, comment);
+
+            showAlert('success', 'Thanks for your comment');
+
+            this.setState({
+                openLeaveCommentCard: false,
+                pendingCommentService: null
+            });
         }
     }
 
