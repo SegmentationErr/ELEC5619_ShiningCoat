@@ -89,7 +89,6 @@ class NavBar extends Component {
                                 </Select>
                             } onChange={this.setKeyword.bind(this)} />
                     </Menu.Item>
-                    {/* this is test frontend only, UPDATE THIS!!!!! */}
                     {cookie.load('userId') !== undefined
                         ?
                         <Menu.Item id="login" key="login" onClick={this.handleLogin.bind(this)}>
