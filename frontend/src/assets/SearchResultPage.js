@@ -101,9 +101,6 @@ class SearchResultPage extends Component {
 
         return (
             <div id="searchResultMainDiv">
-                <div>
-                    {this.state.method}
-                </div>
                 <Row id="searchResultMainRow">
                     {this.state.searchResults.map((service, key) => {
                         return (
