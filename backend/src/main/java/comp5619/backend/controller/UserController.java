@@ -2,6 +2,9 @@ package comp5619.backend.controller;
 
 import comp5619.backend.models.User;
 import comp5619.backend.repository.UserRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +34,13 @@ public class UserController {
 //    }
 
     @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
+    public List<User> getAllUsers() {
         // This returns a JSON or XML with the users
-        return userRepository.findAll();
+        System.out.println(userRepository.findAll1());
+        return userRepository.findAll1();
     }
+    // public @ResponseBody Iterable<User> getAllUsers() {
+    //     // This returns a JSON or XML with the users
+    //     return userRepository.findAll();
+    // }
 }
