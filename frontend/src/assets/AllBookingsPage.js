@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Select, Row, Col, Button, Modal, Input, Slider } from 'antd';
+import { Select, Row, Col, Button, Input, Slider } from 'antd';
 import { withRouter } from './withRouter';
 import '../css/cancelBookingConfirmation.css';
 
 import '../css/allBookingsPage.css';
 import showAlert from './Alert';
+
+const { Option } = Select;
+const { TextArea } = Input;
 
 class AllBookingsPage extends Component {
 
@@ -103,12 +106,26 @@ class AllBookingsPage extends Component {
     leaveCommentCard() {
         return (
             <div className='cover'>
-                <div className='validationCard'>
+                <div className='validationCardComment'>
                     <p>Leave your comments and rating for {this.state.pendingCommentService.name}?</p>
-                    <Row id="cancelBookingConfirmRow">
+                    <Row>
+                        <p>Please select your rating for this service</p>
+                        <Select
+                            defaultValue="5"
+                        >
+                            <Option value="5">5</Option>
+                            <Option value="4">4</Option>
+                            <Option value="3">3</Option>
+                            <Option value="2">2</Option>
+                            <Option value="1">1</Option>
+                        </Select>
+                        <p>Please leave your comment: </p>
+                        <TextArea rows={4} />
+                    </Row>
+                    <Row id="leaveCommentConfirmRow">
                         <Col span={12}>
                             <Button
-                                id="cancel"
+                                id="confirCommentSubmit"
                                 shape="round"
                                 type="primary"
                                 onClick={(e) => this.confirmLeaveComment()}
@@ -118,7 +135,7 @@ class AllBookingsPage extends Component {
                         </Col>
                         <Col span={12}>
                             <Button
-                                id="confirmDelete"
+                                id="cancelComment"
                                 shape="round"
                                 type="danger"
                                 onClick={(e) => this.doNotLeaveComment()}
