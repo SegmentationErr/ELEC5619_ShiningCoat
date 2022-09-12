@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Select, Row, Col, Button, Input, Rate, Form } from 'antd';
+import { Row, Col, Button, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
-import '../css/allBookingsValidationCard.css';
-
 import '../css/allBookingsPage.css';
 import showAlert from './Alert';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 class AllBookingsPage extends Component {
@@ -73,8 +70,8 @@ class AllBookingsPage extends Component {
 
     cancelBookingConfirmationCard() {
         return (
-            <div className='cover'>
-                <div className='validationCard'>
+            <div class='cover'>
+                <div class='validationCardcCancelBooking'>
                     <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
                     <Row id="cancelBookingConfirmRow">
                         <Col span={12}>
@@ -105,8 +102,8 @@ class AllBookingsPage extends Component {
 
     leaveCommentCard() {
         return (
-            <div className='cover'>
-                <div className='validationCardComment'>
+            <div class='cover'>
+                <div class='validationCardComment'>
                     <p>Leave your comments and rating for {this.state.pendingCommentService.name}</p>
 
                     <Form onFinish={this.confirmLeaveComment.bind(this)}>
