@@ -15,7 +15,7 @@ import '../css/searchResultPage.css'
 const { Search } = Input;
 
 
-class SearchPhonePage extends Component {
+class SearchResultPage extends Component {
 
     constructor(props) {
         super(props);
@@ -126,4 +126,4 @@ class SearchPhonePage extends Component {
         );
     }
 }
-export default withRouter(SearchPhonePage);
+export default withRouter(SearchResultPage);

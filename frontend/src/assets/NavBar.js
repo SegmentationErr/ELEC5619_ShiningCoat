@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Menu, Input, Modal, Row, Select } from 'antd';
-import { UserOutlined, SearchOutlined } from '@ant-design/icons';
+import { Menu, Input, Button, Row, Select } from 'antd';
+import { UserOutlined, BookOutlined } from '@ant-design/icons';
+
 import cookie from 'react-cookies';
 import showAlert from './Alert';
 
@@ -10,8 +11,6 @@ import { withRouter } from './withRouter';
 
 const { Search } = Input;
 const { Option } = Select;
-
-
 
 class NavBar extends Component {
 
@@ -42,7 +41,8 @@ class NavBar extends Component {
 
         this.props.navigate(route);
 
-        //reload the page after search in order to reset the state variables in search result
+        //reload the page after search in order to
+        //triger the reconstruct for search phone page
         window.location.reload(false);
 
     }
@@ -53,6 +53,25 @@ class NavBar extends Component {
 
     setKeyword = (e) => {
         this.setState({ searchInput: e.target.value });
+    }
+
+    navToUserProfile = (e) => {
+        console.log("Nav to user profile page");
+    }
+
+    navToUserBookings = (e) => {
+        console.log("Nav to user bookings page");
+
+        this.props.navigate('/user/getAllBookings/' + "testUserId");
+
+        // let userId = cookie.load('userId');
+        // if (userId !== undefined) {
+        //     this.props.navigate('/user/getAllBookings/' + userId);
+        // }
+        // else {
+        //     showAlert('warning', "Invalid login session", "Please login first");
+        // }
+
     }
 
     render() {
@@ -70,9 +89,27 @@ class NavBar extends Component {
                                 </Select>
                             } onChange={this.setKeyword.bind(this)} />
                     </Menu.Item>
-                    <Menu.Item id="login" key="login" onClick={this.handleLogin.bind(this)}>
-                        Login/SignUp
-                    </Menu.Item>
+                    {/* this is test frontend only, UPDATE THIS!!!!! */}
+                    {cookie.load('userId') !== undefined
+                        ?
+                        <Menu.Item id="login" key="login" onClick={this.handleLogin.bind(this)}>
+                            Login/SignUp
+                        </Menu.Item>
+                        :
+                        <Menu.Item id="profile" key="profile">
+                            <Button id="bookingButton"
+                                type="ghost"
+                                shape="circle"
+                                onClick={this.navToUserBookings.bind(this)}
+                                icon={<BookOutlined class="icon" style={{ fontSize: '30px', color: 'black' }} />} />
+                            <Button id="profileButton"
+                                type="ghost"
+                                shape="circle"
+                                onClick={this.navToUserProfile.bind(this)}
+                                icon={<UserOutlined class="icon" style={{ fontSize: '30px', color: 'black' }} />} />
+                        </Menu.Item>
+                    }
+
                 </Menu>
             </div>
         );

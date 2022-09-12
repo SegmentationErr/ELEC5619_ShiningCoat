@@ -12,6 +12,7 @@ import SignUpPage from './assets/SignUpPage';
 import SearchResultPage from './assets/SearchResultPage';
 import ServiceDetailPage from './assets/ServiceDetailPage';
 import ShopDetailPage from './assets/ShopDetailPage';
+import AllBookingsPage from './assets/AllBookingsPage';
 
 
 export default function App() {
@@ -26,6 +27,9 @@ export default function App() {
         <Route exact path="/signUp" element={<SignUpPage />} />
         <Route path="/search/" element={<SearchResultPage />}>
           <Route path=":name/:method" element={<SearchResultPage />} />
+        </Route>
+        <Route path="/user/getAllBookings/" element={<AllBookingsPage />}>
+          <Route path=":userId" element={<AllBookingsPage />} />
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />
