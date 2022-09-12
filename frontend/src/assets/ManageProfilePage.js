@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import PasswordValidation from './PasswordValidation';
 
 class ManageProfilePage extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class ManageProfilePage extends Component {
     render() { 
         return (
             <div style={{ textAlign: "center", marginTop: "10%" }}>
+                <PasswordValidation />
                 <Form
                     name="normal_login"
                     className="login-form"
