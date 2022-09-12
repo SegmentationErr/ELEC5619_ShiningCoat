@@ -63,8 +63,18 @@ class AllBookingsPage extends Component {
     }
 
     cancelBooking = (e) => {
-        let serviceId = e.value;
+        let serviceId = e;
         console.log(serviceId);
+        //ask for confirmation
+
+    }
+
+
+    leaveComment = (e) => {
+        let serviceId = e;
+        console.log(serviceId);
+        //ask for confirmation
+
     }
 
     render() {
@@ -103,8 +113,7 @@ class AllBookingsPage extends Component {
                                                 type="danger"
                                                 shape="round"
                                                 className="cancelBookingButton"
-                                                value={service.id}
-                                                onClick={this.cancelBooking.bind(this)}
+                                                onClick={(e) => this.cancelBooking(service.id)}
                                             >
                                                 Cancel Booking
                                             </Button>
@@ -131,7 +140,7 @@ class AllBookingsPage extends Component {
                                                 type="primary"
                                                 shape="round"
                                                 className="leaveCommentButton"
-                                                value={service.id}
+                                                onClick={(e) => this.leaveComment(service.id)}
                                             >
                                                 Leave a Comment
                                             </Button>
