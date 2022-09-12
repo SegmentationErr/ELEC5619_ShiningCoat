@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import { Menu, Row, Col, Button, Space, Input, Slider } from 'antd';
+import { Select, Row, Col, Button, Modal, Input, Slider } from 'antd';
 import { withRouter } from './withRouter';
-import ResultCard from './ResultCard';
-import '../css/allBookingsPage.css'
+import '../css/cancelBookingConfirmation.css';
 
-
+import '../css/allBookingsPage.css';
+import showAlert from './Alert';
 
 class AllBookingsPage extends Component {
+
 
     constructor(props) {
         super(props);
     }
 
+
     state = {
+        openCancelConfirm: false,
+        openLeaveCommentCard: false,
+        pendingDelteService: null,
+        pendingCommentService: null,
         userId: this.props.params.userId,
         incomingBookings: [
             {
@@ -62,25 +68,138 @@ class AllBookingsPage extends Component {
         ]
     }
 
-    cancelBooking = (e) => {
-        let serviceId = e;
-        console.log(serviceId);
-        //ask for confirmation
+    cancelBookingConfirmationCard() {
+        return (
+            <div className='cover'>
+                <div className='validationCard'>
+                    <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
+                    <Row id="cancelBookingConfirmRow">
+                        <Col span={12}>
+                            <Button
+                                id="confirmDelete"
+                                shape="round"
+                                type="danger"
+                                onClick={(e) => this.confirmDeleteBooking()}
+                            >
+                                Confirm Delete
+                            </Button>
+                        </Col>
+                        <Col span={12}>
+                            <Button
+                                id="cancel"
+                                shape="round"
+                                type="primary"
+                                onClick={(e) => this.doNotCancel()}
+                            >
+                                Cancel
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+        );
+    }
 
+    leaveCommentCard() {
+        return (
+            <div className='cover'>
+                <div className='validationCard'>
+                    <p>Leave your comments and rating for {this.state.pendingCommentService.name}?</p>
+                    <Row id="cancelBookingConfirmRow">
+                        <Col span={12}>
+                            <Button
+                                id="cancel"
+                                shape="round"
+                                type="primary"
+                                onClick={(e) => this.confirmLeaveComment()}
+                            >
+                                Submit Comment
+                            </Button>
+                        </Col>
+                        <Col span={12}>
+                            <Button
+                                id="confirmDelete"
+                                shape="round"
+                                type="danger"
+                                onClick={(e) => this.doNotLeaveComment()}
+                            >
+                                Cancel
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
+            </div>
+        );
+    }
+
+    showCancelConfirm = (e) => {
+        this.setState({
+            openCancelConfirm: true,
+            pendingDelteService: e
+        });
+    }
+
+    confirmDeleteBooking = (e) => {
+        console.log("confirm delete this booking");
+        let service = this.state.pendingDelteService;
+        if (service === null) {
+            showAlert('error', 'Please select a booking first');
+        }
+        else {
+            console.log(service);
+            showAlert('success', 'Successfully deleted this booking');
+            this.setState({
+                openCancelConfirm: false,
+                pendingDelteService: null
+            });
+        }
+    }
+
+    doNotCancel = (e) => {
+        this.setState({
+            openCancelConfirm: false,
+            pendingDelteService: null
+        });
+    }
+
+    showCommentCard = (e) => {
+        this.setState({
+            openLeaveCommentCard: true,
+            pendingCommentService: e
+        });
+    }
+
+    confirmLeaveComment = (e) => {
+        console.log("confirm leave a comment");
+        let service = this.state.pendingCommentService;
+        if (service === null) {
+            showAlert('error', 'Please select a booking first');
+        }
+        else {
+            console.log(service);
+            // showAlert('success', 'Successfully deleted this booking');
+            // this.setState({
+            //     openCancelConfirm: false,
+            //     pendingDelteService: null
+            // });
+        }
+    }
+
+    doNotLeaveComment = (e) => {
+        this.setState({
+            openLeaveCommentCard: false,
+            pendingCommentService: null
+        });
     }
 
 
-    leaveComment = (e) => {
-        let serviceId = e;
-        console.log(serviceId);
-        //ask for confirmation
-
-    }
 
     render() {
 
         return (
             <div id="mainContent">
+                {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
+                {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
                 <Row id="mainContentRow">
                     <Col id="incomingBookingsCol" span={12}>
                         <p class="title" >Incoming Bookings</p>
@@ -113,7 +232,7 @@ class AllBookingsPage extends Component {
                                                 type="danger"
                                                 shape="round"
                                                 className="cancelBookingButton"
-                                                onClick={(e) => this.cancelBooking(service.id)}
+                                                onClick={(e) => this.showCancelConfirm(service)}
                                             >
                                                 Cancel Booking
                                             </Button>
@@ -140,7 +259,7 @@ class AllBookingsPage extends Component {
                                                 type="primary"
                                                 shape="round"
                                                 className="leaveCommentButton"
-                                                onClick={(e) => this.leaveComment(service.id)}
+                                                onClick={(e) => this.showCommentCard(service)}
                                             >
                                                 Leave a Comment
                                             </Button>

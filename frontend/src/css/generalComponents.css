@@ -4,6 +4,12 @@
     border-radius: 10px;
 }
 
+.yellowButto {
+    height: 43px;
+    background-color: #FFBB40;
+    border-radius: 10px;
+}
+
 /* .yellowButton :hover{
     height: 43px;
     background: #FFBB40;
