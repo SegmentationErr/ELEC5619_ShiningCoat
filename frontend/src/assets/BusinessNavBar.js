@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Outlet } from 'react-router-dom';
-import '../css/BusinessNavBar.css'
+import '../css/businessNavBar.css'
 import { withRouter } from './withRouter';
 
 class BusinessNavBar extends Component {
