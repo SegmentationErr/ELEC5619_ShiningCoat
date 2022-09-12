@@ -10,8 +10,6 @@ class AllBookingsPage extends Component {
 
     constructor(props) {
         super(props);
-
-        console.log(this.state.userId);
     }
 
     state = {
@@ -64,6 +62,11 @@ class AllBookingsPage extends Component {
         ]
     }
 
+    cancelBooking = (e) => {
+        let serviceId = e.value;
+        console.log(serviceId);
+    }
+
     render() {
 
         return (
@@ -100,6 +103,8 @@ class AllBookingsPage extends Component {
                                                 type="danger"
                                                 shape="round"
                                                 className="cancelBookingButton"
+                                                value={service.id}
+                                                onClick={this.cancelBooking.bind(this)}
                                             >
                                                 Cancel Booking
                                             </Button>
@@ -126,6 +131,7 @@ class AllBookingsPage extends Component {
                                                 type="primary"
                                                 shape="round"
                                                 className="leaveCommentButton"
+                                                value={service.id}
                                             >
                                                 Leave a Comment
                                             </Button>
