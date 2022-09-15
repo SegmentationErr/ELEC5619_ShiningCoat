@@ -87,11 +87,10 @@ class ShopDetailPage extends Component {
         return (
             <div id="shopProfilePage">
                 <Row id="shopProfileRow">
-                {/* This is shop detial page */}
-                    <Col span={8} id="profile">
+                    <Col span={8} id="profileModule">
                         {this.renderProfile()}
                     </Col>
-                    <Col span={16} id="services">
+                    <Col span={16} id="servicesModule">
                         {this.renderServices()}
                     </Col>
                 </Row>
