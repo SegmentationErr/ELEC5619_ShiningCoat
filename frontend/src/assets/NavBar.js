@@ -89,7 +89,7 @@ class NavBar extends Component {
                                 </Select>
                             } onChange={this.setKeyword.bind(this)} />
                     </Menu.Item>
-                    {cookie.load('userId') !== undefined
+                    {cookie.load('userId') === undefined
                         ?
                         <Menu.Item id="login" key="login" onClick={this.handleLogin.bind(this)}>
                             Login/SignUp
@@ -100,12 +100,12 @@ class NavBar extends Component {
                                 type="ghost"
                                 shape="circle"
                                 onClick={this.navToUserBookings.bind(this)}
-                                icon={<BookOutlined class="icon" style={{ fontSize: '30px', color: 'black' }} />} />
+                                icon={<BookOutlined className="icon" style={{ fontSize: '30px', color: 'black' }} />} />
                             <Button id="profileButton"
                                 type="ghost"
                                 shape="circle"
                                 onClick={this.navToUserProfile.bind(this)}
-                                icon={<UserOutlined class="icon" style={{ fontSize: '30px', color: 'black' }} />} />
+                                icon={<UserOutlined className="icon" style={{ fontSize: '30px', color: 'black' }} />} />
                         </Menu.Item>
                     }
 

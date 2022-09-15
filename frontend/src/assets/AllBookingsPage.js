@@ -70,8 +70,8 @@ class AllBookingsPage extends Component {
 
     cancelBookingConfirmationCard() {
         return (
-            <div class='cover'>
-                <div class='validationCardcCancelBooking'>
+            <div className='cover'>
+                <div className='validationCardcCancelBooking'>
                     <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
                     <Row id="cancelBookingConfirmRow">
                         <Col span={12}>
@@ -102,8 +102,8 @@ class AllBookingsPage extends Component {
 
     leaveCommentCard() {
         return (
-            <div class='cover'>
-                <div class='validationCardComment'>
+            <div className='cover'>
+                <div className='validationCardComment'>
                     <p>Leave your comments and rating for {this.state.pendingCommentService.name}</p>
 
                     <Form onFinish={this.confirmLeaveComment.bind(this)}>
@@ -121,7 +121,7 @@ class AllBookingsPage extends Component {
                                 </Col>
                             </Row>
 
-                            <Col span={24} class="commentCardCol">
+                            <Col span={24} className="commentCardCol">
                                 <p>Please leave your comment: </p>
                                 <Form.Item
                                     name="comment"
@@ -240,10 +240,10 @@ class AllBookingsPage extends Component {
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
                 <Row id="mainContentRow">
                     <Col id="incomingBookingsCol" span={12}>
-                        <p class="title" >Incoming Bookings</p>
+                        <p className="title" >Incoming Bookings</p>
                         {this.state.incomingBookings.map((service, key) => {
                             return (
-                                <div class="serviceCard">
+                                <div className="serviceCard" key={key}>
                                     <Row >
                                         <Col span={8} className="nameCol">
                                             <p>{service.name}</p>
@@ -282,10 +282,10 @@ class AllBookingsPage extends Component {
                         })}
                     </Col>
                     <Col id="pastBookingsCol" span={12}>
-                        <p class="title">Past Bookings</p>
+                        <p className="title">Past Bookings</p>
                         {this.state.pastBookings.map((service, key) => {
                             return (
-                                <div class="serviceCard">
+                                <div className="serviceCard" key={key}>
                                     <Row >
                                         <Col span={12} className="pastBookingNameCol">
                                             <p>{service.name}</p>
