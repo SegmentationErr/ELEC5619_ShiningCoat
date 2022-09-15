@@ -23,14 +23,16 @@ class ResultCard extends Component {
             <div onClick={this.checkDetail.bind(this)}>
                 <Image
                     preview={false}
-                    style={{ width: 200, height: 200, borderRadius: 400 / 2 }}
+                    style={{ padding: 10, width: 200, height: 200, borderRadius: 400 / 2 }}
                     width={200}
                     src={this.props.imgSrc}
                 />
-                <p>{this.props.name}</p>
-                <p>Rating: {this.props.rating}</p>
-                <p>{this.props.location}</p>
-                <p>{this.props.time}</p>
+                <div id="info" style = {{"lineHeight": "50%" }}>
+                    <p>{this.props.name + ' (' + this.props.rating + ')'} </p>
+                    {/* <div>Rating: {this.props.rating}</div> */}
+                    <p>{this.props.location}</p>
+                    <p>{this.props.time}</p>
+                </div>
             </div>
         );
     }

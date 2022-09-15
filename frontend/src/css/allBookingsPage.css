@@ -1,0 +1,196 @@
+#mainContentRow {
+    text-align: left;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 35px;
+}
+
+#incomingBookingsCol {
+    padding-left: 8%;
+}
+
+#pastBookingsCol {
+    padding-left: 8%;
+}
+
+.serviceCard {
+    width: 80%;
+    height: 100px;
+    border-radius: 25px;
+    background-color: white;
+    margin-bottom: 5%;
+}
+
+.nameCol {
+    margin: auto;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 1%;
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.timeCol {
+    margin: auto;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 1%;
+}
+
+.timeCol p {
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.buttonCol {
+    padding-left: 20px;
+    padding-top: 5%;
+}
+
+.cancelBookingButton {
+    height: 60%;
+    width: 90%;
+    color: black;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.pastBookingNameCol {
+    margin: auto;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 1%;
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.buttonColPast {
+    padding-top: 5%;
+    padding-right: 20px;
+}
+
+
+.leaveCommentButton {
+    height: 60%;
+    width: 70%;
+    color: black;
+    background-color: orange;
+    float: right;
+    border: none;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.cover {
+    top: 100px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+}
+
+.validationCardcCancelBooking {
+    /* position: absolute; */
+    width: 400px;
+    height: 20%;
+    background: #FAEDDE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25vh;
+    text-align: center;
+}
+
+.validationCardcCancelBooking p {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 21px;
+    padding: 40px 30px 30px 30px;
+    color: #000000;
+}
+
+#cancelBookingConfirmRow {
+    float: center;
+}
+
+#confirmDelete {
+    font-weight: bold;
+    font-size: 100%;
+    width: 80%;
+    color: black;
+}
+
+#cancel {
+    background-color: #FFBB40;
+    border: none;
+    width: 80%;
+    font-weight: bold;
+    color: black;
+}
+
+.validationCardComment {
+    width: 800px;
+    height: 60%;
+    background: #FAEDDE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.validationCardComment p {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 21px;
+    padding: 40px 30px 30px 30px;
+    color: #000000;
+}
+
+#leaveCommentConfirmRow {
+    padding-top: 5%;
+    float: center;
+}
+
+#cancelComment {
+    font-weight: bold;
+    font-size: 100%;
+    width: 80%;
+    color: black;
+}
+
+#confirCommentSubmit {
+    background-color: #FFBB40;
+    border: none;
+    width: 80%;
+    font-weight: bold;
+    color: black;
+}
+
+#commentInputTextArea {
+    width: 80%;
+    height: 70%;
+}
+
+#commentRatingRow {
+    text-align: center;
+    width: 100%;
+}
+
+#rating {
+    background-color: grey;
+    text-align: center;
+    width: 30%;
+    border-radius: 10px;
+    margin: auto;
+}

@@ -12,12 +12,14 @@ import SignUpPage from './assets/SignUpPage';
 import SearchResultPage from './assets/SearchResultPage';
 import ServiceDetailPage from './assets/ServiceDetailPage';
 import ShopDetailPage from './assets/ShopDetailPage';
+import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
 import ManageShopsPage from './assets/ManageShopsPage';
 
 
 export default function App() {
+  document.body.style.backgroundColor = "#F3E3CF";
 
   return (
     <BrowserRouter>
@@ -33,6 +35,9 @@ export default function App() {
         <Route exact path="/signUp" element={<SignUpPage />} />
         <Route path="/search/" element={<SearchResultPage />}>
           <Route path=":name/:method" element={<SearchResultPage />} />
+        </Route>
+        <Route path="/user/">
+          <Route path="getAllBookings/:userId" element={<AllBookingsPage />} />
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />
