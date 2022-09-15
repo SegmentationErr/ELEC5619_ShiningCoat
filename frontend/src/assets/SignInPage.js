@@ -5,6 +5,7 @@ import axios from 'axios'
 import cookie from 'react-cookies';
 import { withRouter } from './withRouter';
 import '../css/signInPage.css'
+import GoogleSignIn from './GoogleSignIn';
 
 
 class SignInPage extends Component {
@@ -64,6 +65,8 @@ class SignInPage extends Component {
                         </Button>
                     </Form.Item>
                 </Form>
+                <GoogleSignIn/>
+                
                 <Button id="backButton" onClick={() => this.props.navigate(-1)}>
                     Back
                 </Button>
