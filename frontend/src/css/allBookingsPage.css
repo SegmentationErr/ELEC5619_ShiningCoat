@@ -16,7 +16,7 @@
 }
 
 .serviceCard {
-    width: 80%;
+    width: 90%;
     height: 100px;
     border-radius: 25px;
     background-color: white;
@@ -45,13 +45,13 @@
 }
 
 .buttonCol {
-    padding-left: 20px;
-    padding-top: 5%;
+    padding-left: 10px;
+    padding-top: 2%;
 }
 
 .cancelBookingButton {
-    height: 60%;
-    width: 90%;
+    height: 50%;
+    width: 80%;
     color: black;
     font-weight: bold;
     font-size: 100%;
@@ -67,14 +67,14 @@
 }
 
 .buttonColPast {
-    padding-top: 5%;
-    padding-right: 20px;
+    padding-top: 2%;
+    /* padding-right: 20px; */
 }
 
 
 .leaveCommentButton {
     height: 60%;
-    width: 70%;
+    width: 60%;
     color: black;
     background-color: orange;
     float: right;
