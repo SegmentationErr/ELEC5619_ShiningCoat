@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Form, Input } from 'antd';
+import { LockOutlined } from '@ant-design/icons';
 import '../css/passwordValidation.css';
 import '../css/generalComponents.css';
 
 class PasswordValidation extends Component {
-    constructor(props) {
-        super(props);
-    }
-    state = {  }
-
-    handleConfirm = () => {
-        console.log(123123)
-    }
-
     render() { 
         return (
             <div className='cover'>
@@ -24,35 +15,35 @@ class PasswordValidation extends Component {
                         className="login-form"
                         initialValues={{
                         }}
-                        onFinish={this.handleConfirm}
+                        onFinish={this.props.updateProfile}
                     >
                         <Form.Item
-                            name="password"
+                            name="currPassword"
                             rules={[
                                 {
-                                    required: false,
-                                    message: 'Please input your Password!',
+                                    required: true,
+                                    message: 'Please Input Current Password!',
                                 },
                             ]}
                         >
                             <Input.Password
-                                style={{ width: 300, }}
+                                style={{ width: 300 }}
                                 prefix={<LockOutlined className="site-form-item-icon" />}
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Current Password"
+                                allowClear
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button
-                                id="signInButton" type="primary" htmlType="submit" className="login-form-button">
+                            <button
+                                className="redButton"
+                                onClick={this.props.changeDisplayValidation}>
+                                Cancel
+                            </button>
+                            <button className="yellowButton" type="submit">
                                 Update
-                            </Button>
+                            </button>
                         </Form.Item>
-                        <Button
-                            className="yellowButto" htmlType="submit">
-                            Update
-                        </Button>
-                        {/* <Button  */}
                     </Form>
                 </div>
             </div>
