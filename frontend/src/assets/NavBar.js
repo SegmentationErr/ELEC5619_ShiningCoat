@@ -5,7 +5,9 @@ import { UserOutlined, BookOutlined } from '@ant-design/icons';
 import cookie from 'react-cookies';
 import showAlert from './Alert';
 
-import '../css/navBar.css'
+import navBarStyle from '../css/navBar.module.css';
+import generalStyles from '../css/generalComponents.module.css';
+
 import { withRouter } from './withRouter';
 
 
@@ -76,13 +78,13 @@ class NavBar extends Component {
 
     render() {
         return (
-            <div id="navBarDiv">
-                <Menu id="navbar" key="navBar" mode="horizontal" className='navbar'>
-                    <Menu.Item id="websiteName" key="websiteName" onClick={this.handleBackToHomePage.bind(this)} className='navbar-title'>PetDaily</Menu.Item>
-                    <Menu.Item id="search" key="search">
-                        <Input id="searchInput" size="large" placeholder="Search"
+            <div id={navBarStyle.navBarDiv} >
+                <Menu id={navBarStyle.navbar} key="navBar" mode="horizontal" className='navbar'>
+                    <Menu.Item id={navBarStyle.websiteName} key="websiteName" onClick={this.handleBackToHomePage.bind(this)} className='navbar-title'>PetDaily</Menu.Item>
+                    <Menu.Item id={navBarStyle.search} key="search">
+                        <Input id={navBarStyle.searchInput} size="large" placeholder="Search"
                             addonAfter={
-                                <Select id="searchSelect" defaultValue="" onSelect={this.handleSearch.bind(this)}>
+                                <Select id={navBarStyle.searchSelect} defaultValue="" onSelect={this.handleSearch.bind(this)}>
                                     <Option value="">Choose Search Method</Option>
                                     <Option value="service">Search By Service Name</Option>
                                     <Option value="shop">Service By Shop Name</Option>
@@ -91,21 +93,21 @@ class NavBar extends Component {
                     </Menu.Item>
                     {cookie.load('userId') === undefined
                         ?
-                        <Menu.Item id="login" key="login" onClick={this.handleLogin.bind(this)}>
+                        <Menu.Item id={navBarStyle.login} key="login" onClick={this.handleLogin.bind(this)}>
                             Login/SignUp
                         </Menu.Item>
                         :
-                        <Menu.Item id="profile" key="profile">
-                            <Button id="bookingButton"
+                        <Menu.Item id={navBarStyle.profile} key="profile">
+                            <Button id={navBarStyle.bookingButton}
                                 type="ghost"
                                 shape="circle"
                                 onClick={this.navToUserBookings.bind(this)}
-                                icon={<BookOutlined className="icon" style={{ fontSize: '30px', color: 'black' }} />} />
-                            <Button id="profileButton"
+                                icon={<BookOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
+                            <Button id={navBarStyle.profileButton}
                                 type="ghost"
                                 shape="circle"
                                 onClick={this.navToUserProfile.bind(this)}
-                                icon={<UserOutlined className="icon" style={{ fontSize: '30px', color: 'black' }} />} />
+                                icon={<UserOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
                         </Menu.Item>
                     }
 
