@@ -3,7 +3,7 @@ import { Image, Card, Row, Col, Button } from 'antd';
 import { HeartTwoTone } from '@ant-design/icons';
 import { withRouter } from './withRouter';
 
-import '../css/serviceDetailPage.css'
+import styles from '../css/serviceDetailPage.module.css'
 
 class ServiceDetailPage extends Component {
 
@@ -45,7 +45,7 @@ class ServiceDetailPage extends Component {
         return (
             <div>
 
-                <Card id='service_details'>
+                <Card id={styles['service_details']}>
                     <Row>
                         <Col span={12}>
                             <Image
@@ -53,10 +53,10 @@ class ServiceDetailPage extends Component {
                                 style={{ margin:50, width: 400, height: 450, borderRadius: 100 / 2}}
                                 src={this.state.data.imgSrc}
                             />
-                            <div id='review_text'>Customer Reviews</div>
+                            <div id={styles['review_text']}>Customer Reviews</div>
                         </Col>
                         <Col span={12}>
-                            <div id='details_text'>
+                            <div id={styles['details_text']}>
                                 <p>{this.state.data.service_name}</p>
                                 <p>{'Service Provider: ' + this.state.data.service_provider}</p>
                                 <p>{'Location: ' + this.state.data.location}</p>
@@ -69,7 +69,7 @@ class ServiceDetailPage extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Button id='heart' type='text'><HeartTwoTone twoToneColor="#eb2f96"/></Button>
+                        <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96"/></Button>
                     </Row>
                 </Card>
 
