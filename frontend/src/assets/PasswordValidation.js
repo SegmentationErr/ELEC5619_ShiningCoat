@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Form, Input } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
-import '../css/passwordValidation.css';
-import '../css/generalComponents.css';
+import validationStyles from '../css/passwordValidation.module.css';
+import generalStyles from '../css/generalComponents.module.css';
 
 class PasswordValidation extends Component {
     render() { 
         return (
-            <div className='cover'>
-                <div className='validationCard'>
+            <div className={validationStyles.cover}>
+                <div className={validationStyles.validationCard}>
                     <p>For updating the information<br/>please enter your password:</p>
                     <Form
                         name="normal_login"
@@ -36,11 +36,11 @@ class PasswordValidation extends Component {
                         </Form.Item>
                         <Form.Item>
                             <button
-                                className="redButton"
+                                className={generalStyles.redButton}
                                 onClick={this.props.changeDisplayValidation}>
                                 Cancel
                             </button>
-                            <button className="yellowButton" type="submit">
+                            <button className={generalStyles.yellowButton} type="submit">
                                 Update
                             </button>
                         </Form.Item>

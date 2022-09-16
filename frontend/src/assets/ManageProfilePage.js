@@ -3,7 +3,7 @@ import { Form, Input, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PasswordValidation from './PasswordValidation';
-import '../css/generalComponents.css';
+import styles from '../css/generalComponents.module.css';
 
 class ManageProfilePage extends Component {
     constructor(props) {
@@ -119,7 +119,7 @@ class ManageProfilePage extends Component {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <button className="blackButton" type="submit" style={{marginTop: 100}}>
+                        <button className={styles.blackButton} type="submit" style={{marginTop: 100}}>
                             Update Profile
                         </button>
                     </Form.Item>
