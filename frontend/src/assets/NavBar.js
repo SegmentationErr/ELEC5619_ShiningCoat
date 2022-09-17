@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Menu, Input, Button, Row, Select } from 'antd';
+import { Menu, Input, Button, Select } from 'antd';
 import { UserOutlined, BookOutlined } from '@ant-design/icons';
 
 import cookie from 'react-cookies';
 import showAlert from './Alert';
 
 import navBarStyle from '../css/navBar.module.css';
-import generalStyles from '../css/generalComponents.module.css';
 
 import { withRouter } from './withRouter';
 

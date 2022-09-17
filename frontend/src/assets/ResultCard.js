@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
-import { Row, Col, Image } from 'antd';
+import { Image } from 'antd';
 import { withRouter } from './withRouter';
 
 
@@ -27,7 +26,7 @@ class ResultCard extends Component {
                     width={200}
                     src={this.props.imgSrc}
                 />
-                <div id="info" style = {{"lineHeight": "50%" }}>
+                <div id="info" style={{ "lineHeight": "50%" }}>
                     <p>{this.props.name + ' (' + this.props.rating + ')'} </p>
                     {/* <div>Rating: {this.props.rating}</div> */}
                     <p>{this.props.location}</p>
