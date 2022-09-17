@@ -3,7 +3,7 @@ import { Menu, Row, Col, Button, Space, Input, Slider, Image } from 'antd';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
-import '../css/shopDetailPage.css'
+import styles from '../css/shopDetailPage.module.css'
 
 class ShopDetailPage extends Component {
 
@@ -85,12 +85,12 @@ class ShopDetailPage extends Component {
     render() {
 
         return (
-            <div id="shopProfilePage">
+            <div id={styles['shopProfilePage']}>
                 <Row id="shopProfileRow">
-                    <Col span={8} id="profileModule">
+                    <Col span={8} id={styles['profileModule']}>
                         {this.renderProfile()}
                     </Col>
-                    <Col span={16} id="servicesModule">
+                    <Col span={16} id={styles['servicesModule']}>
                         {this.renderServices()}
                     </Col>
                 </Row>
@@ -139,12 +139,12 @@ class Services extends Component {
     render() {
         return(
             
-            <div>                 
-                <div class="title">
+            <div>              
+                <div class={styles.title}>
                     {"Available Services"}
                 </div>
                 <div>
-                    <Row id="homePageMainRow">
+                    <Row>
                         {this.props.services.map((service, key) => {
                             return (
                                 <Col span={8}>
@@ -167,3 +167,4 @@ class Services extends Component {
 }
 
 export default withRouter(ShopDetailPage);
+export {Profile, Services};
