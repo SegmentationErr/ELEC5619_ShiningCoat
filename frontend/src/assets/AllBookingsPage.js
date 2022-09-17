@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Input, Rate, Form } from 'antd';
+import { Row, Col, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
 import showAlert from './Alert';
 
