@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Form, Input, Button } from 'antd';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import cookie from 'react-cookies';
 import { withRouter } from './withRouter';
-import '../css/signInPage.css'
+import signInPageStyle from '../css/signInPage.module.css';
+import generalStyles from '../css/generalComponents.module.css';
+
 
 
 class SignInPage extends Component {
@@ -58,15 +60,18 @@ class SignInPage extends Component {
                         </div>
                     </Form.Item>
                     <Form.Item>
-                        <Button
-                            id="signInButton" type="primary" htmlType="submit" className="login-form-button">
+                        <button
+                            className={generalStyles.blackButton}
+                            id={signInPageStyle.signInButton} htmlType="submit">
                             Sign in
-                        </Button>
+                        </button>
                     </Form.Item>
                 </Form>
-                <Button id="backButton" onClick={() => this.props.navigate(-1)}>
+                <button
+                    className={generalStyles.blackButton}
+                    id={signInPageStyle.backButton} onClick={() => this.props.navigate(-1)}>
                     Back
-                </Button>
+                </button>
             </div>
         );
     }

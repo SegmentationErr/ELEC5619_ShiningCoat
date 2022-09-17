@@ -58,26 +58,26 @@ class ShopDetailPage extends Component {
             ]
         },
     }
-    renderProfile(){
+    renderProfile() {
         return (
-            <Profile 
+            <Profile
                 // props contains two things
-                id = {this.state.data._id}
-                shopName = {this.state.data.shopName}
-                location = {this.state.data.location}
-                contactNumber = {this.state.data.contactNumber}
-                imgSrc = {this.state.data.imgSrc}
-                availableTime = {this.state.data.availableTime}             
+                id={this.state.data._id}
+                shopName={this.state.data.shopName}
+                location={this.state.data.location}
+                contactNumber={this.state.data.contactNumber}
+                imgSrc={this.state.data.imgSrc}
+                availableTime={this.state.data.availableTime}
 
             />
         );
     }
 
-    renderServices(){
+    renderServices() {
         return (
             <Services
                 // props contains two things
-                services = {this.state.data.services}        
+                services={this.state.data.services}
             />
         );
     }
@@ -102,16 +102,16 @@ class ShopDetailPage extends Component {
 class Profile extends Component {
 
     render() {
-        
+
         return (
             <div >
-            
+
                 <div class="title">
                     {"Shop Profile"}
                 </div>
                 <Image
                     preview={false}
-                    style={{ padding: 20, width: 350, height: 450, borderRadius: 100 / 2}}
+                    style={{ padding: 20, width: 350, height: 450, borderRadius: 100 / 2 }}
                     src={this.props.imgSrc}
 
                 />
@@ -126,20 +126,20 @@ class Profile extends Component {
                         {"ContactNumber: " + this.props.contactNumber}
                     </div>
                     <div>
-                        {"Available Time: " +this.props.availableTime}
+                        {"Available Time: " + this.props.availableTime}
                     </div>
                 </span>
             </div>
         );
-      }
+    }
 }
 
 class Services extends Component {
 
     render() {
-        return(
-            
-            <div>                 
+        return (
+
+            <div>
                 <div class="title">
                     {"Available Services"}
                 </div>
@@ -157,11 +157,12 @@ class Services extends Component {
                                         isService={true}
                                     />
                                 </Col>
-                            )}
+                            )
+                        }
                         )}
                     </Row>
                 </div>
-            </div>           
+            </div>
         );
     }
 }
