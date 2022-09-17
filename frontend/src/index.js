@@ -16,6 +16,7 @@ import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
 import ManageShopsPage from './assets/ManageShopsPage';
+import LocationMapPage from './assets/LocationMapPage';
 
 
 export default function App() {
@@ -41,6 +42,9 @@ export default function App() {
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />
+        </Route>
+        <Route path="/LocationMapPage/" element={<LocationMapPage />}>
+          <Route path=":id" element={<LocationMapPage />} />
         </Route>
         <Route path="/shopDetailPage/" element={<ShopDetailPage />}>
           <Route path=":id" element={<ShopDetailPage />} />

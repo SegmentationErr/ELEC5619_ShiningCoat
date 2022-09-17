@@ -41,6 +41,10 @@ class ServiceDetailPage extends Component {
         }
     }
 
+    checkDetail = (e) => {
+        this.props.navigate('/LocationMapPage/' + this.state.id);
+    }
+
     render() {
         return (
             <div>
@@ -59,7 +63,10 @@ class ServiceDetailPage extends Component {
                             <div id={styles['details_text']}>
                                 <p>{this.state.data.service_name}</p>
                                 <p>{'Service Provider: ' + this.state.data.service_provider}</p>
-                                <p>{'Location: ' + this.state.data.location}</p>
+                                <p>
+                                    {'Location: ' + this.state.data.location}
+                                    <Button id={styles['map']} onClick={this.checkDetail.bind(this)}>Map</Button>
+                                </p>
                                 <p>{'Available Time: ' + this.state.data.available_time}</p>
                                 <p>{'Availability for Pick Up: ' + this.state.data.pick_up}</p>
                                 <p>{'Price: ' + this.state.data.price}</p>
