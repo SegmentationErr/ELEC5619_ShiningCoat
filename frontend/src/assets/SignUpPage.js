@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter } from './withRouter';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import '../css/signUpPage.css'
-
+import cookie from 'react-cookies'
 
 import {
     Form,
@@ -21,8 +21,14 @@ class SignUpPage extends Component {
         .then(res => {
             if (res.status === 200) {
                 message.success('Successfully Create User!')
-                // this.formRef.resetFields()
-                // this.fetchUserProfile()
+                // console.log(res.data)
+                cookie.save("id", res.data.id)
+                cookie.save("role", res.data.role)
+                if (res.data.role === "customer") {
+                    this.props.navigate('/')
+                } else {
+                    this.props.navigate('/business/profile')
+                }
             } else {
                 message.error('Username or Email Already Exists.\nCreation Failed.')
             }
@@ -30,6 +36,7 @@ class SignUpPage extends Component {
             message.error('Username or Email Already Exists.\nCreation Failed.')
         })
     }
+
     render() {
         return (
             <div id="mainContentDiv">
@@ -114,8 +121,8 @@ class SignUpPage extends Component {
                             placeholder="Choose your role"
                             style={{ maxWidth: 400 }}
                             allowClear>
-                            <Option value="0">Customer</Option>
-                            <Option value="1">Business</Option>
+                            <Option value="customer">Customer</Option>
+                            <Option value="business">Business</Option>
                         </Select>
                     </Form.Item>
 

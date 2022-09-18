@@ -75,9 +75,30 @@ public class UserController {
         userRepository.save(newUser);
         response.put("Message", "Create User Success");
         response.put("id", String.valueOf(newUser.getId()));
+        response.put("role", String.valueOf(newUser.getRole()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PostMapping(path = "/checkSignIn")
+    public @ResponseBody ResponseEntity<Map<String, Object>> checkEmailandPassword(
+            @RequestBody Map<String, String> params) {
+        String email = params.get("email");
+        String password = params.get("password");
+
+        Map<String, Object> response = new HashMap<>();
+        Map<String, Object> currentUser = userRepository.getUserByEmailandPassword(email, password);
+        if (currentUser.size() == 0) {
+            response.put("Message", "Wrong Email or Password.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        response.put("Message", "Sign In Success");
+        response.put("id", String.valueOf(currentUser.get("id")));
+        response.put("role", String.valueOf(currentUser.get("role")));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    // test only
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<User> testGetAllUser() {
         return userRepository.findAll();

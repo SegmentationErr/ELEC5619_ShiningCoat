@@ -9,6 +9,26 @@ import GoogleSignIn from './GoogleSignIn';
 
 
 class SignInPage extends Component {
+    handleSignIn = data => {
+        axios.post(`http://localhost:8080/users/checkSignIn`, data)
+        .then(res => {
+            if (res.status === 200) {
+                message.success('Successfully Sign In!')
+                // console.log(res.data)
+                cookie.save("id", res.data.id)
+                cookie.save("role", res.data.role)
+                if (res.data.role === "customer") {
+                    this.props.navigate('/')
+                } else {
+                    this.props.navigate('/business/profile')
+                }
+            } else {
+                message.error('Incorrect Email or Password.\nSign In Failed.')
+            }
+        }).catch((error) => {
+            message.error('Incorrect Email or Password.\nSign In Failed.')
+        })
+    }
 
     render() {
         return (
@@ -18,6 +38,7 @@ class SignInPage extends Component {
                     className="login-form"
                     initialValues={{
                     }}
+                    onFinish={this.handleSignIn}
                 >
                     <Form.Item
                         name="email"
@@ -53,11 +74,11 @@ class SignInPage extends Component {
                             Forget password?
                             <a href="/forgetPassword"> Reset your password</a>
                         </div> */}
-                        <div style={{ marginTop: 24 }}>
-                            New to PetDaily?
-                            <a href="/signUp"> Register now!</a>
-                        </div>
                     </Form.Item>
+                    <div style={{ marginTop: 24 }}>
+                        New to PetDaily?
+                        <a href="/signUp"> Register now!</a>
+                    </div>
                     <Form.Item>
                         <Button
                             id="signInButton" type="primary" htmlType="submit" className="login-form-button">

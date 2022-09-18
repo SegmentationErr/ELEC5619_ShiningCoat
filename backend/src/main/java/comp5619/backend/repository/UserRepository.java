@@ -32,7 +32,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT * FROM users WHERE username=:username or email=:email", nativeQuery = true)
     List<Map<String, Object>> getUserByNameOrEmail(@Param("username") String username, @Param("email") String email);
 
-    // @Transactional
-    // @Modifying
-    // @Query
+    @Query(value = "SELECT * FROM users WHERE email=:email and password=:password", nativeQuery = true)
+    Map<String, Object> getUserByEmailandPassword(@Param("email") String email, @Param("password") String password);
 }
