@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { message } from 'antd';
 import axios from 'axios';
 import { withRouter } from './withRouter';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-import '../css/signUpPage.css'
 import cookie from 'react-cookies'
+import signUpPageStyle from '../css/signUpPage.module.css';
+import generalStyles from '../css/generalComponents.module.css';
 
 import {
     Form,
     Input,
-    Button,
-    Select
+    Select,
+    message
 } from 'antd';
 
 const { Option } = Select;
@@ -39,8 +39,8 @@ class SignUpPage extends Component {
 
     render() {
         return (
-            <div id="mainContentDiv">
-                <Form id="signUpForm"
+            <div>
+                <Form id={signUpPageStyle.signUpForm}
                     name="register"
                     scrollToFirstError
                     onFinish={this.handleSignUp}
@@ -60,6 +60,7 @@ class SignUpPage extends Component {
                         ]}
                     >
                         <Input
+                            className={signUpPageStyle.input}
                             placeholder='Username'
                             prefix={<UserOutlined className="site-form-item-icon" />}
                             style={{ maxWidth: 400 }} />
@@ -79,6 +80,7 @@ class SignUpPage extends Component {
                         ]}
                     >
                         <Input
+                            className={signUpPageStyle.input}
                             placeholder='Email'
                             prefix={<MailOutlined className="site-form-item-icon" />}
                             style={{ maxWidth: 400 }} />
@@ -95,6 +97,7 @@ class SignUpPage extends Component {
                         hasFeedback
                     >
                         <Input.Password
+                            className={signUpPageStyle.input}
                             placeholder='Password'
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             style={{ maxWidth: 400 }} />
@@ -111,6 +114,7 @@ class SignUpPage extends Component {
                         hasFeedback
                     >
                         <Input.Password
+                            className={signUpPageStyle.input}
                             placeholder='Confirm Password'
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             style={{ maxWidth: 400 }} />
@@ -118,6 +122,7 @@ class SignUpPage extends Component {
 
                     <Form.Item name="role" rules={[{ required: true }]}>
                         <Select
+                            className={signUpPageStyle.input}
                             placeholder="Choose your role"
                             style={{ maxWidth: 400 }}
                             allowClear>
@@ -127,15 +132,15 @@ class SignUpPage extends Component {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button id="signUpButton" type="primary" htmlType="submit" style={{}}>
+                        <button className={generalStyles.blackButton} id={signUpPageStyle.signUpButton} htmlType="submit">
                             Sign Up
-                        </Button>
+                        </button>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button id="cancelButton" onClick={() => { this.props.navigate(-1) }} style={{}} >
+                        <button className={generalStyles.blackButton} id={signUpPageStyle.cancelButton} onClick={() => { this.props.navigate(-1) }} >
                             Cancel
-                        </Button>
+                        </button>
                     </Form.Item>
                 </Form>
 

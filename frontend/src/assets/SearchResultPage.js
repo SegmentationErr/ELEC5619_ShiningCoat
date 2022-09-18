@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import { Menu, Row, Col, Button, Space, Input, Slider } from 'antd';
+import { Menu, Row, Col, Input } from 'antd';
 import cookie from 'react-cookies';
-import axios from 'axios'
-import { UserOutlined } from '@ant-design/icons';
-import { Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import showAlert from './Alert';
+import axios from 'axios';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
-import '../css/searchResultPage.css'
+import searchResultPageStyle from '../css/searchResultPage.module.css';
 
 
 
@@ -100,8 +96,8 @@ class SearchResultPage extends Component {
     render() {
 
         return (
-            <div id="searchResultMainDiv">
-                <Row id="searchResultMainRow">
+            <div id={searchResultPageStyle.searchResultMainDiv}>
+                <Row id={searchResultPageStyle.searchResultMainRow}>
                     {this.state.searchResults.map((service, key) => {
                         return (
                             <Col span={6}>

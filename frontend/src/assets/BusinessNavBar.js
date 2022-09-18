@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { Outlet } from 'react-router-dom';
-import '../css/businessNavBar.css'
+import styles from '../css/businessNavBar.module.css'
 import { withRouter } from './withRouter';
 
 class BusinessNavBar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         currSelected: 'profile'
     }
@@ -22,12 +18,12 @@ class BusinessNavBar extends Component {
     render() {
         return (
             <div>
-                <div id={this.state.currSelected === 'profile' ? 'menuItemSelected' : 'menuItem'}
+                <div id={this.state.currSelected === 'profile' ? styles['menuItemSelected'] : styles['menuItem']}
                     onClick={() => this.changeSelection('profile')}
                 >
                     <p>Manage Profile</p>
                 </div>
-                <div id={this.state.currSelected === 'shops' ? 'menuItemSelected' : 'menuItem'}
+                <div id={this.state.currSelected === 'shops' ? styles['menuItemSelected'] : styles['menuItem']}
                     onClick={() => this.changeSelection('shops')}
                 >
                     <p>Manage Shops</p>
