@@ -90,12 +90,8 @@ class ManageShopsPage extends Component {
                                 Edit shop
                             </button>
                         </Col>
-                        <Col span={16}>
-                            <button id={styles["AddServices"]} className="yellowButton" type="submit">
-                                + Add Services
-                            </button>
-                            {this.renderServices()}
-                            
+                        <Col span={16}>                    
+                            {this.renderServices()}                      
                         </Col>
                     </Row>
                 </div>    

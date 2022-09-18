@@ -4,6 +4,7 @@ import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
 import styles from '../css/shopDetailPage.module.css'
+import cookie from 'react-cookies';
 
 class ShopDetailPage extends Component {
 
@@ -77,7 +78,8 @@ class ShopDetailPage extends Component {
         return (
             <Services
                 // props contains two things
-                services = {this.state.data.services}        
+                services = {this.state.data.services}    
+                usertype =  {cookie.load('role')}    
             />
         );
     }
@@ -142,6 +144,9 @@ class Services extends Component {
             <div>              
                 <div class={styles.title}>
                     {"Available Services"}
+                    {this.props.userType === "customer" ? null : <button id={styles["AddServices"]} className="yellowButton" type="submit">
+                                + Add Services
+                            </button>}
                 </div>
                 <div>
                     <Row>
