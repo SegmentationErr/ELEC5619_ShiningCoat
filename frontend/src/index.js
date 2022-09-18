@@ -15,6 +15,7 @@ import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
 import ManageShopsPage from './assets/ManageShopsPage';
+import GoogleSignIn from './assets/GoogleSignIn';
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={<NavBar />} /> */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/test" element={<GoogleSignIn />} />
         <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
           <Route path="shops" element={<ManageShopsPage />} />

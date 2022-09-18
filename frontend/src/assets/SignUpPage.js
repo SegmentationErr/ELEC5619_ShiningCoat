@@ -2,18 +2,40 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { withRouter } from './withRouter';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import cookie from 'react-cookies'
 import signUpPageStyle from '../css/signUpPage.module.css';
 import generalStyles from '../css/generalComponents.module.css';
 
 import {
     Form,
     Input,
-    Select
+    Select,
+    message
 } from 'antd';
 
 const { Option } = Select;
 
 class SignUpPage extends Component {
+    handleSignUp = data => {
+        axios.post(`http://localhost:8080/users/add`, data)
+        .then(res => {
+            if (res.status === 200) {
+                message.success('Successfully Create User!')
+                // console.log(res.data)
+                cookie.save("id", res.data.id)
+                cookie.save("role", res.data.role)
+                if (res.data.role === "customer") {
+                    this.props.navigate('/')
+                } else {
+                    this.props.navigate('/business/profile')
+                }
+            } else {
+                message.error('Username or Email Already Exists.\nCreation Failed.')
+            }
+        }).catch((error) => {
+            message.error('Username or Email Already Exists.\nCreation Failed.')
+        })
+    }
 
     render() {
         return (
@@ -21,6 +43,7 @@ class SignUpPage extends Component {
                 <Form id={signUpPageStyle.signUpForm}
                     name="register"
                     scrollToFirstError
+                    onFinish={this.handleSignUp}
                 >
                     <Form.Item
                         name="username"
@@ -103,8 +126,8 @@ class SignUpPage extends Component {
                             placeholder="Choose your role"
                             style={{ maxWidth: 400 }}
                             allowClear>
-                            <Option value="0">Customer</Option>
-                            <Option value="1">Business</Option>
+                            <Option value="customer">Customer</Option>
+                            <Option value="business">Business</Option>
                         </Select>
                     </Form.Item>
 

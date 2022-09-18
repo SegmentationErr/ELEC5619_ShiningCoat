@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import cookie from 'react-cookies';
 import { withRouter } from './withRouter';
+import GoogleSignIn from './GoogleSignIn';
 import signInPageStyle from '../css/signInPage.module.css';
 import generalStyles from '../css/generalComponents.module.css';
 
 
-
 class SignInPage extends Component {
+    handleSignIn = data => {
+        axios.post(`http://localhost:8080/users/checkSignIn`, data)
+        .then(res => {
+            if (res.status === 200) {
+                message.success('Successfully Sign In!')
+                // console.log(res.data)
+                cookie.save("id", res.data.id)
+                cookie.save("role", res.data.role)
+                if (res.data.role === "customer") {
+                    this.props.navigate('/')
+                } else {
+                    this.props.navigate('/business/profile')
+                }
+            } else {
+                message.error('Incorrect Email or Password.\nSign In Failed.')
+            }
+        }).catch((error) => {
+            message.error('Incorrect Email or Password.\nSign In Failed.')
+        })
+    }
 
     render() {
         return (
@@ -19,6 +39,7 @@ class SignInPage extends Component {
                     className="login-form"
                     initialValues={{
                     }}
+                    onFinish={this.handleSignIn}
                 >
                     <Form.Item
                         name="email"
@@ -54,11 +75,11 @@ class SignInPage extends Component {
                             Forget password?
                             <a href="/forgetPassword"> Reset your password</a>
                         </div> */}
-                        <div style={{ marginTop: 24 }}>
-                            New to PetDaily?
-                            <a href="/signUp"> Register now!</a>
-                        </div>
                     </Form.Item>
+                    <div style={{ marginTop: 24 }}>
+                        New to PetDaily?
+                        <a href="/signUp"> Register now!</a>
+                    </div>
                     <Form.Item>
                         <button
                             className={generalStyles.blackButton}
@@ -67,6 +88,7 @@ class SignInPage extends Component {
                         </button>
                     </Form.Item>
                 </Form>
+                <GoogleSignIn/>
                 <button
                     className={generalStyles.blackButton}
                     id={signInPageStyle.backButton} onClick={() => this.props.navigate(-1)}>
