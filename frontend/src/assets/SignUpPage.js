@@ -16,13 +16,27 @@ import {
 const { Option } = Select;
 
 class SignUpPage extends Component {
-
+    handleSignUp = data => {
+        axios.post(`http://localhost:8080/users/add`, data)
+        .then(res => {
+            if (res.status === 200) {
+                message.success('Successfully Create User!')
+                // this.formRef.resetFields()
+                // this.fetchUserProfile()
+            } else {
+                message.error('Username or Email Already Exists.\nCreation Failed.')
+            }
+        }).catch((error) => {
+            message.error('Username or Email Already Exists.\nCreation Failed.')
+        })
+    }
     render() {
         return (
             <div id="mainContentDiv">
                 <Form id="signUpForm"
                     name="register"
                     scrollToFirstError
+                    onFinish={this.handleSignUp}
                 >
                     <Form.Item
                         name="username"

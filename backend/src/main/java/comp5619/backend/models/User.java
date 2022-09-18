@@ -3,10 +3,10 @@ package comp5619.backend.models;
 import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table (name = "users")
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String email;

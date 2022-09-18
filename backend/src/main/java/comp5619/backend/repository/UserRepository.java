@@ -15,17 +15,24 @@ import org.springframework.transaction.annotation.Transactional;
 // CRUD refers Create, Read, Update, Delete
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    @Query(value="SELECT username, email, role FROM users WHERE id=:id", nativeQuery=true)
-    Map<String, Object> getUserProfileById(@Param("id")String id);
+    @Query(value = "SELECT username, email, role FROM users WHERE id=:id", nativeQuery = true)
+    Map<String, Object> getUserProfileById(@Param("id") String id);
 
-    @Query(value="SELECT * FROM users WHERE id=:id and password=:password", nativeQuery=true)
-    Map<String, Object> checkUserPasswordById(@Param("id")String id, @Param("password")String password);
+    @Query(value = "SELECT * FROM users WHERE id=:id and password=:password", nativeQuery = true)
+    Map<String, Object> checkUserPasswordById(@Param("id") String id, @Param("password") String password);
 
     @Transactional
     @Modifying
-    @Query(value="UPDATE users SET username=:username, email=:email, password=:password WHERE id=:id", nativeQuery=true)
-    void updateUserProfileById(@Param("id")String id,
-                               @Param("username")String username,
-                               @Param("email")String email,
-                               @Param("password")String password);
+    @Query(value = "UPDATE users SET username=:username, email=:email, password=:password WHERE id=:id", nativeQuery = true)
+    void updateUserProfileById(@Param("id") String id,
+            @Param("username") String username,
+            @Param("email") String email,
+            @Param("password") String password);
+
+    @Query(value = "SELECT * FROM users WHERE username=:username or email=:email", nativeQuery = true)
+    List<Map<String, Object>> getUserByNameOrEmail(@Param("username") String username, @Param("email") String email);
+
+    // @Transactional
+    // @Modifying
+    // @Query
 }
