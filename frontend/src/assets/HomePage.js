@@ -5,7 +5,7 @@ import showAlert from './Alert';
 import ResultCard from './ResultCard';
 
 
-import '../css/homePage.css'
+import homePageStyle from '../css/homePage.module.css';
 import { withRouter } from './withRouter';
 
 
@@ -91,8 +91,8 @@ class HomePage extends Component {
 
     render() {
         return (
-            <div id="homePageMainDiv">
-                <Row id="homePageMainRow">
+            <div className={homePageStyle.homePageMainDiv}>
+                <Row className={homePageStyle.homePageMainRow}>
                     {this.state.data.map((service, key) => {
                         return (
                             <Col span={6}>

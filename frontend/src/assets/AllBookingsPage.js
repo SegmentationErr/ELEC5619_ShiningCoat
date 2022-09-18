@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Input, Rate, Form } from 'antd';
+import { Row, Col, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
-import '../css/allBookingsPage.css';
 import showAlert from './Alert';
+
+
+import allBookingPageStyle from '../css/allBookingsPage.module.css';
+import generalStyles from '../css/generalComponents.module.css';
+
 
 const { TextArea } = Input;
 
@@ -70,29 +74,26 @@ class AllBookingsPage extends Component {
 
     cancelBookingConfirmationCard() {
         return (
-            <div class='cover'>
-                <div class='validationCardcCancelBooking'>
+            <div className={allBookingPageStyle.cover}>
+                <div className={allBookingPageStyle.validationCardcCancelBooking}>
                     <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
-                    <Row id="cancelBookingConfirmRow">
+                    <Row id={allBookingPageStyle.cancelBookingConfirmRow}>
                         <Col span={12}>
-                            <Button
-                                id="confirmDelete"
-                                shape="round"
-                                type="danger"
+                            <button className={generalStyles.redButton}
+                                id={allBookingPageStyle.confirmDelete}
                                 onClick={(e) => this.confirmDeleteBooking()}
                             >
                                 Confirm Delete
-                            </Button>
+                            </button>
                         </Col>
                         <Col span={12}>
-                            <Button
-                                id="cancel"
-                                shape="round"
-                                type="primary"
+                            <button
+                                className={generalStyles.yellowButton}
+                                id={allBookingPageStyle.cancel}
                                 onClick={(e) => this.doNotCancel()}
                             >
                                 Cancel
-                            </Button>
+                            </button>
                         </Col>
                     </Row>
                 </div>
@@ -102,58 +103,56 @@ class AllBookingsPage extends Component {
 
     leaveCommentCard() {
         return (
-            <div class='cover'>
-                <div class='validationCardComment'>
+            <div className={allBookingPageStyle.cover}>
+                <div className={allBookingPageStyle.validationCardComment}>
                     <p>Leave your comments and rating for {this.state.pendingCommentService.name}</p>
 
                     <Form onFinish={this.confirmLeaveComment.bind(this)}>
                         <Row >
-                            <Row id="commentRatingRow">
+                            <Row id={allBookingPageStyle.commentRatingRow}>
                                 <Col span={24}><p>Please select your rating for this service</p></Col>
                                 <Col span={24}>
-                                    <div id="rating">
+                                    <div id={allBookingPageStyle.rating}>
                                         <Form.Item
                                             name="rating"
                                             rules={[{ required: true, message: 'Please select a rating!' }]}>
-                                            <Rate id="serviceRating" defaultValue={0} name="rating" />
+                                            <Rate id={allBookingPageStyle.serviceRating} defaultValue={0} name="rating" />
                                         </Form.Item>
                                     </div>
                                 </Col>
                             </Row>
 
-                            <Col span={24} class="commentCardCol">
+                            <Col span={24} className={allBookingPageStyle.commentCardCol}>
                                 <p>Please leave your comment: </p>
                                 <Form.Item
                                     name="comment"
                                     rules={[{ required: true, message: 'Please input your comment!' }]}
                                 >
-                                    <TextArea rows={4} id="commentInputTextArea" name="comment" />
+                                    <TextArea rows={4} id={allBookingPageStyle.commentInputTextArea} name="comment" />
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Row id="leaveCommentConfirmRow">
+                        <Row id={allBookingPageStyle.leaveCommentConfirmRow}>
                             <Col span={12}>
                                 <Form.Item>
-                                    <Button
-                                        id="confirCommentSubmit"
-                                        shape="round"
-                                        type="primary"
+                                    <button
+                                        className={generalStyles.yellowButton}
+                                        id={allBookingPageStyle.confirCommentSubmit}
                                         htmlType="submit"
                                     // onClick={(e) => this.confirmLeaveComment()}
                                     >
                                         Submit Comment
-                                    </Button>
+                                    </button>
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Button
-                                    id="cancelComment"
-                                    shape="round"
-                                    type="danger"
+                                <button
+                                    className={generalStyles.redButton}
+                                    id={allBookingPageStyle.cancelComment}
                                     onClick={(e) => this.doNotLeaveComment()}
                                 >
                                     Cancel
-                                </Button>
+                                </button>
                             </Col>
                         </Row>
                     </Form>
@@ -238,26 +237,26 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                <Row id="mainContentRow">
-                    <Col id="incomingBookingsCol" span={12}>
-                        <p class="title" >Incoming Bookings</p>
+                <Row id={allBookingPageStyle.mainContentRow}>
+                    <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
+                        <p className={allBookingPageStyle.title} >Incoming Bookings</p>
                         {this.state.incomingBookings.map((service, key) => {
                             return (
-                                <div class="serviceCard">
+                                <div className={allBookingPageStyle.serviceCard} key={key}>
                                     <Row >
-                                        <Col span={8} className="nameCol">
+                                        <Col span={7} className={allBookingPageStyle.nameCol}>
                                             <p>{service.name}</p>
                                             <p>Price: {service.price}</p>
                                         </Col>
 
                                         {service.isPickUp ?
-                                            <Col span={8} className="timeCol">
+                                            <Col span={7} className={allBookingPageStyle.timeCol}>
                                                 <p>
                                                     Pick Up Service
                                                 </p>
                                             </Col>
                                             :
-                                            <Col span={8} className="timeCol">
+                                            <Col span={7} className={allBookingPageStyle.timeCol}>
                                                 <p>Time: </p>
                                                 <p>
                                                     {service.time}
@@ -265,15 +264,13 @@ class AllBookingsPage extends Component {
                                             </Col>
                                         }
 
-                                        <Col span={8} className="buttonCol">
-                                            <Button
-                                                type="danger"
-                                                shape="round"
-                                                className="cancelBookingButton"
+                                        <Col span={10} className={allBookingPageStyle.buttonCol}>
+                                            <button
+                                                className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
                                                 onClick={(e) => this.showCancelConfirm(service)}
                                             >
                                                 Cancel Booking
-                                            </Button>
+                                            </button>
                                         </Col>
                                     </Row>
 
@@ -281,26 +278,24 @@ class AllBookingsPage extends Component {
                             )
                         })}
                     </Col>
-                    <Col id="pastBookingsCol" span={12}>
-                        <p class="title">Past Bookings</p>
+                    <Col id={allBookingPageStyle.pastBookingsCol} span={10}>
+                        <p className={allBookingPageStyle.title}>Past Bookings</p>
                         {this.state.pastBookings.map((service, key) => {
                             return (
-                                <div class="serviceCard">
+                                <div className={allBookingPageStyle.serviceCard} key={key}>
                                     <Row >
-                                        <Col span={12} className="pastBookingNameCol">
+                                        <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
                                             <p>{service.name}</p>
                                             <p>Price: {service.price}</p>
                                         </Col>
 
-                                        <Col span={12} className="buttonColPast">
-                                            <Button
-                                                type="primary"
-                                                shape="round"
-                                                className="leaveCommentButton"
+                                        <Col span={14} className={allBookingPageStyle.buttonColPast}>
+                                            <button
+                                                className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
                                                 onClick={(e) => this.showCommentCard(service)}
                                             >
                                                 Leave a Comment
-                                            </Button>
+                                            </button>
                                         </Col>
                                     </Row>
 
