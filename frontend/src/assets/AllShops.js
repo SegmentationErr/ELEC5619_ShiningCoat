@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Input, message } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Row, Col, message } from 'antd';
 import axios from 'axios';
-import PasswordValidation from './PasswordValidation';
-import styles from '../css/generalComponents.module.css';
+import generalStyle from '../css/generalComponents.module.css';
+import allShopStyle from '../css/allShops.module.css';
+import AddEditShopForm from './AddEditShopForm';
+
 import cookie from 'react-cookies';
 
 
@@ -15,6 +16,7 @@ class ManageShopsPage extends Component {
 
     state = {
         id: cookie.load('id'),
+        showForm: false,
         data: []
         // profile: {
         //     'username': 'Fetching Data...',
@@ -40,14 +42,32 @@ class ManageShopsPage extends Component {
             })
     }
 
+    openAddShopForm = (e) => {
+        this.setState({ showForm: true });
+    }
+
+    handleCancel = () => {
+        this.setState({ showForm: false });
+    }
+
+    handleConfirm = () => {
+
+    }
+
 
     render() {
         return (
-            <div style={{ textAlign: "center", marginTop: "10%" }}>
-                {this.state.data.length === 0 ?
-                    <div>No Shops Yet</div>
-                    : <div>show some shops</div>
-                }
+            <div>
+                {this.state.showForm ? <AddEditShopForm handleConfirm={this.handleConfirm} handleCancel={this.handleCancel} /> : null}
+                <Col id={allShopStyle.addShopButtonCol}>
+                    <button className={generalStyle.yellowButton} onClick={this.openAddShopForm.bind(this)}>+ Add Shop</button>
+                </Col>
+                <Col id={allShopStyle.mainContentsCol}>
+                    {this.state.data.length === 0 ?
+                        <div>No Shops Yet</div>
+                        : <div>show some shops</div>
+                    }
+                </Col>
             </div>
         );
     }
