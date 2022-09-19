@@ -90,7 +90,7 @@ class NavBar extends Component {
                                 </Select>
                             } onChange={this.setKeyword.bind(this)} />
                     </Menu.Item>
-                    {cookie.load('userId') === undefined
+                    {cookie.load('id') === undefined
                         ?
                         <Menu.Item id={navBarStyle.login} key="login" onClick={this.handleLogin.bind(this)}>
                             Login/SignUp
