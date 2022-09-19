@@ -14,7 +14,6 @@ class AddEditShopForm extends Component {
         return (
             <div className={addEditForm.cover}>
                 <div className={addEditForm.validationCard}>
-                    <p>For updating the information<br />please enter your password:</p>
                     <Form
                         name="normal_login"
                         className="login-form"
@@ -22,7 +21,59 @@ class AddEditShopForm extends Component {
                         }}
                         onFinish={this.props.handleConfirm}
                     >
+                        <Form.Item
+                            name="shopName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your shop name!',
+                                },
+                            ]}
+                        >
+                            <Input
+                                style={{ width: "50%" }}
+                                placeholder="Shop Name"
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="shopAddress"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your shop address!',
+                                },
+                            ]}
+                        >
+                            <Input
+                                style={{ width: "50%" }}
+                                placeholder="Shop Address"
+                            />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="contactNumber"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your shop contact number!',
+                                },
+                            ]}
+                        >
+                            <Input
+                                style={{ width: "50%" }}
+                                placeholder="Contact Number"
+                            />
+                        </Form.Item>
+
+
                         <Form.Item>
+                            <button
+                                className={generalStyles.yellowButton}
+                                type="submit">
+                                Confirm
+                            </button>
                             <button
                                 className={generalStyles.redButton}
                                 onClick={this.props.handleCancel}>
