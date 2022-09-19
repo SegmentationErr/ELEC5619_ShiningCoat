@@ -1,5 +1,6 @@
 package comp5619.backend.models;
 import javax.persistence.*;
+import java.sql.Blob;
 import java.sql.Time;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -24,8 +25,8 @@ public class Shop {
     private Time start_time;
 
     private Time end_time;
-
-    private String image;
+    @Lob
+    private Blob image;
 
     public Integer getId() {
         return id;
@@ -99,11 +100,11 @@ public class Shop {
         this.end_time=endTime;
     }
 
-    public String getImage(){
+    public Blob getImage(){
         return image;
     }
 
-    public void setImage(String image){
+    public void setImage(Blob image){
         this.image = image;
     }
 }

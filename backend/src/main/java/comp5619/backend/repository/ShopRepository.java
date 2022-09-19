@@ -16,9 +16,24 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
 
 //    @Transactional
 //    @Modifying
-//    @Query(value = "UPDATE users SET username=:username, email=:email, password=:password WHERE id=:id", nativeQuery = true)
-//    void updateUserProfileById(@Param("id") String id,
-//                               @Param("username") String username,
-//                               @Param("email") String email,
-//                               @Param("password") String password);
+//    @Query(value = "UPDATE shops" +
+//            "SET user_id=:user_id," +
+//            "shop_name=:shop_name," +
+//            "address=:address," +
+//            "description=:description," +
+//            "phone=:phone," +
+//            "rating=:rating," +
+//            "start_time=:start_time," +
+//            "end_time:end_time," +
+//            "image=:image" +
+//            "WHERE id=:id", nativeQuery = true)
+//    void updateUserProfileById(@Param("user_id") String user_id,
+//                               @Param("shop_name") String shop_name,
+//                               @Param("address") String address,
+//                               @Param("description") String description,
+//                               @Param("phone") String phone,
+//                               @Param("start_time") String start_time,
+//                               @Param("end_time") String end_time,
+//                               @Param("image") String image
+//                               );
 }

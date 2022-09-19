@@ -33,9 +33,9 @@ class ManageShopsPage extends Component {
                 // console.log(res.data)
                 if (res.status === 200) {
                     console.log(res);
-                    // this.setState({
-                    //     profile: res.data
-                    // })
+                    this.setState({
+                        data: res.data
+                    })
                 }
             }).catch((error) => {
                 console.log(error)

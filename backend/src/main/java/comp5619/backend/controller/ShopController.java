@@ -1,11 +1,17 @@
 package comp5619.backend.controller;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import comp5619.backend.models.Shop;
 import comp5619.backend.repository.ShopRepository;
 
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
@@ -19,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.sql.rowset.serial.SerialBlob;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/shops")
@@ -34,6 +42,59 @@ public class ShopController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @PostMapping(path = "/addShop")
+    public @ResponseBody ResponseEntity<Map<String, Object>> addShop(@RequestBody Map<String, String> params) {
+        String shopName = params.get("shopName");
+        String contactNumber = params.get("contactNumber");
+        String startTime = params.get("startTime");
+        String endTime = params.get("endTime");
+
+        String image = params.get("image");
+
+        String shopAddress = params.get("shopAddress");
+        String shopDescription = params.get("shopDescription");
+        String userId = params.get("userId");
+
+        Map<String, Object> response = new HashMap<>();
+
+        SimpleDateFormat source = new SimpleDateFormat("HH:mm");
+
+        Shop newShop = new Shop();
+        newShop.setShopName(shopName);
+        newShop.setPhone(contactNumber);
+        try {
+
+            newShop.setStartTime(new Time(source.parse(startTime).getTime()));
+            newShop.setEndTime(new Time(source.parse(endTime).getTime()));
+
+        } catch (ParseException e) {
+            response.put("Message", "Invalid Time");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+//        byte[] decodedByte = Base64.decode(image);
+//
+//        Blob b = null;
+//        try {
+//            b = new SerialBlob(decodedByte);
+//        } catch (SQLException e) {
+//            response.put("Message", "Invalid Image");
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        }
+
+        newShop.setImage(null);
+        newShop.setRating(5);
+        newShop.setAddress(shopAddress);
+        newShop.setDescription(shopDescription);
+        newShop.setUserId(Integer.parseInt(userId));
+
+        shopRepository.save(newShop);
+        response.put("Message", "Create Shop Success");
+//        response.put("id", String.valueOf(newUser.getId()));
+//        response.put("role", String.valueOf(newUser.getRole()));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }
