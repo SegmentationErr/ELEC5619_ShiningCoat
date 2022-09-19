@@ -11,7 +11,16 @@ import cookie from 'react-cookies';
 class ManageShopsPage extends Component {
     constructor(props) {
         super(props);
-        this.fetchAllShops();
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.fetchAllShops();
+            }
+            else {
+                this.props.navigate('/');
+            }
+        } else {
+            this.props.navigate('/');
+        }
     }
 
     state = {
@@ -27,7 +36,6 @@ class ManageShopsPage extends Component {
     }
 
     fetchAllShops = () => {
-        console.log("fetch all shops")
         axios.get('http://localhost:8080/shops/getAllShopsById/' + this.state.id)
             .then((res) => {
                 // console.log(res.data)

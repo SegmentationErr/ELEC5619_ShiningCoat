@@ -10,6 +10,19 @@ import generalStyles from '../css/generalComponents.module.css';
 
 
 class SignInPage extends Component {
+
+    constructor(props) {
+        super(props);
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+            else {
+                this.props.navigate('/')
+            }
+        }
+    }
+
     handleSignIn = data => {
         axios.post(`http://localhost:8080/users/checkSignIn`, data)
             .then(res => {

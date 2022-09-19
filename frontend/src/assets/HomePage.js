@@ -3,6 +3,7 @@ import { Row, Col, Image } from 'antd';
 import axios from 'axios';
 import showAlert from './Alert';
 import ResultCard from './ResultCard';
+import cookie from 'react-cookies';
 
 
 import homePageStyle from '../css/homePage.module.css';
@@ -12,6 +13,11 @@ import { withRouter } from './withRouter';
 class HomePage extends Component {
     constructor(props) {
         super(props);
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+        }
     }
 
     state = {

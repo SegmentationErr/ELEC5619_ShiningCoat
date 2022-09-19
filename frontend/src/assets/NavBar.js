@@ -30,7 +30,12 @@ class NavBar extends Component {
     }
 
     handleBackToHomePage = (e) => {
-        this.props.navigate('/');
+        if (cookie.load('role') === "business") {
+            this.props.navigate('/business/profile')
+        }
+        else {
+            this.props.navigate('/');
+        }
     }
 
     handleSearch = (e) => {
@@ -51,8 +56,6 @@ class NavBar extends Component {
 
         this.props.navigate(route);
 
-        //reload the page after search in order to
-        //triger the reconstruct for search phone page
         window.location.reload(false);
 
     }

@@ -16,6 +16,19 @@ import {
 const { Option } = Select;
 
 class SignUpPage extends Component {
+
+    constructor(props) {
+        super(props);
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+            else {
+                this.props.navigate('/')
+            }
+        }
+    }
+
     handleSignUp = data => {
         axios.post(`http://localhost:8080/users/add`, data)
             .then(res => {
