@@ -51,8 +51,6 @@ class ManageShopsPage extends Component {
     }
 
     handleConfirm = () => {
-        let id = this.state.id;
-        console.log(id);
         this.setState({ showForm: false });
     }
 
