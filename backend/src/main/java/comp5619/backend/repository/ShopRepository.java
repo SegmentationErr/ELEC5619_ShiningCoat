@@ -10,9 +10,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface ShopRepository {
-    @Query(value = "SELECT * FROM shops WHERE user_id=:id", nativeQuery = true)
-    List<Map<String, Object>> getAllShopsByUserId(@Param("user_id") String id);
+public interface ShopRepository extends CrudRepository<Shop, Integer>{
+    @Query(value = "SELECT * FROM shops WHERE user_id=:user_id", nativeQuery = true)
+    List<Map<String, Object>> getAllShopsByUserId(@Param("user_id") String user_id);
 
 //    @Transactional
 //    @Modifying

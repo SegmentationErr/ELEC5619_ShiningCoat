@@ -15,6 +15,7 @@ class ManageShopsPage extends Component {
 
     state = {
         id: cookie.load('id'),
+        data: []
         // profile: {
         //     'username': 'Fetching Data...',
         //     'email': 'Fetching Data...',
@@ -24,14 +25,15 @@ class ManageShopsPage extends Component {
     }
 
     fetchAllShops = () => {
-        axios.get('http://localhost:8080/users/profile/' + this.state.id)
+        console.log("fetch all shops")
+        axios.get('http://localhost:8080/shops/getAllShopsById/' + this.state.id)
             .then((res) => {
                 // console.log(res.data)
                 if (res.status === 200) {
                     console.log(res);
-                    this.setState({
-                        profile: res.data
-                    })
+                    // this.setState({
+                    //     profile: res.data
+                    // })
                 }
             }).catch((error) => {
                 console.log(error)
@@ -42,7 +44,10 @@ class ManageShopsPage extends Component {
     render() {
         return (
             <div style={{ textAlign: "center", marginTop: "10%" }}>
-                all shops
+                {this.state.data.length === 0 ?
+                    <div>No Shops Yet</div>
+                    : <div>show some shops</div>
+                }
             </div>
         );
     }

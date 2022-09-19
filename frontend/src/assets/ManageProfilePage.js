@@ -28,7 +28,7 @@ class ManageProfilePage extends Component {
             .then((res) => {
                 // console.log(res.data)
                 if (res.status === 200) {
-                    console.log(res);
+                    // console.log(res);
                     this.setState({
                         profile: res.data
                     })
