@@ -1,0 +1,21 @@
+#service_details{
+    background-color: transparent;
+    box-shadow: none;
+    bordered: false;
+}
+#details_text{
+    padding: 100px 0;
+}
+#review_text{
+    padding: 10px 0;
+    padding-left: 180px;
+}
+#heart{
+    padding: 5px 0;
+    padding-left: 230px;
+    width: 30px;
+    block: false;
+}
+#map{
+    margin: 20px
+}

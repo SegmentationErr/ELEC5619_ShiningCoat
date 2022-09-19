@@ -35,7 +35,6 @@
 .timeCol {
     margin: auto;
     text-align: left;
-    padding-left: 20px;
     padding-top: 1%;
 }
 
@@ -45,16 +44,12 @@
 }
 
 .buttonCol {
-    padding-left: 10px;
     padding-top: 2%;
+    width: 100%;
 }
 
 .cancelBookingButton {
-    height: 50%;
     width: 80%;
-    color: black;
-    font-weight: bold;
-    font-size: 100%;
 }
 
 .pastBookingNameCol {
@@ -73,14 +68,7 @@
 
 
 .leaveCommentButton {
-    height: 60%;
-    width: 60%;
-    color: black;
-    background-color: orange;
-    float: right;
-    border: none;
-    font-weight: bold;
-    font-size: 100%;
+    width: 80%;
 }
 
 .cover {
@@ -95,7 +83,7 @@
 
 .validationCardcCancelBooking {
     /* position: absolute; */
-    width: 400px;
+    width: 30%;
     height: 20%;
     background: #FAEDDE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -121,18 +109,11 @@
 }
 
 #confirmDelete {
-    font-weight: bold;
-    font-size: 100%;
     width: 80%;
-    color: black;
 }
 
 #cancel {
-    background-color: #FFBB40;
-    border: none;
     width: 80%;
-    font-weight: bold;
-    color: black;
 }
 
 .validationCardComment {
@@ -163,18 +144,11 @@
 }
 
 #cancelComment {
-    font-weight: bold;
-    font-size: 100%;
     width: 80%;
-    color: black;
 }
 
 #confirCommentSubmit {
-    background-color: #FFBB40;
-    border: none;
     width: 80%;
-    font-weight: bold;
-    color: black;
 }
 
 #commentInputTextArea {

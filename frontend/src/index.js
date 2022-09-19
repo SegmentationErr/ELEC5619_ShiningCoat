@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './css/index.css';
-import './css/app.css'
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './assets/HomePage';
@@ -16,6 +15,8 @@ import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
 import ManageShopsPage from './assets/ManageShopsPage';
+import LocationMapPage from './assets/LocationMapPage';
+import GoogleSignIn from './assets/GoogleSignIn';
 
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
       <Routes>
         {/* <Route path="/" element={<NavBar />} /> */}
         <Route path="/" element={<HomePage />} />
+        <Route path="/test" element={<GoogleSignIn />} />
         <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
           <Route path="shops" element={<ManageShopsPage />} />
@@ -41,6 +43,9 @@ export default function App() {
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />
+        </Route>
+        <Route path="/LocationMapPage/" element={<LocationMapPage />}>
+          <Route path=":id" element={<LocationMapPage />} />
         </Route>
         <Route path="/shopDetailPage/" element={<ShopDetailPage />}>
           <Route path=":id" element={<ShopDetailPage />} />

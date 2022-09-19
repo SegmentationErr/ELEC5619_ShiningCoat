@@ -1,0 +1,20 @@
+/* #mainContentDiv {
+    text-align: center;
+} */
+
+#signUpForm {
+    text-align: center;
+    margin-top: 5%;
+}
+
+#signUpButton {
+    width: 10%;
+}
+
+#cancelButton {
+    width: 10%;
+}
+
+.input {
+    border-radius: 100px;
+}
