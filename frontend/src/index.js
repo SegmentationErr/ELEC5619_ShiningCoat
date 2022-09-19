@@ -14,7 +14,7 @@ import ShopDetailPage from './assets/ShopDetailPage';
 import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
-import ManageShopsPage from './assets/ManageShopsPage';
+import ManageShopsPage from './assets/ManageShopPage';
 import LocationMapPage from './assets/LocationMapPage';
 import GoogleSignIn from './assets/GoogleSignIn';
 
