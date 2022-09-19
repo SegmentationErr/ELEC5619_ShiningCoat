@@ -26,7 +26,7 @@ public class Shop {
 
     private Time end_time;
     @Lob
-    private Blob image;
+    private String image;
 
     public Integer getId() {
         return id;
@@ -100,11 +100,11 @@ public class Shop {
         this.end_time=endTime;
     }
 
-    public Blob getImage(){
+    public String getImage(){
         return image;
     }
 
-    public void setImage(Blob image){
+    public void setImage(String image){
         this.image = image;
     }
 }

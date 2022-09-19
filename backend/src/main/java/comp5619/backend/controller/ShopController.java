@@ -1,10 +1,8 @@
 package comp5619.backend.controller;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import comp5619.backend.models.Shop;
 import comp5619.backend.repository.ShopRepository;
 
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
@@ -25,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/shops")
@@ -74,26 +70,14 @@ public class ShopController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-//        byte[] decodedByte = Base64.decode(image);
-//
-//        Blob b = null;
-//        try {
-//            b = new SerialBlob(decodedByte);
-//        } catch (SQLException e) {
-//            response.put("Message", "Invalid Image");
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//        }
-
-        newShop.setImage(null);
-        newShop.setRating(5);
+        newShop.setImage(image);
+        newShop.setRating(0);
         newShop.setAddress(shopAddress);
         newShop.setDescription(shopDescription);
         newShop.setUserId(Integer.parseInt(userId));
 
         shopRepository.save(newShop);
         response.put("Message", "Create Shop Success");
-//        response.put("id", String.valueOf(newUser.getId()));
-//        response.put("role", String.valueOf(newUser.getRole()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
