@@ -21,7 +21,7 @@ class NavBar extends Component {
     }
 
     handleBackToHomePage = (e) => {
-        this.props.navigate('/')
+        this.props.navigate('/');
     }
 
     handleSearch = (e) => {
@@ -52,6 +52,13 @@ class NavBar extends Component {
         this.props.navigate('/signIn');
     }
 
+    handleLogOut = (e) => {
+        cookie.remove('id');
+        cookie.remove('role');
+        this.props.navigate('/');
+        window.location.reload(false);
+    }
+
     setKeyword = (e) => {
         this.setState({ searchInput: e.target.value });
     }
@@ -79,17 +86,18 @@ class NavBar extends Component {
         return (
             <div id={navBarStyle.navBarDiv} >
                 <Menu id={navBarStyle.navbar} key="navBar" mode="horizontal" className='navbar'>
-                    <Menu.Item id={navBarStyle.websiteName} key="websiteName" onClick={this.handleBackToHomePage.bind(this)} className='navbar-title'>PetDaily</Menu.Item>
-                    <Menu.Item id={navBarStyle.search} key="search">
-                        <Input id={navBarStyle.searchInput} size="large" placeholder="Search"
-                            addonAfter={
-                                <Select id={navBarStyle.searchSelect} defaultValue="" onSelect={this.handleSearch.bind(this)}>
-                                    <Option value="">Choose Search Method</Option>
-                                    <Option value="service">Search By Service Name</Option>
-                                    <Option value="shop">Service By Shop Name</Option>
-                                </Select>
-                            } onChange={this.setKeyword.bind(this)} />
-                    </Menu.Item>
+                    <Menu.Item id={navBarStyle.websiteName} key="websiteName" className='navbar-title' onClick={this.handleBackToHomePage.bind(this)}>PetDaily</Menu.Item>
+                    {cookie.load('role') === "customer" || cookie.load('id') === undefined ?
+                        <Menu.Item id={navBarStyle.search} key="search">
+                            <Input id={navBarStyle.searchInput} size="large" placeholder="Search"
+                                addonAfter={
+                                    <Select id={navBarStyle.searchSelect} defaultValue="" onSelect={this.handleSearch.bind(this)}>
+                                        <Option value="">Choose Search Method</Option>
+                                        <Option value="service">Search By Service Name</Option>
+                                        <Option value="shop">Service By Shop Name</Option>
+                                    </Select>
+                                } onChange={this.setKeyword.bind(this)} />
+                        </Menu.Item> : null}
                     {cookie.load('id') === undefined
                         ?
                         <Menu.Item id={navBarStyle.login} key="login" onClick={this.handleLogin.bind(this)}>
@@ -97,16 +105,31 @@ class NavBar extends Component {
                         </Menu.Item>
                         :
                         <Menu.Item id={navBarStyle.profile} key="profile">
-                            <Button id={navBarStyle.bookingButton}
-                                type="ghost"
-                                shape="circle"
-                                onClick={this.navToUserBookings.bind(this)}
-                                icon={<BookOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
-                            <Button id={navBarStyle.profileButton}
-                                type="ghost"
-                                shape="circle"
-                                onClick={this.navToUserProfile.bind(this)}
-                                icon={<UserOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
+                            {
+                                cookie.load('role') === "customer" ?
+                                    <div>
+                                        <Button id={navBarStyle.bookingButton}
+                                            type="ghost"
+                                            shape="circle"
+                                            onClick={this.navToUserBookings.bind(this)}
+                                            icon={<BookOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
+                                        <Button id={navBarStyle.profileButton}
+                                            type="ghost"
+                                            shape="circle"
+                                            onClick={this.navToUserProfile.bind(this)}
+                                            icon={<UserOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
+                                    </div>
+                                    : null
+                            }
+                        </Menu.Item>
+                    }
+
+                    {cookie.load('id') === undefined
+                        ?
+                        null
+                        :
+                        <Menu.Item key=" profile" id={navBarStyle.profile} onClick={this.handleLogOut.bind(this)}>
+                            Log Out
                         </Menu.Item>
                     }
 

@@ -12,23 +12,23 @@ import generalStyles from '../css/generalComponents.module.css';
 class SignInPage extends Component {
     handleSignIn = data => {
         axios.post(`http://localhost:8080/users/checkSignIn`, data)
-        .then(res => {
-            if (res.status === 200) {
-                message.success('Successfully Sign In!')
-                // console.log(res.data)
-                cookie.save("id", res.data.id)
-                cookie.save("role", res.data.role)
-                if (res.data.role === "customer") {
-                    this.props.navigate('/')
+            .then(res => {
+                if (res.status === 200) {
+                    message.success('Successfully Sign In!')
+                    // console.log(res.data)
+                    cookie.save("id", res.data.id)
+                    cookie.save("role", res.data.role)
+                    if (res.data.role === "customer") {
+                        this.props.navigate('/')
+                    } else {
+                        this.props.navigate('/business/profile')
+                    }
                 } else {
-                    this.props.navigate('/business/profile')
+                    message.error('Incorrect Email or Password.\nSign In Failed.')
                 }
-            } else {
+            }).catch((error) => {
                 message.error('Incorrect Email or Password.\nSign In Failed.')
-            }
-        }).catch((error) => {
-            message.error('Incorrect Email or Password.\nSign In Failed.')
-        })
+            })
     }
 
     render() {
@@ -88,7 +88,7 @@ class SignInPage extends Component {
                         </button>
                     </Form.Item>
                 </Form>
-                <GoogleSignIn/>
+                <GoogleSignIn />
                 <button
                     className={generalStyles.blackButton}
                     id={signInPageStyle.backButton} onClick={() => this.props.navigate(-1)}>

@@ -95,7 +95,7 @@ class HomePage extends Component {
                 <Row className={homePageStyle.homePageMainRow}>
                     {this.state.data.map((service, key) => {
                         return (
-                            <Col span={6}>
+                            <Col span={6} key={key}>
                                 <ResultCard
                                     key={key}
                                     name={service.name}
