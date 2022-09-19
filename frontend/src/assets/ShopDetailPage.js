@@ -108,7 +108,7 @@ class Profile extends Component {
         return (
             <div >
 
-                <div class="title">
+                <div className={styles.title}>
                     {"Shop Profile"}
                 </div>
                 <Image
@@ -117,7 +117,7 @@ class Profile extends Component {
                     src={this.props.imgSrc}
 
                 />
-                <span id="profileTextlines">
+                <span id={styles['profileTextlines']}>
                     <div>
                         {this.props.shopName}
                     </div>
@@ -142,7 +142,7 @@ class Services extends Component {
         return (
 
             <div>
-                <div class="title">
+                <div className={styles.title}>
                     {"Available Services"}
                     {this.props.userType === "customer" ? null : <button id={styles["AddServices"]} className="yellowButton" type="submit">
                                 + Add Services
