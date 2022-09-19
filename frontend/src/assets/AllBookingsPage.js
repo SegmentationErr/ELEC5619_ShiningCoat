@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
 import showAlert from './Alert';
+import cookie from 'react-cookies';
 
 
 import allBookingPageStyle from '../css/allBookingsPage.module.css';
@@ -15,6 +16,11 @@ class AllBookingsPage extends Component {
 
     constructor(props) {
         super(props);
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+        }
     }
 
 

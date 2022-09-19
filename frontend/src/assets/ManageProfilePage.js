@@ -4,14 +4,17 @@ import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import PasswordValidation from './PasswordValidation';
 import styles from '../css/generalComponents.module.css';
+import cookie from 'react-cookies';
+
 
 class ManageProfilePage extends Component {
     constructor(props) {
         super(props);
         this.fetchUserProfile()
     }
-    
+
     state = {
+        id: cookie.load('id'),
         profile: {
             'username': 'Fetching Data...',
             'email': 'Fetching Data...',
@@ -19,19 +22,20 @@ class ManageProfilePage extends Component {
         newProfile: {},
         validation: false
     }
-    
+
     fetchUserProfile = () => {
-        axios.get('http://localhost:8080/users/profile/' + "1")
-        .then((res) => {
-            // console.log(res.data)
-            if (res.status === 200) {
-                this.setState({
-                    profile: res.data
-                })
-            }
-        }).catch((error) => {
-            console.log(error)
-        })
+        axios.get('http://localhost:8080/users/profile/' + this.state.id)
+            .then((res) => {
+                // console.log(res.data)
+                if (res.status === 200) {
+                    // console.log(res);
+                    this.setState({
+                        profile: res.data
+                    })
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
     }
 
     changeDisplayValidation = () => {
@@ -39,7 +43,7 @@ class ManageProfilePage extends Component {
             validation: !this.state.validation
         })
     }
-    
+
     handleUpdateButton = (input) => {
         this.changeDisplayValidation()
 
@@ -61,31 +65,31 @@ class ManageProfilePage extends Component {
         if (!data.newPassword) {
             data.newPassword = input.currPassword
         }
-        
+
         data.id = "1"
 
         this.setState({
             validation: false
         })
         axios.post(`http://localhost:8080/users/update`, data)
-        .then(res => {
-            if (res.status === 200) {
-                message.success('Successfully Update User Profile!')
-                this.formRef.resetFields()
-                this.fetchUserProfile()
-            } else {
+            .then(res => {
+                if (res.status === 200) {
+                    message.success('Successfully Update User Profile!')
+                    this.formRef.resetFields()
+                    this.fetchUserProfile()
+                } else {
+                    message.error('Incorrect Password\nFailed to Update User Profile!')
+                }
+            }).catch((error) => {
                 message.error('Incorrect Password\nFailed to Update User Profile!')
-            }
-        }).catch((error) => {
-            message.error('Incorrect Password\nFailed to Update User Profile!')
-        })
+            })
     }
 
-    render() { 
+    render() {
         return (
             <div style={{ textAlign: "center", marginTop: "10%" }}>
                 {this.state.validation ?
-                    <PasswordValidation changeDisplayValidation={this.changeDisplayValidation} updateProfile={this.updateProfile}/> :
+                    <PasswordValidation changeDisplayValidation={this.changeDisplayValidation} updateProfile={this.updateProfile} /> :
                     null}
                 <Form
                     name="normal_login"
@@ -119,7 +123,7 @@ class ManageProfilePage extends Component {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <button className={styles.blackButton} type="submit" style={{marginTop: 100}}>
+                        <button className={styles.blackButton} type="submit" style={{ marginTop: 100 }}>
                             Update Profile
                         </button>
                     </Form.Item>
@@ -128,5 +132,5 @@ class ManageProfilePage extends Component {
         );
     }
 }
- 
+
 export default ManageProfilePage;

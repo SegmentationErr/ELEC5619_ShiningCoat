@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Form, Input, Row, Col } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
-import {Profile, Services} from './ShopDetailPage';
+import { Profile, Services } from './ShopDetailPage';
 
 
-import styles from '../css/shopDetailPage.module.css'
+import styles from '../css/ManageShopPage.module.css'
 
-class ManageShopsPage extends Component {
+class Shop extends Component {
     constructor(props) {
         super(props);
     }
@@ -56,47 +56,47 @@ class ManageShopsPage extends Component {
         },
     }
 
-    renderProfile(){
+    renderProfile() {
         return (
-            <Profile 
+            <Profile
                 // props contains two things
-                id = {this.state.data._id}
-                shopName = {this.state.data.shopName}
-                location = {this.state.data.location}
-                contactNumber = {this.state.data.contactNumber}
-                imgSrc = {this.state.data.imgSrc}
-                availableTime = {this.state.data.availableTime}             
+                id={this.state.data._id}
+                shopName={this.state.data.shopName}
+                location={this.state.data.location}
+                contactNumber={this.state.data.contactNumber}
+                imgSrc={this.state.data.imgSrc}
+                availableTime={this.state.data.availableTime}
 
             />
         );
     }
 
-    renderServices(){
+    renderServices() {
         return (
             <Services
                 // props contains two things
-                services = {this.state.data.services}        
+                services={this.state.data.services}
             />
         );
     }
-    render() { 
+    render() {
         return (
-      
-                <div id={styles["ManageShopsProfilePage"]}>
-                    <Row id={styles["ManageShopsProfileRow"]}>
-                        <Col span={8}>
-                            {this.renderProfile()}
-                            <button className="yellowButton" type="submit">
-                                Edit shop
-                            </button>
-                        </Col>
-                        <Col span={16}>                    
-                            {this.renderServices()}                      
-                        </Col>
-                    </Row>
-                </div>    
+
+            <div id={styles["ManageShopsProfilePage"]}>
+                <Row id={styles["ManageShopsProfileRow"]}>
+                    <Col span={8}>
+                        {this.renderProfile()}
+                        <button className="yellowButton" type="submit">
+                            Edit shop
+                        </button>
+                    </Col>
+                    <Col span={16}>
+                        {this.renderServices()}
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }
 
-export default ManageShopsPage;
+export default Shop;

@@ -16,25 +16,41 @@ import {
 const { Option } = Select;
 
 class SignUpPage extends Component {
+
+    constructor(props) {
+        super(props);
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+            else {
+                this.props.navigate('/')
+            }
+        }
+    }
+
     handleSignUp = data => {
         axios.post(`http://localhost:8080/users/add`, data)
-        .then(res => {
-            if (res.status === 200) {
-                message.success('Successfully Create User!')
-                // console.log(res.data)
-                cookie.save("id", res.data.id)
-                cookie.save("role", res.data.role)
-                if (res.data.role === "customer") {
-                    this.props.navigate('/')
+            .then(res => {
+                if (res.status === 200) {
+                    message.success('Successfully Create User!')
+                    // console.log(res.data)
+                    cookie.save("id", res.data.id)
+                    cookie.save("role", res.data.role)
+                    if (res.data.role === "customer") {
+                        this.props.navigate('/')
+                    } else {
+                        this.props.navigate('/business/profile')
+                    }
                 } else {
-                    this.props.navigate('/business/profile')
+                    message.error('Username or Email Already Exists.\nCreation Failed.')
                 }
-            } else {
-                message.error('Username or Email Already Exists.\nCreation Failed.')
-            }
-        }).catch((error) => {
-            message.error('Username or Email Already Exists.\nCreation Failed.')
-        })
+            }).catch((error) => {
+                console.log(error);
+                message.error('Something went wrong.\nPlease Try Again.')
+
+                // message.error('Username or Email Already Exists.\nCreation Failed.')
+            })
     }
 
     render() {

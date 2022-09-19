@@ -15,6 +15,12 @@ class SearchResultPage extends Component {
 
     constructor(props) {
         super(props);
+
+        if (cookie.load('id') !== undefined) {
+            if (cookie.load('role') === "business") {
+                this.props.navigate('/business/profile')
+            }
+        }
     }
 
     state = {

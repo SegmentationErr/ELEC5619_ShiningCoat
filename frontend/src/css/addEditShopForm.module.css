@@ -1,0 +1,55 @@
+.cover {
+    top: 100px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+}
+
+.validationCard {
+    /* position: absolute; */
+    width: 800px;
+    height: 700px;
+
+    text-align: center;
+
+    background: #FAEDDE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+}
+
+/* .validationCard p {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 21px;
+    padding: 40px 30px 20px 30px;
+    color: #000000;
+} */
+
+#form {
+    padding-top: 5%;
+}
+
+#startTimeCol {
+    text-align: right;
+    padding-right: 20px;
+}
+
+#endTimeCol {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* 
+#uploadImageDiv {
+    width: 100%;
+    margin-left: 20%;
+    text-align: center;
+} */

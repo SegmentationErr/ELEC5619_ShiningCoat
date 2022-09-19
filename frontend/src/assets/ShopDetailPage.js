@@ -3,7 +3,7 @@ import { Menu, Row, Col, Button, Space, Input, Slider, Image } from 'antd';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
-import styles from '../css/shopDetailPage.module.css'
+import styles from '../css/manageShopPage.module.css'
 import cookie from 'react-cookies';
 
 class ShopDetailPage extends Component {
@@ -78,8 +78,8 @@ class ShopDetailPage extends Component {
         return (
             <Services
                 // props contains two things
-                services = {this.state.data.services}    
-                usertype =  {cookie.load('role')}    
+                services={this.state.data.services}
+                usertype={cookie.load('role')}
             />
         );
     }
@@ -145,8 +145,8 @@ class Services extends Component {
                 <div className={styles.title}>
                     {"Available Services"}
                     {this.props.userType === "customer" ? null : <button id={styles["AddServices"]} className="yellowButton" type="submit">
-                                + Add Services
-                            </button>}
+                        + Add Services
+                    </button>}
                 </div>
                 <div>
                     <Row>
@@ -162,7 +162,8 @@ class Services extends Component {
                                         isService={true}
                                     />
                                 </Col>
-                            )}
+                            )
+                        }
                         )}
                     </Row>
                 </div>
@@ -172,4 +173,4 @@ class Services extends Component {
 }
 
 export default withRouter(ShopDetailPage);
-export {Profile, Services};
+export { Profile, Services };

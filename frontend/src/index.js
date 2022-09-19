@@ -14,10 +14,11 @@ import ShopDetailPage from './assets/ShopDetailPage';
 import AllBookingsPage from './assets/AllBookingsPage';
 import BusinessNavBar from './assets/BusinessNavBar';
 import ManageProfilePage from './assets/ManageProfilePage';
-import ManageShopsPage from './assets/ManageShopsPage';
+import AllShops from './assets/AllShops';
 import LocationMapPage from './assets/LocationMapPage';
 import GoogleSignIn from './assets/GoogleSignIn';
 
+import cookie from 'react-cookies';
 
 export default function App() {
   document.body.style.backgroundColor = "#F3E3CF";
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/test" element={<GoogleSignIn />} />
         <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
-          <Route path="shops" element={<ManageShopsPage />} />
+          <Route path="shops" element={<AllShops />} />
         </Route>
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />
