@@ -1,56 +1,102 @@
 import React, { Component } from 'react';
-import { Form, Input, message } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import PasswordValidation from './PasswordValidation';
-import styles from '../css/generalComponents.module.css';
-import cookie from 'react-cookies';
+import { Form, Input, Row, Col } from 'antd';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { Profile, Services } from './ShopDetailPage';
 
 
-class ManageShopsPage extends Component {
+import styles from '../css/ManageShopPage.module.css'
+
+class Shop extends Component {
     constructor(props) {
         super(props);
-        this.fetchAllShops();
     }
-
     state = {
-        id: cookie.load('id'),
-        data: []
-        // profile: {
-        //     'username': 'Fetching Data...',
-        //     'email': 'Fetching Data...',
-        // },
-        // newProfile: {},
-        // validation: false
+        // id: this.props.params.id,
+        data: {
+            shopName: "shop1",
+            location: "xxxStreet",
+            contactNumber: "1234567",
+            imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+            _id: "shopTestId",
+            availableTime: "9:00-10:00",
+            services: [
+                {
+                    name: "service1",
+                    location: "service1 location",
+                    time: "9-17pm",
+                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    _id: "serviceTestId",
+                    rating: 4
+                },
+                {
+                    name: "service2",
+                    location: "service2 location",
+                    time: "9-10pm",
+                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    _id: "serviceTestId",
+                    rating: 4
+                },
+                {
+                    name: "service3",
+                    location: "service3 location",
+                    time: "9-10pm",
+                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    _id: "serviceTestId",
+                    rating: 4
+                },
+                {
+                    name: "service4",
+                    location: "service4 location",
+                    time: "9-10pm",
+                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    _id: "serviceTestId",
+                    rating: 4
+                },
+            ]
+        },
     }
 
-    fetchAllShops = () => {
-        console.log("fetch all shops")
-        axios.get('http://localhost:8080/shops/getAllShopsById/' + this.state.id)
-            .then((res) => {
-                // console.log(res.data)
-                if (res.status === 200) {
-                    console.log(res);
-                    // this.setState({
-                    //     profile: res.data
-                    // })
-                }
-            }).catch((error) => {
-                console.log(error)
-            })
+    renderProfile() {
+        return (
+            <Profile
+                // props contains two things
+                id={this.state.data._id}
+                shopName={this.state.data.shopName}
+                location={this.state.data.location}
+                contactNumber={this.state.data.contactNumber}
+                imgSrc={this.state.data.imgSrc}
+                availableTime={this.state.data.availableTime}
+
+            />
+        );
     }
 
-
+    renderServices() {
+        return (
+            <Services
+                // props contains two things
+                services={this.state.data.services}
+            />
+        );
+    }
     render() {
         return (
-            <div style={{ textAlign: "center", marginTop: "10%" }}>
-                {this.state.data.length === 0 ?
-                    <div>No Shops Yet</div>
-                    : <div>show some shops</div>
-                }
+
+            <div id={styles["ManageShopsProfilePage"]}>
+                <Row id={styles["ManageShopsProfileRow"]}>
+                    <Col span={8}>
+                        {this.renderProfile()}
+                        <button className="yellowButton" type="submit">
+                            Edit shop
+                        </button>
+                    </Col>
+                    <Col span={16}>
+                        {this.renderServices()}
+                    </Col>
+                </Row>
             </div>
         );
     }
 }
 
-export default ManageShopsPage;
+export default Shop;

@@ -3,7 +3,7 @@ import { Menu, Row, Col, Button, Space, Input, Slider, Image } from 'antd';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
-import styles from '../css/shop.module.css'
+import styles from '../css/manageShopPage.module.css'
 import cookie from 'react-cookies';
 
 class ShopDetailPage extends Component {
