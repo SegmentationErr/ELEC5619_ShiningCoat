@@ -4,7 +4,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Profile, Services } from './ShopDetailPage';
 
 
-import styles from '../css/ManageShopPage.module.css'
+import styles from '../css/manageShopPage.module.css'
 
 class Shop extends Component {
     constructor(props) {

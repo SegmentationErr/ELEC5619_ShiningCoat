@@ -10,8 +10,8 @@
 
 .validationCard {
     /* position: absolute; */
-    width: 800px;
-    height: 700px;
+    width: 50%;
+    height: 60%;
 
     text-align: center;
 
@@ -22,16 +22,6 @@
     margin-right: auto;
     margin-top: 10vh;
 }
-
-/* .validationCard p {
-    font-family: 'Arial';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 21px;
-    padding: 40px 30px 20px 30px;
-    color: #000000;
-} */
 
 #form {
     padding-top: 5%;
@@ -46,10 +36,3 @@
     text-align: left;
     padding-left: 20px;
 }
-
-/* 
-#uploadImageDiv {
-    width: 100%;
-    margin-left: 20%;
-    text-align: center;
-} */
