@@ -6,6 +6,7 @@ import allShopStyle from '../css/allShops.module.css';
 import AddEditShopForm from './AddEditShopForm';
 
 import cookie from 'react-cookies';
+import ShopCard from './ShopCard';
 
 
 class ManageShopsPage extends Component {
@@ -26,7 +27,8 @@ class ManageShopsPage extends Component {
     state = {
         id: cookie.load('id'),
         showForm: false,
-        data: []
+        data: [],
+        loading: true
         // profile: {
         //     'username': 'Fetching Data...',
         //     'email': 'Fetching Data...',
@@ -42,7 +44,8 @@ class ManageShopsPage extends Component {
                 if (res.status === 200) {
                     console.log(res);
                     this.setState({
-                        data: res.data
+                        data: res.data,
+                        loading: false
                     })
                 }
             }).catch((error) => {
@@ -71,9 +74,32 @@ class ManageShopsPage extends Component {
                     <button className={generalStyle.yellowButton} onClick={this.openAddShopForm.bind(this)}>+ Add Shop</button>
                 </Col>
                 <Col id={allShopStyle.mainContentsCol}>
-                    {this.state.data.length === 0 ?
-                        <div>No Shops Yet</div>
-                        : <div>show some shops</div>
+                    {this.state.loading ?
+                        <div>Loading .... </div>
+                        :
+                        <div>
+                            {this.state.data.length === 0 ?
+                                <div>No Shops Yet</div>
+                                :
+                                <div>
+                                    <Row>
+                                        {this.state.data.map((shop, key) => {
+                                            return (
+                                                <Col span={8} key={key}>
+                                                    <ShopCard
+                                                        key={key}
+                                                        shopName={shop.shop_name}
+                                                        image={shop.image}
+                                                        id={shop.id}
+                                                        history={this.props.history} />
+
+                                                </Col>
+                                            )
+                                        })}
+                                    </Row>
+                                </div>
+                            }
+                        </div>
                     }
                 </Col>
             </div>

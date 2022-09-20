@@ -15,15 +15,15 @@ const format = 'HH:mm';
 const { TextArea } = Input;
 
 
-const normFile = (e) => {
-    console.log('Upload event:', e);
+// const normFile = (e) => {
+//     console.log('Upload event:', e);
 
-    if (Array.isArray(e)) {
-        return e;
-    }
+//     if (Array.isArray(e)) {
+//         return e;
+//     }
 
-    return e?.fileList;
-};
+//     return e?.fileList;
+// };
 
 class AddEditShopForm extends Component {
     constructor(props) {
@@ -59,7 +59,7 @@ class AddEditShopForm extends Component {
             .then(res => {
                 if (res.status === 200) {
                     message.success('Successfully Create Shop!');
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.props.navigate('/business/profile');
                 }
                 else {
@@ -126,7 +126,7 @@ class AddEditShopForm extends Component {
                 // Make a fileInfo Object
                 console.log("Called", reader);
                 baseURL = reader.result;
-                console.log(baseURL);
+                // console.log(baseURL);
                 resolve(baseURL);
             };
             console.log(fileInfo);
