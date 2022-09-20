@@ -4,6 +4,8 @@ import { withRouter } from './withRouter';
 import addEditFormStyle from '../css/addEditShopForm.module.css';
 import generalStyles from '../css/generalComponents.module.css';
 import cookie from 'react-cookies'
+import AddressAutoCompleteInput from './AddressAutoCompletInput';
+import showAlert from './Alert';
 
 import moment from 'moment';
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
@@ -33,6 +35,7 @@ class AddEditShopForm extends Component {
     state = {
         startTime: "9:00",
         endTime: "21:00",
+        shopAddress: "",
         file: null,
         image: {
             file: null,
@@ -45,6 +48,14 @@ class AddEditShopForm extends Component {
         data.startTime = this.state.startTime;
         data.endTime = this.state.endTime;
         data.userId = cookie.load('id');
+        data.shopAddress = this.state.shopAddress;
+
+        if (this.state.shopAddress === "") {
+            showAlert('warning', "Invalid Input", "Please choose a address");
+            return;
+        }
+
+        console.log(data);
 
         // const formData = new FormData()
 
@@ -159,6 +170,13 @@ class AddEditShopForm extends Component {
         });
     };
 
+    handleInputAddress = e => {
+        let formattedAddress = e.formatted_address;
+        this.setState({
+            shopAddress: formattedAddress
+        })
+    }
+
     render() {
         return (
             <div className={addEditFormStyle.cover}>
@@ -188,18 +206,20 @@ class AddEditShopForm extends Component {
                         </Form.Item>
 
                         <Form.Item
-                            name="shopAddress"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your shop address!',
-                                },
-                            ]}
+                        // name="shopAddress"
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: 'Please input your shop address!',
+                        //     },
+                        // ]}
                         >
-                            <Input
+                            <AddressAutoCompleteInput
+                                handlePlaceSelected={this.handleInputAddress} />
+                            {/* <Input
                                 style={{ width: "50%" }}
                                 placeholder="Shop Address"
-                            />
+                            /> */}
                         </Form.Item>
 
 
