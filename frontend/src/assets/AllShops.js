@@ -81,7 +81,7 @@ class ManageShopsPage extends Component {
                             {this.state.data.length === 0 ?
                                 <div>No Shops Yet</div>
                                 :
-                                <div>
+                                <div className={allShopStyle.shopsDiv}>
                                     <Row>
                                         {this.state.data.map((shop, key) => {
                                             return (
@@ -92,7 +92,6 @@ class ManageShopsPage extends Component {
                                                         image={shop.image}
                                                         id={shop.id}
                                                         history={this.props.history} />
-
                                                 </Col>
                                             )
                                         })}

@@ -19,8 +19,6 @@ import LocationMapPage from './assets/LocationMapPage';
 import GoogleSignIn from './assets/GoogleSignIn';
 import ManageShopsPage from './assets/ManageShopPage';
 
-import cookie from 'react-cookies';
-
 export default function App() {
   document.body.style.backgroundColor = "#F3E3CF";
 

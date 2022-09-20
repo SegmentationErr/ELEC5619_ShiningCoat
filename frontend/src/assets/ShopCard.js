@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'antd';
 import { withRouter } from './withRouter';
-
+import ShopCardStyle from '../css/shopCard.module.css'
 
 class ShopCard extends Component {
     constructor(props) {
@@ -14,18 +14,18 @@ class ShopCard extends Component {
 
     render() {
         return (
-            <div onClick={this.checkDetail.bind(this)}>
-                {/* <Image
+
+            <div className={ShopCardStyle.cover} onClick={this.checkDetail.bind(this)}>
+                <Image
                     preview={false}
-                    style={{ padding: 10, width: 200, height: 200, borderRadius: 400 / 2 }}
-                    width={200}
+                    style={{ padding: 10, width: 300, height: 200, borderRadius: 50 }}
+                    className={ShopCardStyle.image}
                     src={this.props.image}
-                /> */}
-                <div id="info" style={{ "lineHeight": "50%" }}>
-                    <p>TETS</p>
-                    <p>{this.props.shopName} </p>
-                </div>
+                />
+                <p className={ShopCardStyle.paragraph}>{this.props.shopName}</p>
             </div>
+
+
         );
     }
 }
