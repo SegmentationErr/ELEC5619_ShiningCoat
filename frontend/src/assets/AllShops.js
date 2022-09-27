@@ -48,6 +48,13 @@ class ManageShopsPage extends Component {
                         loading: false
                     })
                 }
+                else {
+                    console.log(res);
+                    this.setState({
+                        data: [],
+                        loading: false
+                    })
+                }
             }).catch((error) => {
                 console.log(error)
             })

@@ -28,6 +28,10 @@ public class Shop {
     @Lob
     private String image;
 
+    private Float lat;
+
+    private Float lng;
+
     public Integer getId() {
         return id;
     }
@@ -106,5 +110,21 @@ public class Shop {
 
     public void setImage(String image){
         this.image = image;
+    }
+
+    public void setLat(Float lat){
+        this.lat = lat;
+    }
+
+    public Float getLat(){
+        return this.lat;
+    }
+
+    public void setLng(Float lng){
+        this.lng = lng;
+    }
+
+    public Float getLng(){
+        return this.lng;
     }
 }
