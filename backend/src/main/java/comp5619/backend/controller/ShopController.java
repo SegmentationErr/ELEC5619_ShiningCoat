@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static java.lang.Float.parseFloat;
+
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/shops")
 public class ShopController {
@@ -53,6 +55,9 @@ public class ShopController {
         String shopDescription = params.get("shopDescription");
         String userId = params.get("userId");
 
+        float lat = parseFloat(params.get("lat"));
+        float lng = parseFloat(params.get("lng"));
+
         Map<String, Object> response = new HashMap<>();
 
         SimpleDateFormat source = new SimpleDateFormat("HH:mm");
@@ -75,6 +80,8 @@ public class ShopController {
         newShop.setAddress(shopAddress);
         newShop.setDescription(shopDescription);
         newShop.setUserId(Integer.parseInt(userId));
+        newShop.setLat(lat);
+        newShop.setLng(lng);
 
         shopRepository.save(newShop);
         response.put("Message", "Create Shop Success");
