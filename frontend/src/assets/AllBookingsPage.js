@@ -327,12 +327,19 @@ class AllBookingsPage extends Component {
                                             </Col>
 
                                             <Col span={14} className={allBookingPageStyle.buttonColPast}>
-                                                <button
-                                                    className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
-                                                    onClick={(e) => this.showCommentCard(service)}
-                                                >
-                                                    Leave a Comment
-                                                </button>
+                                                {service.available ?
+                                                    <button
+                                                        className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
+                                                        onClick={(e) => this.showCommentCard(service)}
+                                                    >
+                                                        Leave a Comment
+                                                    </button> :
+                                                    <button
+                                                        className={`${generalStyles.redButton} ${allBookingPageStyle.leaveCommentButton}`}
+                                                    >
+                                                        Not Available
+                                                    </button>
+                                                }
                                             </Col>
                                         </Row>
 
