@@ -24,7 +24,6 @@ class AllBookingsPage extends Component {
                 this.fetchAllBookings();
             }
         }
-        //TODO: fetch all bookings from backend
     }
 
 
@@ -35,52 +34,8 @@ class AllBookingsPage extends Component {
         pendingDelteService: null,
         pendingCommentService: null,
         userId: this.props.params.userId,
-        incomingBookings: [
-            {
-                id: 1,
-                name: "service1",
-                price: 100,
-                time: "02/02/2022",
-                isPickUp: false
-            },
-            {
-                id: 1,
-                name: "service2",
-                price: 200,
-                time: "03/02/2022",
-                isPickUp: false
-            },
-            {
-                id: 1,
-                name: "service3",
-                price: 300,
-                time: "04/02/2022",
-                isPickUp: true
-            },
-        ],
-        pastBookings: [
-            {
-                id: 1,
-                name: "past service1",
-                price: 100,
-                time: "01/02/2022",
-                isPickUp: false
-            },
-            {
-                id: 1,
-                name: "past service2",
-                price: 200,
-                time: "01/02/2022",
-                isPickUp: false
-            },
-            {
-                id: 1,
-                name: "past service3",
-                price: 300,
-                time: "01/02/2022",
-                isPickUp: true
-            },
-        ]
+        incomingBookings: [],
+        pastBookings: []
     }
 
     fetchAllBookings = () => {
@@ -251,6 +206,9 @@ class AllBookingsPage extends Component {
     }
 
     showCommentCard = (e) => {
+
+        console.log(e);
+
         this.setState({
             openLeaveCommentCard: true,
             pendingCommentService: e
@@ -272,14 +230,31 @@ class AllBookingsPage extends Component {
 
             console.log(rating, comment);
 
-            showAlert('success', 'Thanks for your comment');
+            let data = {
+                rating: rating,
+                content: comment,
+                userId: service.user_id,
+                serviceId: service.id
+            };
 
-            //TODO: leave a comment, connect to backend
+            axios.post(`http://localhost:8080/comments/addComment`, data)
+                .then(res => {
+                    if (res.status === 200) {
+                        showAlert('success', 'Thanks for your comment');
 
-            this.setState({
-                openLeaveCommentCard: false,
-                pendingCommentService: null
-            });
+                        this.setState({
+                            openLeaveCommentCard: false,
+                            pendingCommentService: null
+                        });
+
+                    }
+                    else {
+                        showAlert('warning', 'Something went wrong');
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    showAlert('warning', 'Something went wrong');
+                })
         }
     }
 

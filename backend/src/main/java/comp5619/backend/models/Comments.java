@@ -64,4 +64,8 @@ public class Comments {
     public Timestamp getTime() {
         return time;
     }
+
+    public void setTime(Timestamp time){
+        this.time=time;
+    }
 }
