@@ -19,6 +19,8 @@ public class Service {
 
     private Integer pick_up;
 
+    private Integer rating;
+
     private Float price;
 
     private Integer total_sold;
@@ -32,6 +34,14 @@ public class Service {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getRating(){
+        return this.rating;
+    }
+
+    public void setRating(Integer rating){
+        this.rating = rating;
     }
 
     public Integer getShop_id() {

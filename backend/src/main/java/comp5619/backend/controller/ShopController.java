@@ -76,7 +76,6 @@ public class ShopController {
         }
 
         newShop.setImage(image);
-        newShop.setRating(0);
         newShop.setAddress(shopAddress);
         newShop.setDescription(shopDescription);
         newShop.setUserId(Integer.parseInt(userId));
