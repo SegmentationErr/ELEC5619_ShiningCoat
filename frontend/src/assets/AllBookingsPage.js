@@ -32,21 +32,21 @@ class AllBookingsPage extends Component {
         userId: this.props.params.userId,
         incomingBookings: [
             {
-                id: "testId",
+                id: 1,
                 name: "service1",
                 price: 100,
                 time: "02/02/2022",
                 isPickUp: false
             },
             {
-                id: "testId",
+                id: 2,
                 name: "service2",
                 price: 200,
                 time: "03/02/2022",
                 isPickUp: false
             },
             {
-                id: "testId",
+                id: 3,
                 name: "service3",
                 price: 300,
                 time: "04/02/2022",
@@ -55,21 +55,21 @@ class AllBookingsPage extends Component {
         ],
         pastBookings: [
             {
-                id: "testId",
+                id: 4,
                 name: "past service1",
                 price: 100,
                 time: "01/02/2022",
                 isPickUp: false
             },
             {
-                id: "testId",
+                id: 5,
                 name: "past service2",
                 price: 200,
                 time: "01/02/2022",
                 isPickUp: false
             },
             {
-                id: "testId",
+                id: 6,
                 name: "past service3",
                 price: 300,
                 time: "01/02/2022",
