@@ -233,8 +233,8 @@ class AllBookingsPage extends Component {
             let data = {
                 rating: rating,
                 content: comment,
-                userId: service.user_id,
-                serviceId: service.id
+                userId: cookie.load('id'),
+                serviceId: service.service_id
             };
 
             axios.post(`http://localhost:8080/comments/addComment`, data)
