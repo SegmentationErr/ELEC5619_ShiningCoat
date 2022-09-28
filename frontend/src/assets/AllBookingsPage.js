@@ -84,22 +84,47 @@ class AllBookingsPage extends Component {
     }
 
     fetchAllBookings = () => {
-        axios.get('http://localhost:8080/bookings/getAllBookings/' + this.state.id)
+        axios.get('http://localhost:8080/bookings/getAllBookings/' + cookie.load('id'))
             .then((res) => {
                 // console.log(res.data)
                 if (res.status === 200) {
                     console.log(res);
-                    // this.setState({
-                    //     data: res.data,
-                    //     loading: false
-                    // })
+
+                    let data = res.data;
+
+                    const currentTime = new Date();
+
+                    let pastBookings = [];
+                    let incomingBookings = [];
+
+                    for (let booking of data) {
+                        let time = new Date(booking.time);
+
+                        let formattedTime = time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + time.getDate() + "-" + time.getHours() + ":" + time.getMinutes();
+
+                        booking.time = formattedTime;
+
+                        if (currentTime > time) {
+                            pastBookings.push(booking);
+                        }
+                        else {
+                            incomingBookings.push(booking);
+                        }
+                    }
+
+                    this.setState({
+                        incomingBookings: incomingBookings,
+                        pastBookings: pastBookings,
+                        loading: false
+                    })
                 }
                 else {
                     console.log(res);
-                    // this.setState({
-                    //     data: [],
-                    //     loading: false
-                    // })
+                    this.setState({
+                        incomingBookings: [],
+                        pastBookings: [],
+                        loading: false
+                    })
                 }
             }).catch((error) => {
                 console.log(error)
@@ -273,73 +298,74 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                <Row id={allBookingPageStyle.mainContentRow}>
-                    <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
-                        <p className={allBookingPageStyle.title} >Incoming Bookings</p>
-                        {this.state.incomingBookings.map((service, key) => {
-                            return (
-                                <div className={allBookingPageStyle.serviceCard} key={key}>
-                                    <Row >
-                                        <Col span={7} className={allBookingPageStyle.nameCol}>
-                                            <p>{service.name}</p>
-                                            <p>Price: {service.price}</p>
-                                        </Col>
-
-                                        {service.isPickUp ?
-                                            <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                <p>
-                                                    Pick Up Service
-                                                </p>
+                {this.state.loading ? <p>Loading ... </p> :
+                    <Row id={allBookingPageStyle.mainContentRow}>
+                        <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
+                            <p className={allBookingPageStyle.title} >Incoming Bookings</p>
+                            {this.state.incomingBookings.map((service, key) => {
+                                return (
+                                    <div className={allBookingPageStyle.serviceCard} key={key}>
+                                        <Row >
+                                            <Col span={7} className={allBookingPageStyle.nameCol}>
+                                                <p>{service.name}</p>
+                                                <p>Price: {service.price}</p>
                                             </Col>
-                                            :
-                                            <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                <p>Time: </p>
-                                                <p>
-                                                    {service.time}
-                                                </p>
+
+                                            {service.pick_up ?
+                                                <Col span={7} className={allBookingPageStyle.timeCol}>
+                                                    <p>
+                                                        Pick Up Service
+                                                    </p>
+                                                </Col>
+                                                :
+                                                <Col span={7} className={allBookingPageStyle.timeCol}>
+                                                    <p>Time: </p>
+                                                    <p>
+                                                        {service.time}
+                                                    </p>
+                                                </Col>
+                                            }
+
+                                            <Col span={10} className={allBookingPageStyle.buttonCol}>
+                                                <button
+                                                    className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
+                                                    onClick={(e) => this.showCancelConfirm(service)}
+                                                >
+                                                    Cancel Booking
+                                                </button>
                                             </Col>
-                                        }
+                                        </Row>
 
-                                        <Col span={10} className={allBookingPageStyle.buttonCol}>
-                                            <button
-                                                className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
-                                                onClick={(e) => this.showCancelConfirm(service)}
-                                            >
-                                                Cancel Booking
-                                            </button>
-                                        </Col>
-                                    </Row>
+                                    </div>
+                                )
+                            })}
+                        </Col>
+                        <Col id={allBookingPageStyle.pastBookingsCol} span={10}>
+                            <p className={allBookingPageStyle.title}>Past Bookings</p>
+                            {this.state.pastBookings.map((service, key) => {
+                                return (
+                                    <div className={allBookingPageStyle.serviceCard} key={key}>
+                                        <Row >
+                                            <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
+                                                <p>{service.name}</p>
+                                                <p>Price: {service.price}</p>
+                                            </Col>
 
-                                </div>
-                            )
-                        })}
-                    </Col>
-                    <Col id={allBookingPageStyle.pastBookingsCol} span={10}>
-                        <p className={allBookingPageStyle.title}>Past Bookings</p>
-                        {this.state.pastBookings.map((service, key) => {
-                            return (
-                                <div className={allBookingPageStyle.serviceCard} key={key}>
-                                    <Row >
-                                        <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
-                                            <p>{service.name}</p>
-                                            <p>Price: {service.price}</p>
-                                        </Col>
+                                            <Col span={14} className={allBookingPageStyle.buttonColPast}>
+                                                <button
+                                                    className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
+                                                    onClick={(e) => this.showCommentCard(service)}
+                                                >
+                                                    Leave a Comment
+                                                </button>
+                                            </Col>
+                                        </Row>
 
-                                        <Col span={14} className={allBookingPageStyle.buttonColPast}>
-                                            <button
-                                                className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
-                                                onClick={(e) => this.showCommentCard(service)}
-                                            >
-                                                Leave a Comment
-                                            </button>
-                                        </Col>
-                                    </Row>
-
-                                </div>
-                            )
-                        })}
-                    </Col>
-                </Row>
+                                    </div>
+                                )
+                            })}
+                        </Col>
+                    </Row>}
             </div>
         );
     }
