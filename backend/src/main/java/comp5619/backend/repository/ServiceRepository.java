@@ -14,4 +14,7 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
 
     @Query(value = "select sh.lat, sh.lng from shops sh where sh.id=(select shop_id from services where id=:id)", nativeQuery = true)
     Map<String, Object> getMapInfoById(@Param("id") String id);
+
+    @Query(value = "select * from services where shop_id=:shop_id", nativeQuery = true)
+    List<Map<String, Object>> getServices(@Param("shop_id") String shop_id);
 }

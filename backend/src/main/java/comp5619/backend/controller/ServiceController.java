@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -37,6 +39,16 @@ public class ServiceController {
     public @ResponseBody ResponseEntity<Map<String, Object>> getMapInfoById(@PathVariable(name = "id") String id) {
         Map<String, Object> result = serviceRepository.getMapInfoById(id);
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(path = "/getServices/{id}")
+    public @ResponseBody ResponseEntity<List<Map<String, Object>>> getServices(@PathVariable(name = "id") String shop_id) {
+        List<Map<String, Object>> result = serviceRepository.getServices(shop_id);
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
     }
 
 }
