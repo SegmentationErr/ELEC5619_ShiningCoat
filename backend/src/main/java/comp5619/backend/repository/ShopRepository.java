@@ -14,4 +14,7 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
     @Query(value = "SELECT * FROM shops WHERE user_id=:user_id", nativeQuery = true)
     List<Map<String, Object>> getAllShopsByUserId(@Param("user_id") String user_id);
 
+    @Query(value = "select * FROM shops where id=:shop_id", nativeQuery = true)
+    Map<String, Object> getShopDetail(@Param("shop_id") String shop_id);
+
 }
