@@ -1,74 +1,86 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { Menu, Row, Col, Button, Space, Input, Slider, Image } from 'antd';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
 import styles from '../css/manageShopPage.module.css'
 import cookie from 'react-cookies';
+import axios from 'axios';
 
 class ShopDetailPage extends Component {
 
-    constructor(props) {
-        super(props);
-
-        // console.log(this.state.id);
-    }
-
     state = {
         id: this.props.params.id,
-        data: {
-            shopName: "shop1",
-            location: "xxxStreet",
-            contactNumber: "1234567",
-            imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-            _id: "shopTestId",
-            availableTime: "9:00-10:00",
-            services: [
-                {
-                    name: "service1",
-                    location: "service1 location",
-                    time: "9-17pm",
-                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                    _id: "serviceTestId",
-                    rating: 4
-                },
-                {
-                    name: "service2",
-                    location: "service2 location",
-                    time: "9-10pm",
-                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                    _id: "serviceTestId",
-                    rating: 4
-                },
-                {
-                    name: "service3",
-                    location: "service3 location",
-                    time: "9-10pm",
-                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                    _id: "serviceTestId",
-                    rating: 4
-                },
-                {
-                    name: "service4",
-                    location: "service4 location",
-                    time: "9-10pm",
-                    imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                    _id: "serviceTestId",
-                    rating: 4
-                },
-            ]
+        // data: {}, 
+        data:{
+            user_id: "",
+            phone: "",
+            end_time: "]",
+            shop_name: "",
+            description: "",
+            address: "",
+            start_time: "",
+            id: '',
+            image: "", 
+            services: [],
         },
+        // loading: true
     }
+
+    constructor(props) {
+        super(props);
+        this.fetchShopDetail()
+        this.fetchServices()
+    }
+
+    fetchShopDetail = () => {
+        axios.get('http://localhost:8080/shops/getShopDetail/' + this.state.id)
+            .then((res) => {
+                var shopData = res.data
+                if (this.state.data['services'] == []){
+                    shopData["services"] = []
+                }else{
+                    shopData["services"] = this.state.data["services"]
+                }
+                if (res.status === 200) {
+                        this.setState({
+                        data: shopData,
+                        // loading: false
+                    })
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+    fetchServices = () => {
+        axios.get('http://localhost:8080/shops/getServices/' + this.state.id)
+            .then((res) => {
+                console.log("++++++")
+                
+                var updateData = this.state.data
+
+                updateData["services"] = res.data
+                console.log(updateData)
+                if (res.status === 200) {
+                        this.setState({
+                        data: updateData,
+                        // loading: false
+                    })
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+
     renderProfile() {
         return (
             <Profile
-                // props contains two things
                 id={this.state.data._id}
-                shopName={this.state.data.shopName}
-                location={this.state.data.location}
-                contactNumber={this.state.data.contactNumber}
-                imgSrc={this.state.data.imgSrc}
-                availableTime={this.state.data.availableTime}
+                shopName={this.state.data.shop_name}
+                location={this.state.data.address}
+                contactNumber={this.state.data.phone}
+                imgSrc={this.state.data.image}
+                availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
 
             />
         );
@@ -77,7 +89,6 @@ class ShopDetailPage extends Component {
     renderServices() {
         return (
             <Services
-                // props contains two things
                 services={this.state.data.services}
                 usertype={cookie.load('role')}
             />
@@ -87,16 +98,22 @@ class ShopDetailPage extends Component {
     render() {
 
         return (
-            <div id={styles['shopProfilePage']}>
-                <Row id="shopProfileRow">
-                    <Col span={8} id={styles['profileModule']}>
-                        {this.renderProfile()}
-                    </Col>
-                    <Col span={16} id={styles['servicesModule']}>
-                        {this.renderServices()}
-                    </Col>
-                </Row>
-            </div>
+            <span>
+                {/* {this.state.loading ?
+                    <div>Loading .... </div>
+                    : */}
+                    <div id={styles['shopProfilePage']}>
+                        <Row id="shopProfileRow">
+                            <Col span={8} id={styles['profileModule']}>
+                                {this.renderProfile()}
+                            </Col>
+                            <Col span={16} id={styles['servicesModule']}>
+                                {this.renderServices()}
+                            </Col>
+                        </Row>
+                    </div>
+                {/* } */}
+            </span>
         );
     }
 }
@@ -154,8 +171,8 @@ class Services extends Component {
                             return (
                                 <Col span={8}>
                                     <ResultCard
-                                        name={service.name}
-                                        imgSrc={service.imgSrc}
+                                        name={service.service_name}
+                                        imgSrc={service.image}
                                         location={service.location}
                                         time={service.time}
                                         rating={service.rating}
