@@ -53,7 +53,7 @@ class ShopDetailPage extends Component {
             })
     }
     fetchServices = () => {
-        axios.get('http://localhost:8080/shops/getServices/' + this.state.id)
+        axios.get('http://localhost:8080/service/getServices/' + this.state.id)
             .then((res) => {
                 console.log("++++++")
                 
