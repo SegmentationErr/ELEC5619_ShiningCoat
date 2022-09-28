@@ -20,8 +20,6 @@ public class Shop {
 
     private String phone;
 
-    private Integer rating;
-
     private Time start_time;
 
     private Time end_time;
@@ -78,14 +76,6 @@ public class Shop {
 
     public void setPhone(String phone){
         this.phone=phone;
-    }
-
-    public Integer getRating(){
-        return rating;
-    }
-
-    public void setRating(Integer rating){
-        this.rating = rating;
     }
 
     public Time getStartTime(){

@@ -9,7 +9,7 @@ import cookie from 'react-cookies';
 import ShopCard from './ShopCard';
 
 
-class ManageShopsPage extends Component {
+class AllShops extends Component {
     constructor(props) {
         super(props);
         if (cookie.load('id') !== undefined) {
@@ -113,4 +113,4 @@ class ManageShopsPage extends Component {
     }
 }
 
-export default ManageShopsPage;
+export default AllShops;
