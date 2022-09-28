@@ -86,5 +86,12 @@ public class ShopController {
         response.put("Message", "Create Shop Success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-
+    @GetMapping(path = "/getShopDetail/{id}")
+    public @ResponseBody ResponseEntity<Map<String, Object>> getShopDetail(@PathVariable(name = "id") String shop_id) {
+        Map<String, Object> result = shopRepository.getShopDetail(shop_id);
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }
