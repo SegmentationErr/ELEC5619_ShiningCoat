@@ -90,14 +90,14 @@ class AllBookingsPage extends Component {
         return (
             <div className={allBookingPageStyle.cover}>
                 <div className={allBookingPageStyle.validationCardcCancelBooking}>
-                    <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
+                    <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.service_name} at {this.state.pendingDelteService.time}?</p>
                     <Row id={allBookingPageStyle.cancelBookingConfirmRow}>
                         <Col span={12}>
                             <button className={generalStyles.redButton}
                                 id={allBookingPageStyle.confirmDelete}
                                 onClick={(e) => this.confirmDeleteBooking()}
                             >
-                                Confirm Delete
+                                Confirm
                             </button>
                         </Col>
                         <Col span={12}>
@@ -185,7 +185,7 @@ class AllBookingsPage extends Component {
     confirmDeleteBooking = (e) => {
         console.log("confirm delete this booking");
         let service = this.state.pendingDelteService;
-        if (service === null) {
+        if (service === null || !service.available) {
             showAlert('error', 'Please select a booking first');
         }
         else {
@@ -218,7 +218,7 @@ class AllBookingsPage extends Component {
     confirmLeaveComment = (para) => {
         console.log("confirm leave a comment");
         let service = this.state.pendingCommentService;
-        if (service === null) {
+        if (service === null || !service.available) {
             showAlert('error', 'Please select a booking first');
         }
         else {
