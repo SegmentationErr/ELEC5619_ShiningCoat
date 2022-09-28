@@ -144,7 +144,8 @@ class Services extends Component {
             <div>
                 <div className={styles.title}>
                     {"Available Services"}
-                    {this.props.userType === "customer" ? null : <button id={styles["AddServices"]} className="yellowButton" type="submit">
+                    {this.props.userType === "customer" ? null :
+                    <button id={styles["AddServices"]} className="yellowButton" type="submit">
                         + Add Services
                     </button>}
                 </div>

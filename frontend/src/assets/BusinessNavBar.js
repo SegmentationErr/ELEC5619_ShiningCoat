@@ -18,15 +18,17 @@ class BusinessNavBar extends Component {
     render() {
         return (
             <div>
-                <div id={this.state.currSelected === 'profile' ? styles['menuItemSelected'] : styles['menuItem']}
-                    onClick={() => this.changeSelection('profile')}
-                >
-                    <p>Manage Profile</p>
-                </div>
-                <div id={this.state.currSelected === 'shops' ? styles['menuItemSelected'] : styles['menuItem']}
-                    onClick={() => this.changeSelection('shops')}
-                >
-                    <p>Manage Shops</p>
+                <div style={{display: "flex"}}>
+                    <div id={this.state.currSelected === 'profile' ? styles['menuItemSelected'] : styles['menuItem']}
+                        onClick={() => this.changeSelection('profile')}
+                    >
+                        <p>Manage Profile</p>
+                    </div>
+                    <div id={this.state.currSelected === 'shops' ? styles['menuItemSelected'] : styles['menuItem']}
+                        onClick={() => this.changeSelection('shops')}
+                    >
+                        <p>Manage Shops</p>
+                    </div>
                 </div>
                 <Outlet />
             </div>
