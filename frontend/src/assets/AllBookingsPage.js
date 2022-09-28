@@ -273,7 +273,7 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                {this.state.loading ? <p>Loading ... </p> :
+                {this.state.loading ? <p id={allBookingPageStyle.loadingP}>Loading ... </p> :
                     <Row id={allBookingPageStyle.mainContentRow}>
                         <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
                             <p className={allBookingPageStyle.title} >Incoming Bookings</p>
