@@ -82,15 +82,13 @@ class NavBar extends Component {
     navToUserBookings = (e) => {
         console.log("Nav to user bookings page");
 
-        this.props.navigate('/user/getAllBookings/' + "testUserId");
-
-        // let userId = cookie.load('userId');
-        // if (userId !== undefined) {
-        //     this.props.navigate('/user/getAllBookings/' + userId);
-        // }
-        // else {
-        //     showAlert('warning', "Invalid login session", "Please login first");
-        // }
+        let userId = cookie.load('id');
+        if (userId !== undefined) {
+            this.props.navigate('/user/getAllBookings/' + userId);
+        }
+        else {
+            showAlert('warning', "Invalid login session", "Please login first");
+        }
 
     }
 
@@ -119,7 +117,16 @@ class NavBar extends Component {
                         <Menu.Item id={navBarStyle.profile} key="profile">
                             {
                                 cookie.load('role') === "customer" ?
+
                                     <div>
+                                        <Button
+                                            id={navBarStyle.logOutButton}
+                                            type="ghost"
+                                            shape="circle"
+                                            onClick={this.handleLogOut.bind(this)}>
+                                            Log Out
+                                        </Button>
+
                                         <Button id={navBarStyle.bookingButton}
                                             type="ghost"
                                             shape="circle"
@@ -130,18 +137,17 @@ class NavBar extends Component {
                                             shape="circle"
                                             onClick={this.navToUserProfile.bind(this)}
                                             icon={<UserOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
-                                    </div>
-                                    : null
-                            }
-                        </Menu.Item>
-                    }
 
-                    {cookie.load('id') === undefined
-                        ?
-                        null
-                        :
-                        <Menu.Item key=" profile" id={navBarStyle.profile} onClick={this.handleLogOut.bind(this)}>
-                            Log Out
+                                    </div>
+                                    : <Button
+                                        id={navBarStyle.logOutButton}
+                                        type="ghost"
+                                        shape="circle"
+                                        onClick={this.handleLogOut.bind(this)}>
+                                        Log Out
+                                    </Button>
+                            }
+
                         </Menu.Item>
                     }
 

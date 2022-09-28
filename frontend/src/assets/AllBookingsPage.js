@@ -3,6 +3,7 @@ import { Row, Col, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
 import showAlert from './Alert';
 import cookie from 'react-cookies';
+import axios from 'axios';
 
 
 import allBookingPageStyle from '../css/allBookingsPage.module.css';
@@ -13,69 +14,76 @@ const { TextArea } = Input;
 
 class AllBookingsPage extends Component {
 
-
     constructor(props) {
         super(props);
         if (cookie.load('id') !== undefined) {
             if (cookie.load('role') === "business") {
                 this.props.navigate('/business/profile')
             }
+            else {
+                this.fetchAllBookings();
+            }
         }
     }
 
 
     state = {
+        loading: true,
         openCancelConfirm: false,
         openLeaveCommentCard: false,
         pendingDelteService: null,
         pendingCommentService: null,
         userId: this.props.params.userId,
-        incomingBookings: [
-            {
-                id: "testId",
-                name: "service1",
-                price: 100,
-                time: "02/02/2022",
-                isPickUp: false
-            },
-            {
-                id: "testId",
-                name: "service2",
-                price: 200,
-                time: "03/02/2022",
-                isPickUp: false
-            },
-            {
-                id: "testId",
-                name: "service3",
-                price: 300,
-                time: "04/02/2022",
-                isPickUp: true
-            },
-        ],
-        pastBookings: [
-            {
-                id: "testId",
-                name: "past service1",
-                price: 100,
-                time: "01/02/2022",
-                isPickUp: false
-            },
-            {
-                id: "testId",
-                name: "past service2",
-                price: 200,
-                time: "01/02/2022",
-                isPickUp: false
-            },
-            {
-                id: "testId",
-                name: "past service3",
-                price: 300,
-                time: "01/02/2022",
-                isPickUp: true
-            },
-        ]
+        incomingBookings: [],
+        pastBookings: []
+    }
+
+    fetchAllBookings = () => {
+        axios.get('http://localhost:8080/bookings/getAllBookings/' + cookie.load('id'))
+            .then((res) => {
+                // console.log(res.data)
+                if (res.status === 200) {
+                    console.log(res);
+
+                    let data = res.data;
+
+                    const currentTime = new Date();
+
+                    let pastBookings = [];
+                    let incomingBookings = [];
+
+                    for (let booking of data) {
+                        let time = new Date(booking.time);
+
+                        let formattedTime = time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + time.getDate() + "-" + time.getHours() + ":" + time.getMinutes();
+
+                        booking.time = formattedTime;
+
+                        if (currentTime > time) {
+                            pastBookings.push(booking);
+                        }
+                        else {
+                            incomingBookings.push(booking);
+                        }
+                    }
+
+                    this.setState({
+                        incomingBookings: incomingBookings,
+                        pastBookings: pastBookings,
+                        loading: false
+                    })
+                }
+                else {
+                    console.log(res);
+                    this.setState({
+                        incomingBookings: [],
+                        pastBookings: [],
+                        loading: false
+                    })
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
     }
 
     cancelBookingConfirmationCard() {
@@ -198,6 +206,9 @@ class AllBookingsPage extends Component {
     }
 
     showCommentCard = (e) => {
+
+        console.log(e);
+
         this.setState({
             openLeaveCommentCard: true,
             pendingCommentService: e
@@ -219,12 +230,31 @@ class AllBookingsPage extends Component {
 
             console.log(rating, comment);
 
-            showAlert('success', 'Thanks for your comment');
+            let data = {
+                rating: rating,
+                content: comment,
+                userId: cookie.load('id'),
+                serviceId: service.service_id
+            };
 
-            this.setState({
-                openLeaveCommentCard: false,
-                pendingCommentService: null
-            });
+            axios.post(`http://localhost:8080/comments/addComment`, data)
+                .then(res => {
+                    if (res.status === 200) {
+                        showAlert('success', 'Thanks for your comment');
+
+                        this.setState({
+                            openLeaveCommentCard: false,
+                            pendingCommentService: null
+                        });
+
+                    }
+                    else {
+                        showAlert('warning', 'Something went wrong');
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    showAlert('warning', 'Something went wrong');
+                })
         }
     }
 
@@ -243,73 +273,81 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                <Row id={allBookingPageStyle.mainContentRow}>
-                    <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
-                        <p className={allBookingPageStyle.title} >Incoming Bookings</p>
-                        {this.state.incomingBookings.map((service, key) => {
-                            return (
-                                <div className={allBookingPageStyle.serviceCard} key={key}>
-                                    <Row >
-                                        <Col span={7} className={allBookingPageStyle.nameCol}>
-                                            <p>{service.name}</p>
-                                            <p>Price: {service.price}</p>
-                                        </Col>
-
-                                        {service.isPickUp ?
-                                            <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                <p>
-                                                    Pick Up Service
-                                                </p>
+                {this.state.loading ? <p>Loading ... </p> :
+                    <Row id={allBookingPageStyle.mainContentRow}>
+                        <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
+                            <p className={allBookingPageStyle.title} >Incoming Bookings</p>
+                            {this.state.incomingBookings.map((service, key) => {
+                                return (
+                                    <div className={allBookingPageStyle.serviceCard} key={key}>
+                                        <Row >
+                                            <Col span={7} className={allBookingPageStyle.nameCol}>
+                                                <p>{service.service_name}</p>
+                                                <p>Price: {service.price}</p>
                                             </Col>
-                                            :
-                                            <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                <p>Time: </p>
-                                                <p>
-                                                    {service.time}
-                                                </p>
+
+                                            {service.pick_up ?
+                                                <Col span={7} className={allBookingPageStyle.timeCol}>
+                                                    <p>
+                                                        Pick Up Service
+                                                    </p>
+                                                </Col>
+                                                :
+                                                <Col span={7} className={allBookingPageStyle.timeCol}>
+                                                    <p>Time: </p>
+                                                    <p>
+                                                        {service.time}
+                                                    </p>
+                                                </Col>
+                                            }
+
+                                            <Col span={10} className={allBookingPageStyle.buttonCol}>
+                                                <button
+                                                    className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
+                                                    onClick={(e) => this.showCancelConfirm(service)}
+                                                >
+                                                    Cancel Booking
+                                                </button>
                                             </Col>
-                                        }
+                                        </Row>
 
-                                        <Col span={10} className={allBookingPageStyle.buttonCol}>
-                                            <button
-                                                className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
-                                                onClick={(e) => this.showCancelConfirm(service)}
-                                            >
-                                                Cancel Booking
-                                            </button>
-                                        </Col>
-                                    </Row>
+                                    </div>
+                                )
+                            })}
+                        </Col>
+                        <Col id={allBookingPageStyle.pastBookingsCol} span={10}>
+                            <p className={allBookingPageStyle.title}>Past Bookings</p>
+                            {this.state.pastBookings.map((service, key) => {
+                                return (
+                                    <div className={allBookingPageStyle.serviceCard} key={key}>
+                                        <Row >
+                                            <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
+                                                <p>{service.service_name}</p>
+                                                <p>Price: {service.price}</p>
+                                            </Col>
 
-                                </div>
-                            )
-                        })}
-                    </Col>
-                    <Col id={allBookingPageStyle.pastBookingsCol} span={10}>
-                        <p className={allBookingPageStyle.title}>Past Bookings</p>
-                        {this.state.pastBookings.map((service, key) => {
-                            return (
-                                <div className={allBookingPageStyle.serviceCard} key={key}>
-                                    <Row >
-                                        <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
-                                            <p>{service.name}</p>
-                                            <p>Price: {service.price}</p>
-                                        </Col>
+                                            <Col span={14} className={allBookingPageStyle.buttonColPast}>
+                                                {service.available ?
+                                                    <button
+                                                        className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
+                                                        onClick={(e) => this.showCommentCard(service)}
+                                                    >
+                                                        Leave a Comment
+                                                    </button> :
+                                                    <button
+                                                        className={`${generalStyles.redButton} ${allBookingPageStyle.leaveCommentButton}`}
+                                                    >
+                                                        Not Available
+                                                    </button>
+                                                }
+                                            </Col>
+                                        </Row>
 
-                                        <Col span={14} className={allBookingPageStyle.buttonColPast}>
-                                            <button
-                                                className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
-                                                onClick={(e) => this.showCommentCard(service)}
-                                            >
-                                                Leave a Comment
-                                            </button>
-                                        </Col>
-                                    </Row>
-
-                                </div>
-                            )
-                        })}
-                    </Col>
-                </Row>
+                                    </div>
+                                )
+                            })}
+                        </Col>
+                    </Row>}
             </div>
         );
     }
