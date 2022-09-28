@@ -76,7 +76,7 @@ class AllShops extends Component {
     render() {
         return (
             <div>
-                {this.state.showForm ? <AddEditShopForm handleConfirm={this.handleConfirm} handleCancel={this.handleCancel} /> : null}
+                {this.state.showForm ? <AddEditShopForm addShop={true} handleConfirm={this.handleConfirm} handleCancel={this.handleCancel} /> : null}
                 <Col id={allShopStyle.addShopButtonCol}>
                     <button className={generalStyle.yellowButton} onClick={this.openAddShopForm.bind(this)}>+ Add Shop</button>
                 </Col>

@@ -20,12 +20,20 @@ const { TextArea } = Input;
 class AddEditShopForm extends Component {
     constructor(props) {
         super(props);
+        if (!this.state.addShop) {
+            showAlert('warning', 'now showing edit shop form');
+            //TODO: call backend to get he current shop infomation and filled in the corresponding fields in the state
+        }
     }
 
     state = {
+        addShop: this.props.addShop,
+        shopName: "loading...",
+        contactNumber: "loading...",
         startTime: "9:00",
         endTime: "21:00",
-        shopAddress: "",
+        shopAddress: "loading...",
+        shopDescription: "loading...",
         file: null,
         image: {
             file: null,
@@ -33,7 +41,12 @@ class AddEditShopForm extends Component {
         }
     }
 
-    handleConfirm = data => {
+    //TODO: complete this function for edit shop info
+    handleEditShopConfirm = data => {
+        showAlert('warning', 'called edit shop information confirm');
+    }
+
+    handleAddShopConfirm = data => {
         data.image = this.state.image.base64URL;
         data.startTime = this.state.startTime;
         data.endTime = this.state.endTime;
@@ -164,7 +177,7 @@ class AddEditShopForm extends Component {
                         className="login-form"
                         initialValues={{
                         }}
-                        onFinish={this.handleConfirm}
+                        onFinish={this.state.addShop ? this.handleAddShopConfirm : this.handleEditShopConfirm}
                     >
                         <Form.Item
                             id={addEditFormStyle.shopName}
@@ -176,10 +189,16 @@ class AddEditShopForm extends Component {
                                 },
                             ]}
                         >
-                            <Input
-                                style={{ width: "50%" }}
-                                placeholder="Shop Name"
-                            />
+                            {this.state.addShop ?
+                                <Input
+                                    style={{ width: "50%" }}
+                                    placeholder="Shop Name"
+                                /> :
+                                <Input
+                                    style={{ width: "50%" }}
+                                    placeholder="Shop Name"
+                                    defaultValue={this.state.shopName}
+                                />}
                         </Form.Item>
 
                         <Form.Item
@@ -203,10 +222,20 @@ class AddEditShopForm extends Component {
                                 },
                             ]}
                         >
-                            <Input
-                                style={{ width: "50%" }}
-                                placeholder="Contact Number"
-                            />
+
+
+                            {this.state.addShop ?
+                                <Input
+                                    style={{ width: "50%" }}
+                                    placeholder="Contact Number"
+                                /> :
+                                <Input
+                                    style={{ width: "50%" }}
+                                    placeholder="Contact Number"
+                                    defaultValue={this.state.contactNumber}
+
+                                />
+                            }
                         </Form.Item>
 
                         <Row>
@@ -228,7 +257,11 @@ class AddEditShopForm extends Component {
                             name="shopDescription"
                             rules={[{ required: true, message: 'Please input your shop description!' }]}
                         >
-                            <TextArea style={{ width: "50%" }} rows={4} placeholder='Shop Description' />
+                            {this.state.addShop ?
+                                <TextArea style={{ width: "50%" }} rows={4} placeholder='Shop Description' /> :
+                                <TextArea style={{ width: "50%" }} rows={4} placeholder='Shop Description' defaultValue={this.state.shopDescription} />
+                            }
+
                         </Form.Item>
 
                         <Form.Item
