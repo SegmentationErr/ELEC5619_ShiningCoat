@@ -3,6 +3,7 @@ import { Row, Col, Input, Rate, Form } from 'antd';
 import { withRouter } from './withRouter';
 import showAlert from './Alert';
 import cookie from 'react-cookies';
+import axios from 'axios';
 
 
 import allBookingPageStyle from '../css/allBookingsPage.module.css';
@@ -13,18 +14,22 @@ const { TextArea } = Input;
 
 class AllBookingsPage extends Component {
 
-
     constructor(props) {
         super(props);
         if (cookie.load('id') !== undefined) {
             if (cookie.load('role') === "business") {
                 this.props.navigate('/business/profile')
             }
+            else {
+                this.fetchAllBookings();
+            }
         }
+        //TODO: fetch all bookings from backend
     }
 
 
     state = {
+        loading: true,
         openCancelConfirm: false,
         openLeaveCommentCard: false,
         pendingDelteService: null,
@@ -39,14 +44,14 @@ class AllBookingsPage extends Component {
                 isPickUp: false
             },
             {
-                id: 2,
+                id: 1,
                 name: "service2",
                 price: 200,
                 time: "03/02/2022",
                 isPickUp: false
             },
             {
-                id: 3,
+                id: 1,
                 name: "service3",
                 price: 300,
                 time: "04/02/2022",
@@ -55,27 +60,50 @@ class AllBookingsPage extends Component {
         ],
         pastBookings: [
             {
-                id: 4,
+                id: 1,
                 name: "past service1",
                 price: 100,
                 time: "01/02/2022",
                 isPickUp: false
             },
             {
-                id: 5,
+                id: 1,
                 name: "past service2",
                 price: 200,
                 time: "01/02/2022",
                 isPickUp: false
             },
             {
-                id: 6,
+                id: 1,
                 name: "past service3",
                 price: 300,
                 time: "01/02/2022",
                 isPickUp: true
             },
         ]
+    }
+
+    fetchAllBookings = () => {
+        axios.get('http://localhost:8080/bookings/getAllBookings/' + this.state.id)
+            .then((res) => {
+                // console.log(res.data)
+                if (res.status === 200) {
+                    console.log(res);
+                    // this.setState({
+                    //     data: res.data,
+                    //     loading: false
+                    // })
+                }
+                else {
+                    console.log(res);
+                    // this.setState({
+                    //     data: [],
+                    //     loading: false
+                    // })
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
     }
 
     cancelBookingConfirmationCard() {
@@ -220,6 +248,8 @@ class AllBookingsPage extends Component {
             console.log(rating, comment);
 
             showAlert('success', 'Thanks for your comment');
+
+            //TODO: leave a comment, connect to backend
 
             this.setState({
                 openLeaveCommentCard: false,
