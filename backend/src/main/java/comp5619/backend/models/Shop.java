@@ -20,13 +20,15 @@ public class Shop {
 
     private String phone;
 
-    private Integer rating;
-
     private Time start_time;
 
     private Time end_time;
     @Lob
     private String image;
+
+    private Float lat;
+
+    private Float lng;
 
     public Integer getId() {
         return id;
@@ -76,14 +78,6 @@ public class Shop {
         this.phone=phone;
     }
 
-    public Integer getRating(){
-        return rating;
-    }
-
-    public void setRating(Integer rating){
-        this.rating = rating;
-    }
-
     public Time getStartTime(){
         return start_time;
     }
@@ -106,5 +100,21 @@ public class Shop {
 
     public void setImage(String image){
         this.image = image;
+    }
+
+    public void setLat(Float lat){
+        this.lat = lat;
+    }
+
+    public Float getLat(){
+        return this.lat;
+    }
+
+    public void setLng(Float lng){
+        this.lng = lng;
+    }
+
+    public Float getLng(){
+        return this.lng;
     }
 }

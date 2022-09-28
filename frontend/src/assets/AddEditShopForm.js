@@ -17,16 +17,6 @@ const format = 'HH:mm';
 const { TextArea } = Input;
 
 
-// const normFile = (e) => {
-//     console.log('Upload event:', e);
-
-//     if (Array.isArray(e)) {
-//         return e;
-//     }
-
-//     return e?.fileList;
-// };
-
 class AddEditShopForm extends Component {
     constructor(props) {
         super(props);
@@ -50,21 +40,22 @@ class AddEditShopForm extends Component {
         data.userId = cookie.load('id');
         data.shopAddress = this.state.shopAddress;
 
+        console.log(this.state);
+
+        if (this.state.lat === undefined || this.state.lng === undefined) {
+            showAlert('warning', "Invalid Input", "Please choose a address");
+            return;
+        }
+
+        data.lat = this.state.lat;
+        data.lng = this.state.lng;
+
         if (this.state.shopAddress === "") {
             showAlert('warning', "Invalid Input", "Please choose a address");
             return;
         }
 
         console.log(data);
-
-        // const formData = new FormData()
-
-
-        // for (let key in data) {
-        //     formData.append(key, data[key]);
-        // }
-
-        // data.append('image', data.image);
 
         axios.post(`http://localhost:8080/shops/addShop`, data)
             .then(res => {
@@ -81,7 +72,6 @@ class AddEditShopForm extends Component {
                 message.error('Something went wrong.\nPlease Try Again.')
 
             })
-        //this.props.handleConfirm();
     }
 
     onChangeStartTime = (time) => {
@@ -100,27 +90,6 @@ class AddEditShopForm extends Component {
             endTime: String(newTime)
         })
     }
-
-    // onUploadImage = async (event) => {
-    //     const file = event.target.files[0]
-    //     // this.setState({ image: file })
-
-    //     const base64 = await this.convertBase64(file)
-    //     this.setState({ image: base64 })
-    // }
-
-    // convertBase64 = (event) => {
-    //     return new Promise((resolve, reject) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.readAsDataURL(event.target.files[0])
-    //         fileReader.onload = () => {
-    //             resolve(fileReader.result);
-    //         }
-    //         fileReader.onerror = (error) => {
-    //             reject(error);
-    //         }
-    //     })
-    // }
 
     getBase64 = file => {
         return new Promise(resolve => {
@@ -172,9 +141,17 @@ class AddEditShopForm extends Component {
 
     handleInputAddress = e => {
         let formattedAddress = e.formatted_address;
+
+        let geometry = e.geometry;
+
+        let lat = geometry.location.lat();
+        let lng = geometry.location.lng();
+
         this.setState({
-            shopAddress: formattedAddress
-        })
+            shopAddress: formattedAddress,
+            lat: lat,
+            lng: lng
+        });
     }
 
     render() {
@@ -206,20 +183,9 @@ class AddEditShopForm extends Component {
                         </Form.Item>
 
                         <Form.Item
-                        // name="shopAddress"
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: 'Please input your shop address!',
-                        //     },
-                        // ]}
                         >
                             <AddressAutoCompleteInput
                                 handlePlaceSelected={this.handleInputAddress} />
-                            {/* <Input
-                                style={{ width: "50%" }}
-                                placeholder="Shop Address"
-                            /> */}
                         </Form.Item>
 
 
