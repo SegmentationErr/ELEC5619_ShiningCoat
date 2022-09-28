@@ -307,7 +307,7 @@ class AllBookingsPage extends Component {
                                     <div className={allBookingPageStyle.serviceCard} key={key}>
                                         <Row >
                                             <Col span={7} className={allBookingPageStyle.nameCol}>
-                                                <p>{service.name}</p>
+                                                <p>{service.service_name}</p>
                                                 <p>Price: {service.price}</p>
                                             </Col>
 
@@ -347,7 +347,7 @@ class AllBookingsPage extends Component {
                                     <div className={allBookingPageStyle.serviceCard} key={key}>
                                         <Row >
                                             <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
-                                                <p>{service.name}</p>
+                                                <p>{service.service_name}</p>
                                                 <p>Price: {service.price}</p>
                                             </Col>
 
