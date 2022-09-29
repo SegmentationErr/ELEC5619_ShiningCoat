@@ -2,6 +2,12 @@
     text-align: left;
 }
 
+#loadingP {
+    font-weight: bold;
+    font-size: 35px;
+    text-align: center;
+}
+
 .title {
     font-weight: bold;
     font-size: 35px;

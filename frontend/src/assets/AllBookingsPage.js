@@ -52,6 +52,13 @@ class AllBookingsPage extends Component {
                     let pastBookings = [];
                     let incomingBookings = [];
 
+                    data.sort(function (a, b) {
+                        const date1 = new Date(a.time)
+                        const date2 = new Date(b.time)
+
+                        return date1 - date2;
+                    })
+
                     for (let booking of data) {
                         let time = new Date(booking.time);
 
@@ -90,14 +97,18 @@ class AllBookingsPage extends Component {
         return (
             <div className={allBookingPageStyle.cover}>
                 <div className={allBookingPageStyle.validationCardcCancelBooking}>
-                    <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.name}?</p>
+                    {
+                        this.state.pendingDelteService.pick_up ?
+                            <p>Are you sure you want to cancel booking for pick up service: {this.state.pendingDelteService.service_name}?</p> :
+                            <p>Are you sure you want to cancel booking for {this.state.pendingDelteService.service_name} at {this.state.pendingDelteService.time}?</p>
+                    }
                     <Row id={allBookingPageStyle.cancelBookingConfirmRow}>
                         <Col span={12}>
                             <button className={generalStyles.redButton}
                                 id={allBookingPageStyle.confirmDelete}
                                 onClick={(e) => this.confirmDeleteBooking()}
                             >
-                                Confirm Delete
+                                Confirm
                             </button>
                         </Col>
                         <Col span={12}>
@@ -185,16 +196,35 @@ class AllBookingsPage extends Component {
     confirmDeleteBooking = (e) => {
         console.log("confirm delete this booking");
         let service = this.state.pendingDelteService;
-        if (service === null) {
+        if (service === null || !service.available) {
             showAlert('error', 'Please select a booking first');
         }
         else {
             console.log(service);
-            showAlert('success', 'Successfully deleted this booking');
-            this.setState({
-                openCancelConfirm: false,
-                pendingDelteService: null
-            });
+
+            let data = {
+                id: service.id
+            }
+
+            axios.post(`http://localhost:8080/bookings/deleteBooking`, data)
+                .then(res => {
+                    if (res.status === 200) {
+                        showAlert('success', 'Successfully deleted this booking');
+                        this.setState({
+                            openCancelConfirm: false,
+                            pendingDelteService: null
+                        });
+                        window.location.reload(false);
+                    }
+                    else {
+                        showAlert('warning', 'Something went wrong');
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    showAlert('warning', 'Something went wrong');
+                })
+
+
         }
     }
 
@@ -218,7 +248,7 @@ class AllBookingsPage extends Component {
     confirmLeaveComment = (para) => {
         console.log("confirm leave a comment");
         let service = this.state.pendingCommentService;
-        if (service === null) {
+        if (service === null || !service.available) {
             showAlert('error', 'Please select a booking first');
         }
         else {
@@ -273,7 +303,7 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                {this.state.loading ? <p>Loading ... </p> :
+                {this.state.loading ? <p id={allBookingPageStyle.loadingP}>Loading ... </p> :
                     <Row id={allBookingPageStyle.mainContentRow}>
                         <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
                             <p className={allBookingPageStyle.title} >Incoming Bookings</p>
