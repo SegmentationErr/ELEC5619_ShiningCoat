@@ -17,7 +17,7 @@ import ManageProfilePage from './assets/ManageProfilePage';
 import AllShops from './assets/AllShops';
 import LocationMapPage from './assets/LocationMapPage';
 import GoogleSignIn from './assets/GoogleSignIn';
-import ManageShopsPage from './assets/ManageShopPage';
+import AddEditServiceForm from './assets/AddEditServiceForm';
 
 export default function App() {
   document.body.style.backgroundColor = "#F3E3CF";
@@ -32,7 +32,9 @@ export default function App() {
         <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
           <Route path="shops" element={<AllShops />} />
-          <Route path="manageShop/:id" element={<ManageShopsPage />} />
+          <Route path="manageShop/:id" element={<ShopDetailPage />} />
+          {/* <Route path="addService/:shop_id" element={<AddEditServiceForm />} /> */}
+          {/* <Route path="editService/:id" element={< />} /> */}
         </Route>
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />

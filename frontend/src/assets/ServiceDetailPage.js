@@ -48,7 +48,7 @@ class ServiceDetailPage extends Component {
     }
 
     fetchServiceDetail = () => {
-        axios.get('http://localhost:8080/service/getServiceDetailById/' + this.state.id)
+        axios.get('http://localhost:8080/services/getServiceDetailById/' + this.state.id)
             .then((res) => {
                 if (res.status === 200) {
                     console.log(res.data);
