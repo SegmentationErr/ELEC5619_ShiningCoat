@@ -41,12 +41,8 @@ public class BookingController {
 
     @PostMapping(path = "/deleteBooking")
     public @ResponseBody ResponseEntity<Object> deleteBookingById(@RequestBody Map<String, String> params) {
-
-
+        
         String id = params.get("id");
-
-        System.out.println(id);
-
 
         Map<String,Object> result = bookingRepository.getBookingById(id);
 
