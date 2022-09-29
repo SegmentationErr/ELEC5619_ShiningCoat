@@ -38,4 +38,24 @@ public class BookingController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PostMapping(path = "/deleteBooking")
+    public @ResponseBody ResponseEntity<Object> deleteBookingById(@RequestBody Map<String, String> params) {
+
+
+        String id = params.get("id");
+
+        System.out.println(id);
+
+
+        Map<String,Object> result = bookingRepository.getBookingById(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        bookingRepository.deleteBookingById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
 }
