@@ -25,8 +25,10 @@
 
 #form {
     padding-top: 5%;
+    text-align: center;
 }
 
+/* 
 #startTimeCol {
     text-align: right;
     padding-right: 20px;
@@ -35,4 +37,4 @@
 #endTimeCol {
     text-align: left;
     padding-left: 20px;
-}
+} */

@@ -7,13 +7,14 @@ import styles from '../css/manageShopPage.module.css'
 import cookie from 'react-cookies';
 import axios from 'axios';
 import AddEditServiceForm from './AddEditServiceForm';
+import AddEditShopForm from './AddEditShopForm';
 
 class ShopDetailPage extends Component {
 
     state = {
         id: this.props.params.id,
         // data: {}, 
-        data:{
+        data: {
             user_id: "",
             phone: "",
             end_time: "",
@@ -22,12 +23,13 @@ class ShopDetailPage extends Component {
             address: "",
             start_time: "",
             id: "",
-            image: "", 
+            image: "",
             services: [],
         },
         shop_loading: true,
         service_loading: true,
-        showForm: false
+        showForm: false,
+        showEditShopForm: false
     }
 
     constructor(props) {
@@ -45,9 +47,11 @@ class ShopDetailPage extends Component {
 
                 var shopData = res.data
                 shopData["services"] = this.state.data["services"]
-                
+
+                console.log(shopData)
+
                 if (res.status === 200) {
-                        this.setState({
+                    this.setState({
                         data: shopData,
                         // loading: false
                     })
@@ -87,6 +91,18 @@ class ShopDetailPage extends Component {
         })
     }
 
+
+    changeEditShopFormDisplay = () => {
+        if (this.state.showForm) {
+            document.body.style.overflow = "visible"
+        } else {
+            document.body.style.overflow = "hidden"
+        }
+        this.setState({
+            showEditShopForm: !this.state.showEditShopForm
+        })
+    }
+
     renderProfile() {
         return (
             <>
@@ -99,7 +115,7 @@ class ShopDetailPage extends Component {
                     availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
                 />
                 {cookie.load('role') === "customer" ? null :
-                    <button className="yellowButton">
+                    <button className="yellowButton" onClick={this.changeEditShopFormDisplay}>
                         Edit shop
                     </button>
                 }
@@ -120,7 +136,22 @@ class ShopDetailPage extends Component {
 
         return (
             <div>
-                {this.state.showForm ? <AddEditServiceForm handleCancel={this.changeFormDisplay} shop_id={this.state.data.id}/> : null}
+                {this.state.showForm ? <AddEditServiceForm handleCancel={this.changeFormDisplay} shop_id={this.state.data.id} /> : null}
+                {this.state.showEditShopForm ?
+                    <AddEditShopForm
+                        addShop={false}
+                        handleCancel={this.changeEditShopFormDisplay}
+                        shop_id={this.state.data.id}
+                        shop_name={this.state.data.shop_name}
+                        address={this.state.data.address}
+                        phone={this.state.data.phone}
+                        start_time={this.state.data.start_time}
+                        end_time={this.state.data.end_time}
+                        description={this.state.data.description}
+                        image={this.state.data.image}
+                        lat={this.state.data.lat}
+                        lng={this.state.data.lng}
+                    /> : null}
                 <div id={styles['shopProfilePage']}>
                     <Row id="shopProfileRow">
                         <Col span={8} id={styles['profileModule']}>
@@ -178,10 +209,10 @@ class Services extends Component {
 
             <div>
                 <div className={styles.title}>
-                    <p style={{display: "inline-block"}}>Available Services</p>
+                    <p style={{ display: "inline-block" }}>Available Services</p>
                     {cookie.load('role') === "customer" ? null :
-                        <button id={styles["AddServices"]} className="yellowButton" type="submit" style={{display: "inline-block", float: 'right'}}
-                            onClick={() => {this.props.changeFormDisplay()}}
+                        <button id={styles["AddServices"]} className="yellowButton" type="submit" style={{ display: "inline-block", float: 'right' }}
+                            onClick={() => { this.props.changeFormDisplay() }}
                         >
                             + Add Services
                         </button>
