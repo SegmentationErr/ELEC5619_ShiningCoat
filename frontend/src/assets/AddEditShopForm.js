@@ -230,6 +230,8 @@ class AddEditShopForm extends Component {
                                 } : {}
                         }
                         onFinish={this.state.addShop ? this.handleAddShopConfirm : this.handleEditShopConfirm}
+                        labelCol={{ span: 8 }}
+                        wrapperCol={{ span: 25 }}
                     >
                         <Form.Item
                             id={addEditFormStyle.shopName}
@@ -353,7 +355,6 @@ class AddEditShopForm extends Component {
                                 Cancel
                             </button>
                         </Form.Item>
-
 
                     </Form>
                 </div>

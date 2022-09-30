@@ -14,10 +14,6 @@ class AddressAutoCompleteInput extends Component {
         super(props);
     }
 
-    // checkDetail = (e) => {
-    //     this.props.navigate('/business/manageShop/' + this.props.id);
-    // }
-
     render() {
         return (
             <Autocomplete
