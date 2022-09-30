@@ -199,6 +199,7 @@ class Services extends Component {
                                         time={service.time}
                                         rating={service.rating}
                                         isService={true}
+                                        id={service.id}
                                     />
                                 </Col>
                             )

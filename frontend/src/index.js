@@ -33,8 +33,7 @@ export default function App() {
           <Route path="profile" element={<ManageProfilePage />} />
           <Route path="shops" element={<AllShops />} />
           <Route path="manageShop/:id" element={<ShopDetailPage />} />
-          {/* <Route path="addService/:shop_id" element={<AddEditServiceForm />} /> */}
-          {/* <Route path="editService/:id" element={< />} /> */}
+          <Route path="manageService/:id" element={<ServiceDetailPage />} />
         </Route>
         <Route exact path="/signIn" element={<SignInPage />} />
         <Route exact path="/signUp" element={<SignUpPage />} />

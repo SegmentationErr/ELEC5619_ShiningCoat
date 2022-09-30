@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { Image, Card, Row, Col, Button } from 'antd';
 import { HeartTwoTone } from '@ant-design/icons';
 import { withRouter } from './withRouter';
+import cookie from 'react-cookies';
 
 import styles from '../css/serviceDetailPage.module.css'
 import axios from "axios";
+import AddEditServiceForm from './AddEditServiceForm';
 
 class ServiceDetailPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.state.id);
         this.fetchServiceDetail()
     }
 
@@ -29,7 +30,9 @@ class ServiceDetailPage extends Component {
             shop_name: 'Fetching Data...',
             total_sold: null,
             start_time: null,
-            end_time: null
+            end_time: null,
+
+            showForm: false
             // customer_reviews: [
             //     {
             //         user_name: "James",
@@ -51,7 +54,7 @@ class ServiceDetailPage extends Component {
         axios.get('http://localhost:8080/services/getServiceDetailById/' + this.state.id)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         service_details: res.data
                     })
@@ -65,10 +68,29 @@ class ServiceDetailPage extends Component {
         this.props.navigate('/LocationMapPage/' + this.state.id);
     }
 
+    changeFormDisplay = () => {
+        if (this.state.showForm) {
+            document.body.style.overflow = "visible"
+        } else {
+            document.body.style.overflow = "hidden"
+        }
+        this.setState({
+            showForm: !this.state.showForm
+        })
+        // console.log(this.state.service_details)
+    }
+
     render() {
         return (
             <div>
-
+                {this.state.showForm ?
+                    <AddEditServiceForm
+                        handleCancel={this.changeFormDisplay}
+                        shop_id={-1}
+                        service_id={this.state.id}
+                        service_details={this.state.service_details}
+                    /> : null
+                }
                 <Card id={styles['service_detail']}>
                     <Row>
                         <Col span={12}>
@@ -93,6 +115,13 @@ class ServiceDetailPage extends Component {
                                 <p>{'Total Sold: ' + this.state.service_details.total_sold}</p>
                                 <p>{'Description: ' + this.state.service_details.description}</p>
                             </div>
+                            {cookie.load('role') === "customer" ? null :
+                                <button id={styles["AddServices"]} className="yellowButton" type="submit"
+                                    onClick={() => {this.changeFormDisplay()}}
+                                >
+                                    + Edit Services
+                                </button>
+                            }
                         </Col>
                     </Row>
                     <Row>

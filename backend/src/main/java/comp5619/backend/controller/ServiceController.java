@@ -53,17 +53,7 @@ public class ServiceController {
 
     @PostMapping(path = "/add")
     public @ResponseBody ResponseEntity<Map<String, Object>> addService(@RequestBody Map<String, Object> params) {
-        // String username = params.get("username");
-        // String email = params.get("email");
-        // String password = params.get("password");
-        // String role = params.get("role");
-
         Map<String, Object> response = new HashMap<>();
-
-        // if (serviceRepository.getUserByNameOrEmail(username, email).size() != 0) {
-        //     response.put("Message", "User Exists");
-        //     return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        // }
 
         Service newService = new Service();
         newService.setAvailable((int)params.get("available"));
@@ -80,5 +70,18 @@ public class ServiceController {
 
         response.put("Message", "Create Service Success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping(path = "/update")
+    public @ResponseBody ResponseEntity<Object> updataService(@RequestBody Map<String, String> params) {
+        serviceRepository.updateServiceyId(params.get("service_id"),
+                params.get("serviceName"),
+                params.get("serviceDescription"),
+                params.get("available"),
+                params.get("pickup"),
+                params.get("price"),
+                params.get("image"));
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 }

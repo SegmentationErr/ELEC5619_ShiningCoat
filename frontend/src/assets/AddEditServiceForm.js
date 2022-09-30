@@ -15,11 +15,38 @@ class AddEditServiceForm extends Component {
     }
     
     state = {
-        // mode: window.location.pathname.split('/')[1] === 'business' ? 'add' : 'edit',
         image: null
     }
 
     handleConfirm = data => {
+        if (this.props.shop_id == -1) {
+            data.image = this.state.image ? this.state.image : this.props.service_details.image
+            data.service_id = this.props.service_id
+            // console.log(data)
+            this.updateService(data)
+        } else {
+            this.newService(data)
+        }
+    }
+
+    updateService = data => {
+        axios.post(`http://localhost:8080/services/update`, data)
+            .then(res => {
+                if (res.status === 200) {
+                    message.success('Successfully Create Service!');
+                    window.location.reload()
+                }
+                else {
+                    message.error("Something went wrong")
+                }
+            }).catch((error) => {
+                console.log(error);
+                message.error('Something went wrong.\nPlease Try Again.')
+
+            })
+    }
+
+    newService = data => {
         data.image = this.state.image
         data.shop_id = this.props.shop_id
         data.price = data.price.toString()
@@ -95,9 +122,16 @@ class AddEditServiceForm extends Component {
                         id={addEditFormStyle.form}
                         name="normal_login"
                         className="login-form"
-                        initialValues={{
-                            // TODO!!!
-                        }}
+                        initialValues={
+                            this.props.shop_id == -1 ?
+                            {
+                                serviceName: this.props.service_details.service_name,
+                                price: this.props.service_details.price,
+                                serviceDescription: this.props.service_details.description,
+                                pickup: this.props.service_details.pick_up ? 1 : 0,
+                                available: this.props.service_details.available ? 1 : 0,
+                            } : {}
+                        }
                         onFinish={this.handleConfirm}
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 12 }}

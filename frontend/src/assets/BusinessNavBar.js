@@ -5,7 +5,7 @@ import { withRouter } from './withRouter';
 
 class BusinessNavBar extends Component {
     state = {
-        currSelected: 'profile'
+        currSelected: window.location.pathname.split('/')[2] === 'profile' ? 'profile' : 'shops'
     }
 
     changeSelection = (selection) => {
