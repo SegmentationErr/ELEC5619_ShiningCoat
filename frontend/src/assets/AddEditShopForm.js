@@ -10,7 +10,6 @@ import { FileAddOutlined } from '@ant-design/icons';
 
 
 import moment from 'moment';
-import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
 
@@ -22,30 +21,30 @@ const { TextArea } = Input;
 class AddEditShopForm extends Component {
     constructor(props) {
         super(props);
-        if (!this.state.addShop) {
-            showAlert('warning', 'now showing edit shop form');
-            //TODO: call backend to get he current shop infomation and filled in the corresponding fields in the state
-        }
     }
 
     state = {
         addShop: this.props.addShop,
-        shopName: "loading...",
-        contactNumber: "loading...",
-        startTime: "9:00",
-        endTime: "21:00",
-        shopAddress: "loading...",
-        shopDescription: "loading...",
+        shopName: this.props.shop_name,
+        contactNumber: this.props.phone,
+        startTime: this.props.start_time,
+        endTime: this.props.end_time,
+        shopAddress: this.props.address,
+        shopDescription: this.props.description,
         file: null,
         image: {
             file: null,
-            base64URL: ""
+            base64URL: this.props.image
         }
     }
 
     //TODO: complete this function for edit shop info
     handleEditShopConfirm = data => {
         showAlert('warning', 'called edit shop information confirm');
+
+        console.log(this.state);
+
+        console.log(data);
     }
 
     handleAddShopConfirm = data => {
@@ -193,8 +192,15 @@ class AddEditShopForm extends Component {
                         id={addEditFormStyle.form}
                         name="normal_login"
                         className="login-form"
-                        initialValues={{
-                        }}
+                        initialValues={
+                            !this.props.addShop ?
+                                {
+                                    shopName: this.props.shop_name,
+                                    contactNumber: this.props.phone,
+                                    shopDescription: this.props.description,
+                                    image: this.props.image
+                                } : {}
+                        }
                         onFinish={this.state.addShop ? this.handleAddShopConfirm : this.handleEditShopConfirm}
                     >
                         <Form.Item
@@ -206,6 +212,7 @@ class AddEditShopForm extends Component {
                                     message: 'Please input your shop name!',
                                 },
                             ]}
+                            label='Shop Name'
                         >
                             {this.state.addShop ?
                                 <Input
@@ -220,6 +227,7 @@ class AddEditShopForm extends Component {
                         </Form.Item>
 
                         <Form.Item
+                            label='Shop Location'
                         >
                             <AddressAutoCompleteInput
                                 handlePlaceSelected={this.handleInputAddress} />
@@ -239,6 +247,7 @@ class AddEditShopForm extends Component {
                                     message: 'The input is not valid phone number!',
                                 },
                             ]}
+                            label='Contact Number'
                         >
 
 
@@ -256,24 +265,24 @@ class AddEditShopForm extends Component {
                             }
                         </Form.Item>
 
-                        <Row>
-                            <Col span={12} id={addEditFormStyle.startTimeCol}>
-                                <Form.Item name="startTime">
-                                    <p>Working Time Starts</p>
-                                    <TimePicker format={format} defaultValue={moment(this.state.startTime, format)} onChange={this.onChangeStartTime} />
-                                </Form.Item>
-                            </Col>
-                            <Col span={12} id={addEditFormStyle.endTimeCol}>
-                                <Form.Item name="endTime">
-                                    <p>Working Time Ends</p>
-                                    <TimePicker format={format} defaultValue={moment(this.state.endTime, format)} onChange={this.onChangeEndTime} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+
+                        <Form.Item
+                            name="startTime"
+                            label='Work time starts'>
+                            <TimePicker format={format} defaultValue={moment(this.state.startTime, format)} onChange={this.onChangeStartTime} />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            name="endTime"
+                            label='Work time ends'>
+                            <TimePicker format={format} defaultValue={moment(this.state.endTime, format)} onChange={this.onChangeEndTime} />
+                        </Form.Item>
 
                         <Form.Item
                             name="shopDescription"
                             rules={[{ required: true, message: 'Please input your shop description!' }]}
+                            label='Shop Description'
                         >
                             {this.state.addShop ?
                                 <TextArea style={{ width: "50%" }} rows={4} placeholder='Shop Description' /> :
@@ -284,22 +293,10 @@ class AddEditShopForm extends Component {
 
                         <Form.Item
                             name="image"
-                        // valuePropName="filelist"
-                        // getValueFromEvent={normFile}
+                            label='Shop Cover Image'
                         >
                             <Row id={addEditFormStyle.uploadImageDiv}>
                                 <Col span={12} offset={6}>
-                                    {/* <input
-                                        id="originalFileName"
-                                        type="file"
-                                        inputprops={{ accept: 'image/*, .xlsx, .xls, .csv, .pdf, .pptx, .pptm, .ppt' }}
-                                        required
-                                        label="Document"
-                                        name="originalFileName"
-                                        onChange={e => this.handleFileInputChange(e)}
-                                        size="small"
-                                        variant="standard"
-                                    /> */}
                                     <Upload
                                         name="avatar"
                                         listType="picture-card"

@@ -17,4 +17,15 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
     @Query(value = "select * FROM shops where id=:shop_id", nativeQuery = true)
     Map<String, Object> getShopDetail(@Param("shop_id") String shop_id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE services SET service_name=:service_name, description=:description, available=:available, pick_up=:pick_up, price=:price, image=:image WHERE id=:id", nativeQuery = true)
+    void updateShopDetails(@Param("id") String id,
+                          @Param("service_name") String service_name,
+                          @Param("description") String description,
+                          @Param("available") String available,
+                          @Param("pick_up") String pick_up,
+                          @Param("price") String price,
+                          @Param("image") String image);
+
 }
