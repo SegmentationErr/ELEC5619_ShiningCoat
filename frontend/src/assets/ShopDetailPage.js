@@ -224,6 +224,7 @@ class Services extends Component {
                             return (
                                 <Col span={8}>
                                     <ResultCard
+                                        key={key}
                                         name={service.service_name}
                                         imgSrc={service.image}
                                         location={service.location}
