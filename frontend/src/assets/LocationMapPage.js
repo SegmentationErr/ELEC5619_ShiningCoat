@@ -16,7 +16,7 @@ export class LocationMapPage extends Component {
     }
 
     fetchMapInfo() {
-        axios.get('http://localhost:8080/service/getMapInfoById/' + this.state.id)
+        axios.get('http://localhost:8080/services/getMapInfoById/' + this.state.id)
             .then((res) => {
                 if (res.status === 200) {
                     this.setState({

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Image } from 'antd';
 import { withRouter } from './withRouter';
+import cookie from 'react-cookies';
 
 
 class ResultCard extends Component {
@@ -9,6 +10,11 @@ class ResultCard extends Component {
     }
 
     checkDetail = (e) => {
+        if (cookie.load('role') === "business") {
+            this.props.navigate('/business/manageService/' + this.props.id);
+            return;
+        }
+
         if (this.props.isService) {
             this.props.navigate('/serviceDetailPage/' + this.props.id);
         }

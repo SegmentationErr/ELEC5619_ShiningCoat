@@ -6,6 +6,7 @@ import ResultCard from './ResultCard';
 import styles from '../css/manageShopPage.module.css'
 import cookie from 'react-cookies';
 import axios from 'axios';
+import AddEditServiceForm from './AddEditServiceForm';
 
 class ShopDetailPage extends Component {
 
@@ -15,16 +16,18 @@ class ShopDetailPage extends Component {
         data:{
             user_id: "",
             phone: "",
-            end_time: "]",
+            end_time: "",
             shop_name: "",
             description: "",
             address: "",
             start_time: "",
-            id: '',
+            id: "",
             image: "", 
             services: [],
         },
-        // loading: true
+        shop_loading: true,
+        service_loading: true,
+        showForm: false
     }
 
     constructor(props) {
@@ -36,12 +39,13 @@ class ShopDetailPage extends Component {
     fetchShopDetail = () => {
         axios.get('http://localhost:8080/shops/getShopDetail/' + this.state.id)
             .then((res) => {
+                this.setState({
+                    shop_loading: false
+                })
+
                 var shopData = res.data
-                if (this.state.data['services'] == []){
-                    shopData["services"] = []
-                }else{
-                    shopData["services"] = this.state.data["services"]
-                }
+                shopData["services"] = this.state.data["services"]
+                
                 if (res.status === 200) {
                         this.setState({
                         data: shopData,
@@ -53,16 +57,16 @@ class ShopDetailPage extends Component {
             })
     }
     fetchServices = () => {
-        axios.get('http://localhost:8080/service/getServices/' + this.state.id)
+        axios.get('http://localhost:8080/services/getServices/' + this.state.id)
             .then((res) => {
-                console.log("++++++")
-                
-                var updateData = this.state.data
+                this.setState({
+                    service_loading: false
+                })
 
-                updateData["services"] = res.data
-                console.log(updateData)
                 if (res.status === 200) {
-                        this.setState({
+                    var updateData = this.state.data
+                    updateData["services"] = res.data
+                    this.setState({
                         data: updateData,
                         // loading: false
                     })
@@ -72,17 +76,34 @@ class ShopDetailPage extends Component {
             })
     }
 
+    changeFormDisplay = () => {
+        if (this.state.showForm) {
+            document.body.style.overflow = "visible"
+        } else {
+            document.body.style.overflow = "hidden"
+        }
+        this.setState({
+            showForm: !this.state.showForm
+        })
+    }
+
     renderProfile() {
         return (
-            <Profile
-                id={this.state.data._id}
-                shopName={this.state.data.shop_name}
-                location={this.state.data.address}
-                contactNumber={this.state.data.phone}
-                imgSrc={this.state.data.image}
-                availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
-
-            />
+            <>
+                <Profile
+                    id={this.state.data._id}
+                    shopName={this.state.data.shop_name}
+                    location={this.state.data.address}
+                    contactNumber={this.state.data.phone}
+                    imgSrc={this.state.data.image}
+                    availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
+                />
+                {cookie.load('role') === "customer" ? null :
+                    <button className="yellowButton">
+                        Edit shop
+                    </button>
+                }
+            </>
         );
     }
 
@@ -90,7 +111,7 @@ class ShopDetailPage extends Component {
         return (
             <Services
                 services={this.state.data.services}
-                usertype={cookie.load('role')}
+                changeFormDisplay={this.changeFormDisplay}
             />
         );
     }
@@ -98,22 +119,19 @@ class ShopDetailPage extends Component {
     render() {
 
         return (
-            <span>
-                {/* {this.state.loading ?
-                    <div>Loading .... </div>
-                    : */}
-                    <div id={styles['shopProfilePage']}>
-                        <Row id="shopProfileRow">
-                            <Col span={8} id={styles['profileModule']}>
-                                {this.renderProfile()}
-                            </Col>
-                            <Col span={16} id={styles['servicesModule']}>
-                                {this.renderServices()}
-                            </Col>
-                        </Row>
-                    </div>
-                {/* } */}
-            </span>
+            <div>
+                {this.state.showForm ? <AddEditServiceForm handleCancel={this.changeFormDisplay} shop_id={this.state.data.id}/> : null}
+                <div id={styles['shopProfilePage']}>
+                    <Row id="shopProfileRow">
+                        <Col span={8} id={styles['profileModule']}>
+                            {this.state.shop_loading ? <p>Loading</p> : this.renderProfile()}
+                        </Col>
+                        <Col span={16} id={styles['servicesModule']}>
+                            {this.state.service_loading ? <p>Loading</p> : this.renderServices()}
+                        </Col>
+                    </Row>
+                </div>
+            </div>
         );
     }
 }
@@ -160,10 +178,14 @@ class Services extends Component {
 
             <div>
                 <div className={styles.title}>
-                    {"Available Services"}
-                    {this.props.userType === "customer" ? null : <button id={styles["AddServices"]} className="yellowButton" type="submit">
-                        + Add Services
-                    </button>}
+                    <p style={{display: "inline-block"}}>Available Services</p>
+                    {cookie.load('role') === "customer" ? null :
+                        <button id={styles["AddServices"]} className="yellowButton" type="submit" style={{display: "inline-block", float: 'right'}}
+                            onClick={() => {this.props.changeFormDisplay()}}
+                        >
+                            + Add Services
+                        </button>
+                    }
                 </div>
                 <div>
                     <Row>
@@ -177,6 +199,7 @@ class Services extends Component {
                                         time={service.time}
                                         rating={service.rating}
                                         isService={true}
+                                        id={service.id}
                                     />
                                 </Col>
                             )
