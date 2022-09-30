@@ -5,10 +5,6 @@ import cookie from 'react-cookies';
 
 
 class ResultCard extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     checkDetail = (e) => {
         if (cookie.load('role') === "business") {
             this.props.navigate('/business/manageService/' + this.props.id);

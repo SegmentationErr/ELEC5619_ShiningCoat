@@ -17,7 +17,6 @@ import ManageProfilePage from './assets/ManageProfilePage';
 import AllShops from './assets/AllShops';
 import LocationMapPage from './assets/LocationMapPage';
 import GoogleSignIn from './assets/GoogleSignIn';
-import AddEditServiceForm from './assets/AddEditServiceForm';
 
 export default function App() {
   document.body.style.backgroundColor = "#F3E3CF";

@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from 'react';
-import { Menu, Row, Col, Button, Space, Input, Slider, Image } from 'antd';
+import React, { Component } from 'react';
+import { Row, Col, Image } from 'antd';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 

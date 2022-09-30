@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, TimePicker, Col, Row, Upload, message, InputNumber, Radio } from 'antd';
+import { Form, Input, Upload, message, InputNumber, Radio } from 'antd';
 import { FileAddOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
@@ -10,16 +10,12 @@ import generalStyles from '../css/generalComponents.module.css';
 const { TextArea } = Input;
 
 class AddEditServiceForm extends Component {
-    constructor(props) {
-        super(props);
-    }
-    
     state = {
         image: null
     }
 
     handleConfirm = data => {
-        if (this.props.shop_id == -1) {
+        if (this.props.shop_id === -1) {
             data.image = this.state.image ? this.state.image : this.props.service_details.image
             data.service_id = this.props.service_id
             // console.log(data)
@@ -123,7 +119,7 @@ class AddEditServiceForm extends Component {
                         name="normal_login"
                         className="login-form"
                         initialValues={
-                            this.props.shop_id == -1 ?
+                            this.props.shop_id === -1 ?
                             {
                                 serviceName: this.props.service_details.service_name,
                                 price: this.props.service_details.price,
