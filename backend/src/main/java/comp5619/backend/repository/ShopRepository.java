@@ -1,6 +1,7 @@
 package comp5619.backend.repository;
 import comp5619.backend.models.Shop;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,16 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE services SET service_name=:service_name, description=:description, available=:available, pick_up=:pick_up, price=:price, image=:image WHERE id=:id", nativeQuery = true)
+    @Query(value = "UPDATE shops SET shop_name=:shop_name, address=:address, lat=:lat, lng=:lng, description=:description, phone=:phone, start_time=:start_time, end_time=:end_time, image=:image WHERE id=:id", nativeQuery = true)
     void updateShopDetails(@Param("id") String id,
-                          @Param("service_name") String service_name,
+                          @Param("shop_name") String shop_name,
+                          @Param("address") String address,
+                          @Param("lat") Float lat,
+                          @Param("lng") Float lng,
                           @Param("description") String description,
-                          @Param("available") String available,
-                          @Param("pick_up") String pick_up,
-                          @Param("price") String price,
+                          @Param("phone") String phone,
+                          @Param("start_time") Time start_time,
+                          @Param("end_time") Time end_time,
                           @Param("image") String image);
 
 }

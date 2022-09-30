@@ -31,6 +31,8 @@ class AddEditShopForm extends Component {
         endTime: this.props.end_time,
         shopAddress: this.props.address,
         shopDescription: this.props.description,
+        lat: this.props.lat,
+        lng: this.props.lng,
         file: null,
         image: {
             file: null,
@@ -38,13 +40,43 @@ class AddEditShopForm extends Component {
         }
     }
 
-    //TODO: complete this function for edit shop info
     handleEditShopConfirm = data => {
-        showAlert('warning', 'called edit shop information confirm');
 
-        console.log(this.state);
+        data.image = this.state.image.base64URL;
+        data.startTime = this.state.startTime;
+        data.endTime = this.state.endTime;
+        data.userId = this.props.shop_id;
+        data.shopAddress = this.state.shopAddress;
+
+        if (this.state.lat === undefined || this.state.lng === undefined) {
+            showAlert('warning', "Invalid Input", "Please choose a address");
+            return;
+        }
+
+        if (this.state.shopAddress === "") {
+            showAlert('warning', "Invalid Input", "Please choose a address");
+            return;
+        }
+
+        data.lat = this.state.lat;
+        data.lng = this.state.lng;
 
         console.log(data);
+
+
+        axios.post(`http://localhost:8080/shops/updateShop`, data)
+            .then(res => {
+                if (res.status === 200) {
+                    showAlert('success', "Successfully Update Shop!");
+                    window.location.reload();
+                }
+                else {
+                    showAlert('warning', "Something went wrong");
+                }
+            }).catch((error) => {
+                console.log(error);
+                showAlert('warning', "Something went wrong");
+            })
     }
 
     handleAddShopConfirm = data => {
@@ -53,8 +85,6 @@ class AddEditShopForm extends Component {
         data.endTime = this.state.endTime;
         data.userId = cookie.load('id');
         data.shopAddress = this.state.shopAddress;
-
-        console.log(this.state);
 
         if (this.state.lat === undefined || this.state.lng === undefined) {
             showAlert('warning', "Invalid Input", "Please choose a address");
@@ -68,8 +98,6 @@ class AddEditShopForm extends Component {
             showAlert('warning', "Invalid Input", "Please choose a address");
             return;
         }
-
-        console.log(data);
 
         axios.post(`http://localhost:8080/shops/addShop`, data)
             .then(res => {

@@ -149,6 +149,8 @@ class ShopDetailPage extends Component {
                         end_time={this.state.data.end_time}
                         description={this.state.data.description}
                         image={this.state.data.image}
+                        lat={this.state.data.lat}
+                        lng={this.state.data.lng}
                     /> : null}
                 <div id={styles['shopProfilePage']}>
                     <Row id="shopProfileRow">
