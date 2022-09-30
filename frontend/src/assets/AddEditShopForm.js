@@ -6,6 +6,8 @@ import generalStyles from '../css/generalComponents.module.css';
 import cookie from 'react-cookies'
 import AddressAutoCompleteInput from './AddressAutoCompletInput';
 import showAlert from './Alert';
+import { FileAddOutlined } from '@ant-design/icons';
+
 
 import moment from 'moment';
 import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
@@ -127,10 +129,26 @@ class AddEditShopForm extends Component {
     };
 
     handleFileInputChange = e => {
-        console.log(e.target.files[0]);
-        let { file } = this.state.image;
 
-        file = e.target.files[0];
+        console.log(e);
+
+        let file = e;
+
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+
+        console.log(file.type);
+
+        if (!isJpgOrPng) {
+            showAlert('warning', 'You can only upload JPG/PNG file!');
+            return;
+        }
+
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isLt2M) {
+            showAlert('warning', 'Image must smaller than 2MB!');
+            return;
+        }
 
         this.getBase64(file)
             .then(result => {
@@ -148,7 +166,7 @@ class AddEditShopForm extends Component {
             });
 
         this.setState({
-            file: e.target.files[0]
+            file: e
         });
     };
 
@@ -271,7 +289,7 @@ class AddEditShopForm extends Component {
                         >
                             <Row id={addEditFormStyle.uploadImageDiv}>
                                 <Col span={12} offset={6}>
-                                    <input
+                                    {/* <input
                                         id="originalFileName"
                                         type="file"
                                         inputprops={{ accept: 'image/*, .xlsx, .xls, .csv, .pdf, .pptx, .pptm, .ppt' }}
@@ -281,13 +299,18 @@ class AddEditShopForm extends Component {
                                         onChange={e => this.handleFileInputChange(e)}
                                         size="small"
                                         variant="standard"
-                                    />
-                                    {/* <Upload.Dragger name="files" onChange={e => this.onUploadImage(e)} maxCount={1}>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined />
-                                        </p>
-                                        <p className="ant-upload-text">Upload Shop Cover Image</p>
-                                    </Upload.Dragger> */}
+                                    /> */}
+                                    <Upload
+                                        name="avatar"
+                                        listType="picture-card"
+                                        className="avatar-uploader"
+                                        showUploadList={{ showPreviewIcon: false }}
+                                        accept='image/*'
+                                        maxCount={1}
+                                        beforeUpload={e => this.handleFileInputChange(e)}
+                                    >
+                                        <FileAddOutlined style={{ fontSize: 40 }} />
+                                    </Upload>
                                 </Col>
                             </Row>
                         </Form.Item>
