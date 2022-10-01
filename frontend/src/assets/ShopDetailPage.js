@@ -114,7 +114,7 @@ class ShopDetailPage extends Component {
                     imgSrc={this.state.data.image}
                     availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
                 />
-                {cookie.load('role') === "customer" ?
+                {cookie.load('role') === "business" ?
                     <button className="yellowButton" onClick={this.changeEditShopFormDisplay}>
                         Edit shop
                     </button> : null
