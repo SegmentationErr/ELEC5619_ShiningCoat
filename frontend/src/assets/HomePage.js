@@ -26,7 +26,8 @@ class HomePage extends Component {
             {
                 name: "service1",
                 location: "service1 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId",
                 rating: 4,
@@ -35,7 +36,8 @@ class HomePage extends Component {
             {
                 name: "service2",
                 location: "service2 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId",
                 rating: 4,
@@ -44,7 +46,8 @@ class HomePage extends Component {
             {
                 name: "service3",
                 location: "service3 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId",
                 rating: 4,
@@ -53,7 +56,8 @@ class HomePage extends Component {
             {
                 name: "service4",
                 location: "service4 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId",
                 rating: 4,
@@ -62,7 +66,8 @@ class HomePage extends Component {
             {
                 name: "service5",
                 location: "service1 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId", rating: 4,
                 isService: true
@@ -70,7 +75,8 @@ class HomePage extends Component {
             {
                 name: "service6",
                 location: "service2 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId", rating: 4,
                 isService: true
@@ -78,7 +84,8 @@ class HomePage extends Component {
             {
                 name: "service7",
                 location: "service3 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId", rating: 4,
                 isService: true
@@ -86,7 +93,8 @@ class HomePage extends Component {
             {
                 name: "service8",
                 location: "service4 location",
-                time: "9-17pm",
+                startTime: "9:00",
+                endTime: "21:00",
                 imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
                 _id: "serviceTestId",
                 rating: 4,
@@ -107,7 +115,8 @@ class HomePage extends Component {
                                     name={service.name}
                                     imgSrc={service.imgSrc}
                                     id={service._id}
-                                    time={service.time}
+                                    startTime={service.startTime}
+                                    endTime={service.endTime}
                                     rating={service.rating}
                                     isService={service.isService}
                                     history={this.props.history}

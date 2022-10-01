@@ -127,6 +127,8 @@ class ShopDetailPage extends Component {
         return (
             <Services
                 services={this.state.data.services}
+                startTime={this.state.data.start_time}
+                endTime={this.state.data.end_time}
                 changeFormDisplay={this.changeFormDisplay}
             />
         );
@@ -228,7 +230,8 @@ class Services extends Component {
                                         name={service.service_name}
                                         imgSrc={service.image}
                                         location={service.location}
-                                        time={service.time}
+                                        startTime={this.props.startTime}
+                                        endTime={this.props.endTime}
                                         rating={service.rating}
                                         isService={true}
                                         id={service.id}
