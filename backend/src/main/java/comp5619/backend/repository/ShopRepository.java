@@ -18,6 +18,29 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
     @Query(value = "select * FROM shops where id=:shop_id", nativeQuery = true)
     Map<String, Object> getShopDetail(@Param("shop_id") String shop_id);
 
+
+//    @Query(value = "SELECT * FROM shops  WHERE LOWER(shop_name) LIKE :shop_name", nativeQuery = true)
+//    List<Map<String, Object>> searchShopsByName(@Param("shop_name") String shop_name);
+
+
+//    SELECT sh.id, sh.shop_name, sh.image, sh.start_time, sh.end_time, sh.address,
+//    ISNULL(se.averagerating, 0) averagerating
+//    FROM shops sh
+//    LEFT JOIN (SELECT AVG(se.rating) averagerating FROM services se GROUP BY se.shop_id) se ON se.shop_id=sh.id
+//    WHERE LOWER(sh.shop_name) LIKE :shop_name
+//    ORDER BY ISNULL(se.averagerating, 0) DESC;
+
+    @Query(value =
+            "SELECT sh.id, sh.shop_name, sh.image, sh.start_time, sh.end_time, sh.address,\n" +
+            "    IFNULL(se.averagerating, 0) averagerating\n" +
+            "    FROM shops sh\n" +
+            "    LEFT JOIN " +
+                    "(SELECT se.shop_id, AVG(se.rating) averagerating FROM services se GROUP BY se.shop_id) se " +
+                    "ON se.shop_id=sh.id\n" +
+            "    WHERE LOWER(sh.shop_name) LIKE :shop_name\n" +
+            "    ORDER BY IFNULL(se.averagerating, 0) DESC", nativeQuery = true)
+    List<Map<String, Object>> searchShopsByName(@Param("shop_name") String shop_name);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE shops SET shop_name=:shop_name, address=:address, lat=:lat, lng=:lng, description=:description, phone=:phone, start_time=:start_time, end_time=:end_time, image=:image WHERE id=:id", nativeQuery = true)

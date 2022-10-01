@@ -60,8 +60,8 @@ class ServiceDetailPage extends Component {
                     })
                 }
             }).catch((error) => {
-            console.log(error)
-        })
+                console.log(error)
+            })
     }
 
     checkDetail = (e) => {
@@ -96,7 +96,7 @@ class ServiceDetailPage extends Component {
                         <Col span={12}>
                             <Image
                                 preview={false}
-                                style={{ margin:50, width: 400, height: 450, borderRadius: 100 / 2}}
+                                style={{ margin: 50, width: 400, height: 450, borderRadius: 100 / 2 }}
                                 src={this.state.service_details.image}
                             />
                             <div id={styles['review_text']}>Customer Reviews</div>
@@ -117,7 +117,7 @@ class ServiceDetailPage extends Component {
                             </div>
                             {cookie.load('role') === "business" ? 
                                 <button id={styles["AddServices"]} className="yellowButton" type="submit"
-                                    onClick={() => {this.changeFormDisplay()}}
+                                    onClick={() => { this.changeFormDisplay() }}
                                 >
                                     + Edit Services
                                 </button> : null
@@ -125,7 +125,7 @@ class ServiceDetailPage extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96"/></Button>
+                        <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96" /></Button>
                     </Row>
                 </Card>
 

@@ -95,6 +95,15 @@ public class ShopController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    @GetMapping(path = "/search/{name}")
+    public @ResponseBody ResponseEntity<List<Map<String, Object>>> searchServicesByName(@PathVariable(name = "name") String shop_name) {
+        List<Map<String, Object>> result = shopRepository.searchShopsByName('%' + shop_name + '%');
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
     @PostMapping(path = "/updateShop")
     public @ResponseBody ResponseEntity<Object> updateShopDetails(@RequestBody Map<String, String> params) {
 
