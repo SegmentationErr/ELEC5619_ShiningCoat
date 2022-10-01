@@ -23,7 +23,15 @@
 
 .serviceCard {
     width: 90%;
-    height: 100px;
+    height: 110px;
+    border-radius: 25px;
+    background-color: white;
+    margin-bottom: 5%;
+}
+
+.serviceCardBusiness {
+    width: 90%;
+    height: 150px;
     border-radius: 25px;
     background-color: white;
     margin-bottom: 5%;
@@ -54,6 +62,11 @@
     width: 100%;
 }
 
+.buttonColBusiness {
+    padding-top: 5%;
+    width: 100%;
+}
+
 .cancelBookingButton {
     width: 80%;
 }
@@ -72,10 +85,14 @@
     /* padding-right: 20px; */
 }
 
-
 .leaveCommentButton {
     width: 80%;
 }
+
+.usernameButton {
+    background-color: none;
+}
+
 
 .cover {
     top: 100px;
@@ -90,7 +107,7 @@
 .validationCardcCancelBooking {
     /* position: absolute; */
     width: 30%;
-    height: 20%;
+    height: 22%;
     background: #FAEDDE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -173,4 +190,9 @@
     width: 30%;
     border-radius: 10px;
     margin: auto;
+}
+
+.usernameButton {
+    background-color: white;
+    color: #000000;
 }

@@ -39,6 +39,15 @@ public class BookingController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    @GetMapping(path = "/getAllShopBookings/{shopId}")
+    public @ResponseBody ResponseEntity<List<Map<String, Object>>> getAllBookingsByShopId(@PathVariable(name = "shopId") String shopId) {
+        List<Map<String, Object>> result = bookingRepository.getAllBookingsByShopId(shopId);
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
     @PostMapping(path = "/deleteBooking")
     public @ResponseBody ResponseEntity<Object> deleteBookingById(@RequestBody Map<String, String> params) {
 
