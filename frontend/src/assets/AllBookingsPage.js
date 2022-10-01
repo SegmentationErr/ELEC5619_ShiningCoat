@@ -263,8 +263,6 @@ class AllBookingsPage extends Component {
                     console.log(error);
                     showAlert('warning', 'Something went wrong');
                 })
-
-
         }
     }
 
@@ -317,6 +315,13 @@ class AllBookingsPage extends Component {
                             pendingCommentService: null
                         });
 
+
+                        axios.post(`http://localhost:8080/services/updateServiceRating`, { serviceId: service.service_id })
+                            .then(res => {
+                                console.log(res);
+                            }).catch((error) => {
+                                console.log(error);
+                            })
                     }
                     else {
                         showAlert('warning', 'Something went wrong');
