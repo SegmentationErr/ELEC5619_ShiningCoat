@@ -31,6 +31,7 @@ export default function App() {
         <Route path="business" element={<BusinessNavBar />} >
           <Route path="profile" element={<ManageProfilePage />} />
           <Route path="shops" element={<AllShops />} />
+          <Route path="getAllBookings/:shopId" element={<AllBookingsPage />} />
           <Route path="manageShop/:id" element={<ShopDetailPage />} />
           <Route path="manageService/:id" element={<ServiceDetailPage />} />
         </Route>
@@ -40,7 +41,7 @@ export default function App() {
           <Route path=":name/:method" element={<SearchResultPage />} />
         </Route>
         <Route path="/user/">
-          <Route path="getAllBookings/:userId" element={<AllBookingsPage />} />
+          <Route path="getAllBookings" element={<AllBookingsPage />} />
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />

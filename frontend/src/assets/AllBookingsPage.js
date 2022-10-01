@@ -18,7 +18,8 @@ class AllBookingsPage extends Component {
         super(props);
         if (cookie.load('id') !== undefined) {
             if (cookie.load('role') === "business") {
-                this.props.navigate('/business/profile')
+                //this.props.navigate('/business/profile')
+                this.fetchAllBookingsBusiness();
             }
             else {
                 this.fetchAllBookings();
@@ -28,18 +29,26 @@ class AllBookingsPage extends Component {
 
 
     state = {
+        isBusiness: cookie.load('role') === "business" ? true : false,
         loading: true,
         openCancelConfirm: false,
         openLeaveCommentCard: false,
         pendingDelteService: null,
         pendingCommentService: null,
-        userId: this.props.params.userId,
+        userId: cookie.load('id'),
         incomingBookings: [],
         pastBookings: []
     }
 
+
+    fetchAllBookingsBusiness = () => {
+        let shopId = this.props.params.shopId;
+
+        console.log(shopId);
+    }
+
     fetchAllBookings = () => {
-        axios.get('http://localhost:8080/bookings/getAllBookings/' + cookie.load('id'))
+        axios.get('http://localhost:8080/bookings/getAllBookings/' + this.state.userId)
             .then((res) => {
                 // console.log(res.data)
                 if (res.status === 200) {
@@ -296,6 +305,69 @@ class AllBookingsPage extends Component {
     }
 
 
+    customerIncomingBookingCard(service, key) {
+        return (
+            <div className={allBookingPageStyle.serviceCard} key={key}>
+                <Row >
+                    <Col span={7} className={allBookingPageStyle.nameCol}>
+                        <p>{service.service_name}</p>
+                        <p>Price: {service.price}</p>
+                    </Col>
+
+                    {service.pick_up ?
+                        <Col span={7} className={allBookingPageStyle.timeCol}>
+                            <p>
+                                Pick Up Service
+                            </p>
+                        </Col>
+                        :
+                        <Col span={7} className={allBookingPageStyle.timeCol}>
+                            <p>Time: </p>
+                            <p>
+                                {service.time}
+                            </p>
+                        </Col>
+                    }
+
+                    <Col span={10} className={allBookingPageStyle.buttonCol}>
+                        <button
+                            className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
+                            onClick={(e) => this.showCancelConfirm(service)}
+                        >
+                            Cancel Booking
+                        </button>
+                    </Col>
+                </Row>
+            </div>
+        );
+    }
+
+    customerPastBookingCard(service, key) {
+        <div className={allBookingPageStyle.serviceCard} key={key}>
+            <Row >
+                <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
+                    <p>{service.service_name}</p>
+                    <p>Price: {service.price}</p>
+                </Col>
+
+                <Col span={14} className={allBookingPageStyle.buttonColPast}>
+                    {service.available ?
+                        <button
+                            className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
+                            onClick={(e) => this.showCommentCard(service)}
+                        >
+                            Leave a Comment
+                        </button> :
+                        <button
+                            className={`${generalStyles.redButton} ${allBookingPageStyle.leaveCommentButton}`}
+                        >
+                            Not Available
+                        </button>
+                    }
+                </Col>
+            </Row>
+        </div>
+    }
 
     render() {
 
@@ -303,45 +375,14 @@ class AllBookingsPage extends Component {
             <div id="mainContent">
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
-                {this.state.loading ? <p id={allBookingPageStyle.loadingP}>Loading ... </p> :
+                {this.state.loading ?
+                    <p id={allBookingPageStyle.loadingP}>Loading ... </p> :
                     <Row id={allBookingPageStyle.mainContentRow}>
                         <Col id={allBookingPageStyle.incomingBookingsCol} span={12}>
                             <p className={allBookingPageStyle.title} >Incoming Bookings</p>
                             {this.state.incomingBookings.map((service, key) => {
                                 return (
-                                    <div className={allBookingPageStyle.serviceCard} key={key}>
-                                        <Row >
-                                            <Col span={7} className={allBookingPageStyle.nameCol}>
-                                                <p>{service.service_name}</p>
-                                                <p>Price: {service.price}</p>
-                                            </Col>
-
-                                            {service.pick_up ?
-                                                <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                    <p>
-                                                        Pick Up Service
-                                                    </p>
-                                                </Col>
-                                                :
-                                                <Col span={7} className={allBookingPageStyle.timeCol}>
-                                                    <p>Time: </p>
-                                                    <p>
-                                                        {service.time}
-                                                    </p>
-                                                </Col>
-                                            }
-
-                                            <Col span={10} className={allBookingPageStyle.buttonCol}>
-                                                <button
-                                                    className={`${generalStyles.redButton} ${allBookingPageStyle.cancelBookingButton}`}
-                                                    onClick={(e) => this.showCancelConfirm(service)}
-                                                >
-                                                    Cancel Booking
-                                                </button>
-                                            </Col>
-                                        </Row>
-
-                                    </div>
+                                    this.state.isBusiness ? <p>Show Business Incoming Bookings Now</p> : this.customerIncomingBookingCard({ service }, { key })
                                 )
                             })}
                         </Col>
@@ -349,31 +390,7 @@ class AllBookingsPage extends Component {
                             <p className={allBookingPageStyle.title}>Past Bookings</p>
                             {this.state.pastBookings.map((service, key) => {
                                 return (
-                                    <div className={allBookingPageStyle.serviceCard} key={key}>
-                                        <Row >
-                                            <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
-                                                <p>{service.service_name}</p>
-                                                <p>Price: {service.price}</p>
-                                            </Col>
-
-                                            <Col span={14} className={allBookingPageStyle.buttonColPast}>
-                                                {service.available ?
-                                                    <button
-                                                        className={`${generalStyles.yellowButton} ${allBookingPageStyle.leaveCommentButton}`}
-                                                        onClick={(e) => this.showCommentCard(service)}
-                                                    >
-                                                        Leave a Comment
-                                                    </button> :
-                                                    <button
-                                                        className={`${generalStyles.redButton} ${allBookingPageStyle.leaveCommentButton}`}
-                                                    >
-                                                        Not Available
-                                                    </button>
-                                                }
-                                            </Col>
-                                        </Row>
-
-                                    </div>
+                                    this.state.isBusiness ? <p>Show Business Past Bookings Now</p> : this.customerPastBookingCard({ service }, { key })
                                 )
                             })}
                         </Col>
