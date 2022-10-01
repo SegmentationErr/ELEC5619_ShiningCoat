@@ -51,6 +51,16 @@ public class ServiceController {
 
     }
 
+    @GetMapping(path = "/search/{name}")
+    public @ResponseBody ResponseEntity<List<Map<String, Object>>> searchServicesByName(@PathVariable(name = "name") String service_name) {
+        List<Map<String, Object>> result = serviceRepository.searchServicesByName('%'+service_name+'%');
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+    }
+
     @PostMapping(path = "/add")
     public @ResponseBody ResponseEntity<Map<String, Object>> addService(@RequestBody Map<String, Object> params) {
         Map<String, Object> response = new HashMap<>();

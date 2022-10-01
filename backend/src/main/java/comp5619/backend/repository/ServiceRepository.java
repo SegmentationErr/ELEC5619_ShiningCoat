@@ -20,6 +20,10 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
     @Query(value = "select * from services where shop_id=:shop_id", nativeQuery = true)
     List<Map<String, Object>> getServices(@Param("shop_id") String shop_id);
 
+    @Query(value =
+            "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id WHERE se.available = true AND LOWER(se.service_name) LIKE :service_name ", nativeQuery = true)
+    List<Map<String, Object>> searchServicesByName(@Param("service_name") String service_name);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE services SET service_name=:service_name, description=:description, available=:available, pick_up=:pick_up, price=:price, image=:image WHERE id=:id", nativeQuery = true)

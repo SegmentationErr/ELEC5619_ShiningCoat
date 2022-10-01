@@ -32,7 +32,7 @@ class ResultCard extends Component {
                     <p>{this.props.name + ' (' + this.props.rating + ')'} </p>
                     {/* <div>Rating: {this.props.rating}</div> */}
                     <p>{this.props.location}</p>
-                    <p>{this.props.time}</p>
+                    <p>{this.props.startTime + " - " + this.props.endTime}</p>
                 </div>
             </div>
         );

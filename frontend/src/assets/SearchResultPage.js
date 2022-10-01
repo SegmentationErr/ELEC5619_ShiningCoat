@@ -18,85 +18,57 @@ class SearchResultPage extends Component {
 
         if (cookie.load('id') !== undefined) {
             if (cookie.load('role') === "business") {
-                this.props.navigate('/business/profile')
+                this.props.navigate('/business/profile');
             }
+        }
+
+        let name = this.state.name;
+        let method = this.state.method;
+
+        console.log(name, method);
+
+        if (method === 'service') {
+            this.searchServices();
+        }
+        else {
+            this.searchShops();
         }
     }
 
     state = {
         name: this.props.params.name,
         method: this.props.params.method,
-        searchResults: [
-            {
-                name: "this is the serach result",
-                location: "service1 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "this is test shop",
-                location: "service2 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: false
-            },
-            {
-                name: "service3",
-                location: "service3 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service4",
-                location: "service4 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service5",
-                location: "service1 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service6",
-                location: "service2 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service7",
-                location: "service3 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service8",
-                location: "service4 location",
-                time: "9-17pm",
-                imgSrc: "https://www.rd.com/wp-content/uploads/2021/01/GettyImages-1175550351.jpg",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            }
-        ]
+        searchResults: []
+    }
+
+    searchServices = () => {
+
+        axios.get('http://localhost:8080/services/search/' + this.state.name.toLowerCase())
+            .then((res) => {
+
+                if (res.status === 200) {
+                    console.log(res.data);
+                    this.setState({
+                        searchResults: res.data
+                    })
+                }
+                if (res.status === 204) {
+                    console.log('No content');
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+
+    searchShops = () => {
+        axios.get('http://localhost:8080/shops/search/' + this.state.name.toLowerCase())
+            .then((res) => {
+                if (res.status === 200) {
+                    console.log(res.data);
+                }
+            }).catch((error) => {
+                console.log(error)
+            })
     }
 
     render() {
@@ -109,12 +81,14 @@ class SearchResultPage extends Component {
                             <Col span={6}>
                                 <ResultCard
                                     key={key}
-                                    name={service.name}
-                                    imgSrc={service.imgSrc}
-                                    id={service._id}
-                                    time={service.time}
+                                    name={service.service_name}
+                                    imgSrc={service.image}
+                                    id={service.id}
                                     rating={service.rating}
-                                    isService={service.isService}
+                                    isService={true}
+                                    startTime={service.start_time}
+                                    endTime={service.end_time}
+                                    location={service.address}
                                     history={this.props.history}
                                 />
                             </Col>
