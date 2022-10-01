@@ -98,7 +98,7 @@ class ShopDetailPage extends Component {
                     imgSrc={this.state.data.image}
                     availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
                 />
-                {cookie.load('role') === "customer" ?
+                {cookie.load('role') === "business" ?
                     <button className="yellowButton">
                         Edit shop
                     </button> : null
@@ -179,7 +179,7 @@ class Services extends Component {
             <div>
                 <div className={styles.title}>
                     <p style={{display: "inline-block"}}>Available Services</p>
-                    {cookie.load('role') === "customer" ?
+                    {cookie.load('role') === "business" ?
                         <button id={styles["AddServices"]} className="yellowButton" type="submit" style={{display: "inline-block", float: 'right'}}
                             onClick={() => {this.props.changeFormDisplay()}}
                         >
