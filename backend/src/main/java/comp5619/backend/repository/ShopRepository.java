@@ -18,6 +18,9 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
     @Query(value = "select * FROM shops where id=:shop_id", nativeQuery = true)
     Map<String, Object> getShopDetail(@Param("shop_id") String shop_id);
 
+    @Query(value = "SELECT * FROM shops  WHERE LOWER(shop_name) LIKE :shop_name", nativeQuery = true)
+    List<Map<String, Object>> searchShopsByName(@Param("shop_name") String shop_name);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE shops SET shop_name=:shop_name, address=:address, lat=:lat, lng=:lng, description=:description, phone=:phone, start_time=:start_time, end_time=:end_time, image=:image WHERE id=:id", nativeQuery = true)

@@ -28,7 +28,7 @@ class ResultCard extends Component {
                     width={200}
                     src={this.props.imgSrc}
                 />
-                <div id="info" style={{ "lineHeight": "50%" }}>
+                <div id="info" style={{ "lineHeight": "100%" }}>
                     <p>{this.props.name + ' (' + this.props.rating + ')'} </p>
                     {/* <div>Rating: {this.props.rating}</div> */}
                     <p>{this.props.location}</p>
