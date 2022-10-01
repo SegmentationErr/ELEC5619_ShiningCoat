@@ -122,6 +122,13 @@ class ServiceDetailPage extends Component {
                                     + Edit Services
                                 </button>
                             }
+                            {cookie.load('role') === "business" ? 
+                                <button id={styles["AddServices"]} className="yellowButton" type="submit"
+                                    onClick={() => {this.changeFormDisplay()}}
+                                >
+                                    + Edit Services
+                                </button> : null
+                            }
                         </Col>
                     </Row>
                     <Row>
