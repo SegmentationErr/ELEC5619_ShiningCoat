@@ -3,12 +3,22 @@
     box-shadow: none;
     bordered: false;
 }
+#comments{
+    background-color: transparent;
+    box-shadow: none;
+    bordered: false;
+    overflow-y:auto;
+    max-height: 200px;
+}
 #details_text{
-    padding: 100px 0;
+    padding-top: 75px;
+    padding-left: 20px;
+    padding-bottom: 10px;
 }
 #review_text{
-    padding: 10px 0;
-    padding-left: 180px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom:1px solid whitesmoke;
 }
 #heart{
     padding: 5px 0;
