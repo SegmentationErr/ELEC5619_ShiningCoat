@@ -23,6 +23,7 @@ class BackendApplicationTests {
     @Autowired
     public MockMvc mockMvc;
 
+    //Remove the SampleTests related codes when finish the final implementation
     private final SampleTest sampleTest = new SampleTest();
 
     @Test

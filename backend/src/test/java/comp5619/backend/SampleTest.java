@@ -17,7 +17,7 @@ import java.util.Map;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.*;
 
-
+//This class is only for the demo of the basic tests for GET and POST actions for backend
 public class SampleTest{
 
     public static String asJsonString(final Object obj) {
@@ -30,7 +30,6 @@ public class SampleTest{
         }
     }
 
-    //sampleTest and sampleTest2 is only samples to demo the use of the mockMvc, remove after finish the final implementation
 
     public void sampleTestGetMethod(MockMvc mockMvc) throws Exception {
 
