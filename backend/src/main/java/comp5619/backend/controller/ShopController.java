@@ -94,4 +94,49 @@ public class ShopController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PostMapping(path = "/updateShop")
+    public @ResponseBody ResponseEntity<Object> updateShopDetails(@RequestBody Map<String, String> params) {
+
+        String shopName = params.get("shopName");
+        String contactNumber = params.get("contactNumber");
+        String startTime = params.get("startTime");
+        String endTime = params.get("endTime");
+
+        String image = params.get("image");
+
+        String shopAddress = params.get("shopAddress");
+        String shopDescription = params.get("shopDescription");
+        String userId = params.get("userId");
+
+        float lat = parseFloat(params.get("lat"));
+        float lng = parseFloat(params.get("lng"));
+
+        SimpleDateFormat source = new SimpleDateFormat("HH:mm");
+
+        Time start;
+        Time end;
+
+        try {
+            start = new Time(source.parse(startTime).getTime());
+            end = new Time(source.parse(endTime).getTime());
+
+        } catch (ParseException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Something went wrong");
+        }
+
+        shopRepository.updateShopDetails(
+                userId,
+                shopName,
+                shopAddress,
+                lat,
+                lng,
+                shopDescription,
+                contactNumber,
+                start,
+                end,
+                image);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
 }
