@@ -29,6 +29,14 @@
     margin-bottom: 5%;
 }
 
+.serviceCardUnavailable {
+    width: 90%;
+    height: 110px;
+    border-radius: 25px;
+    background-color: grey;
+    margin-bottom: 5%;
+}
+
 .serviceCardBusiness {
     width: 90%;
     height: 150px;
@@ -91,8 +99,8 @@
 
 .usernameButton {
     background-color: none;
+    pointer-events: none;
 }
-
 
 .cover {
     top: 100px;
@@ -195,4 +203,11 @@
 .usernameButton {
     background-color: white;
     color: #000000;
+}
+
+.unavailableButton {
+    height: 50%;
+    background-color: grey;
+    color: black;
+    pointer-events: none;
 }

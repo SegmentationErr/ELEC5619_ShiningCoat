@@ -68,7 +68,7 @@ class NavBar extends Component {
         cookie.remove('id');
         cookie.remove('role');
         this.props.navigate('/');
-        window.location.reload(false);
+        // window.location.reload(false);
     }
 
     setKeyword = (e) => {
