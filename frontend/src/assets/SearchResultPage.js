@@ -122,7 +122,7 @@ class SearchResultPage extends Component {
                                             name={service.shop_name}
                                             imgSrc={service.image}
                                             id={service.id}
-                                            rating={service.rating}
+                                            rating={service.averagerating}
                                             isService={false}
                                             startTime={service.start_time}
                                             endTime={service.end_time}
