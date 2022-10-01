@@ -115,12 +115,12 @@ class ServiceDetailPage extends Component {
                                 <p>{'Total Sold: ' + this.state.service_details.total_sold}</p>
                                 <p>{'Description: ' + this.state.service_details.description}</p>
                             </div>
-                            {cookie.load('role') === "customer" ? null :
+                            {cookie.load('role') === "business" ? 
                                 <button id={styles["AddServices"]} className="yellowButton" type="submit"
                                     onClick={() => { this.changeFormDisplay() }}
                                 >
                                     + Edit Services
-                                </button>
+                                </button> : null
                             }
                         </Col>
                     </Row>
