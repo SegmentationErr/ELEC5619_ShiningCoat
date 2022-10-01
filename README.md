@@ -23,3 +23,11 @@ Open terminal in root directory of the project. Run the following command.
 cd frontend/
 npm start 
 ```
+
+## Running Tests
+Open terminal in root directory of the project. Run the following command.
+
+```bash
+cd backend/
+./gradlew test
+```
