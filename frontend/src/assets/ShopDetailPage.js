@@ -103,6 +103,10 @@ class ShopDetailPage extends Component {
         })
     }
 
+    handleViewAllBookings() {
+        this.props.navigate('/business/getAllBookings/' + this.state.data.id)
+    }
+
     renderProfile() {
         return (
             <>
@@ -116,7 +120,15 @@ class ShopDetailPage extends Component {
                 />
                 {cookie.load('role') === "business" ?
                     <button className="yellowButton" onClick={this.changeEditShopFormDisplay}>
-                        Edit shop
+                        Edit Shop
+                    </button> : null
+                }
+
+                {cookie.load('role') === "business" ?
+                    <button id={styles["AddServices"]} className="blackButton"
+                        onClick={() => { this.handleViewAllBookings() }}
+                    >
+                        View All Bookings
                     </button> : null
                 }
             </>
@@ -130,6 +142,7 @@ class ShopDetailPage extends Component {
                 startTime={this.state.data.start_time}
                 endTime={this.state.data.end_time}
                 changeFormDisplay={this.changeFormDisplay}
+                handleViewAllBookings={this.handleViewAllBookings}
             />
         );
     }

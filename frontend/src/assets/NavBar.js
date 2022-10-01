@@ -84,7 +84,7 @@ class NavBar extends Component {
 
         let userId = cookie.load('id');
         if (userId !== undefined) {
-            this.props.navigate('/user/getAllBookings/' + userId);
+            this.props.navigate('/user/getAllBookings');
         }
         else {
             showAlert('warning', "Invalid login session", "Please login first");

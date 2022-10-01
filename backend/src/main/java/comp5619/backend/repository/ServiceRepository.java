@@ -34,4 +34,13 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
             @Param("pick_up") String pick_up,
             @Param("price") String price,
             @Param("image") String image);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "update services ser join\n" +
+            "            (SELECT com.service_id,AVG(com.rating) averagerating FROM comments com GROUP BY com.service_id) com\n" +
+            "    on ser.id = com.service_id\n" +
+            "    set ser.rating = com.averagerating", nativeQuery = true)
+    void updateServiceRating(@Param("id") String id);
 }

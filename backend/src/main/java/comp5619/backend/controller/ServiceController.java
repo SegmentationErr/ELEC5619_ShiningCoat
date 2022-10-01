@@ -94,4 +94,13 @@ public class ServiceController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
+
+
+    @PostMapping(path = "/updateServiceRating")
+    public @ResponseBody ResponseEntity<Object> updateServiceRating(@RequestBody Map<String, String> params) {
+
+        serviceRepository.updateServiceRating(params.get("serviceId"));
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
 }
