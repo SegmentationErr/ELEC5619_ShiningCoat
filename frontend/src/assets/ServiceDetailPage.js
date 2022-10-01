@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Card, Row, Col, Button } from 'antd';
+import { Image, Card, Row, Col, Button, Rate } from 'antd';
 import { HeartTwoTone } from '@ant-design/icons';
 import { withRouter } from './withRouter';
 import cookie from 'react-cookies';
@@ -13,6 +13,7 @@ class ServiceDetailPage extends Component {
     constructor(props) {
         super(props);
         this.fetchServiceDetail()
+        this.fetchReview()
     }
 
     state = {
@@ -33,21 +34,15 @@ class ServiceDetailPage extends Component {
             end_time: null,
 
             showForm: false
-            // customer_reviews: [
-            //     {
-            //         user_name: "James",
-            //         content: "Patient service.",
-            //         time: "9-17pm",
-            //         rating: 4
-            //     },
-            //     {
-            //         user_name: "Bob",
-            //         content: "Nice service.",
-            //         time: "9-17pm",
-            //         rating: 4
-            //     }
-            // ]
-        }
+        },
+        customer_reviews: [
+            {
+                username: null,
+                content: null,
+                time: null,
+                rating: null
+            }
+        ],
     }
 
     fetchServiceDetail = () => {
@@ -60,8 +55,21 @@ class ServiceDetailPage extends Component {
                     })
                 }
             }).catch((error) => {
-                console.log(error)
-            })
+            console.log(error)
+        })
+    }
+
+    fetchReview = () => {
+        axios.get('http://localhost:8080/comments/getCommentsById/' + this.state.id)
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        customer_reviews: res.data
+                    })
+                }
+            }).catch((error) => {
+            console.log(error)
+        })
     }
 
     checkDetail = (e) => {
@@ -99,11 +107,11 @@ class ServiceDetailPage extends Component {
                                 style={{ margin: 50, width: 400, height: 450, borderRadius: 100 / 2 }}
                                 src={this.state.service_details.image}
                             />
-                            <div id={styles['review_text']}>Customer Reviews</div>
+                            <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96" /></Button>
                         </Col>
                         <Col span={12}>
                             <div id={styles['details_text']}>
-                                <p>{this.state.service_details.service_name}</p>
+                                <p>{'Service Name: ' + this.state.service_details.service_name}</p>
                                 <p>{'Service Provider: ' + this.state.service_details.shop_name}</p>
                                 <p>
                                     {'Location: ' + this.state.service_details.address}
@@ -115,17 +123,27 @@ class ServiceDetailPage extends Component {
                                 <p>{'Total Sold: ' + this.state.service_details.total_sold}</p>
                                 <p>{'Description: ' + this.state.service_details.description}</p>
                             </div>
-                            {cookie.load('role') === "business" ? 
+                            <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent' }} id={styles['comments']}>
+                                <div>
+                                    {this.state.customer_reviews?.map(r =>
+                                        <div id={styles['review_text']}>
+                                            <div>
+                                                {r.username}
+                                                <Rate disabled style={{paddingLeft: 10}} defaultValue={0} value={r.rating} />
+                                            </div>
+                                            <div>{'Content: '+ r.content}</div>
+                                        </div>
+                                    )}
+                                </div>
+                            </Card>
+                            {cookie.load('role') === "business" ?
                                 <button id={styles["AddServices"]} className="yellowButton" type="submit"
-                                    onClick={() => { this.changeFormDisplay() }}
+                                        onClick={() => { this.changeFormDisplay() }}
                                 >
                                     + Edit Services
                                 </button> : null
                             }
                         </Col>
-                    </Row>
-                    <Row>
-                        <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96" /></Button>
                     </Row>
                 </Card>
 
