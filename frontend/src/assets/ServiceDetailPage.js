@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Image, Card, Row, Col, Button, Rate } from 'antd';
+import { Image, Card, Row, Col, Button, Rate, message } from 'antd';
 import { HeartTwoTone } from '@ant-design/icons';
 import { withRouter } from './withRouter';
 import cookie from 'react-cookies';
 
 import styles from '../css/serviceDetailPage.module.css'
+import generalStyles from '../css/generalComponents.module.css'
 import axios from "axios";
 import AddEditServiceForm from './AddEditServiceForm';
+import MakeBookingForm from './MakeBookingForm';
 
 class ServiceDetailPage extends Component {
 
@@ -20,7 +22,7 @@ class ServiceDetailPage extends Component {
         id: this.props.params.id,
         service_details: {
             address: 'Fetching Data...',
-            available: true,
+            available: false,
             description: 'Fetching Data...',
             image: null,
             lat: null,
@@ -49,7 +51,7 @@ class ServiceDetailPage extends Component {
         axios.get('http://localhost:8080/services/getServiceDetailById/' + this.state.id)
             .then((res) => {
                 if (res.status === 200) {
-                    // console.log(res.data);
+                    console.log(res.data);
                     this.setState({
                         service_details: res.data
                     })
@@ -80,6 +82,10 @@ class ServiceDetailPage extends Component {
         if (this.state.showForm) {
             document.body.style.overflow = "visible"
         } else {
+            if (cookie.load('role') === "customer" && !this.state.service_details.available) {
+                message.warning("The Service is Currently Unavailable")
+                return
+            }
             document.body.style.overflow = "hidden"
         }
         this.setState({
@@ -91,7 +97,7 @@ class ServiceDetailPage extends Component {
     render() {
         return (
             <div>
-                {this.state.showForm ?
+                {this.state.showForm && cookie.load('role') === "business" ?
                     <AddEditServiceForm
                         handleCancel={this.changeFormDisplay}
                         shop_id={-1}
@@ -99,12 +105,25 @@ class ServiceDetailPage extends Component {
                         service_details={this.state.service_details}
                     /> : null
                 }
+                {this.state.showForm && cookie.load('role') === "customer" ?
+                    <MakeBookingForm
+                        handleCancel={this.changeFormDisplay}
+                        available={this.state.service_details.available}
+                        end_time={this.state.service_details.end_time}
+                        pick_up={this.state.service_details.pick_up}
+                        price={this.state.service_details.price}
+                        start_time={this.state.service_details.start_time}
+                        shop_id={this.state.service_details.shop_id}
+                        service_id={this.props.params.id}
+                    /> : null
+                }
+
                 <Card id={styles['service_detail']}>
                     <Row>
                         <Col span={12}>
                             <Image
                                 preview={false}
-                                style={{ margin: 50, width: 400, height: 450, borderRadius: 100 / 2 }}
+                                style={{ margin: 50, width: 400, height: 450, borderRadius: 50 }}
                                 src={this.state.service_details.image}
                             />
                             <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96" /></Button>
@@ -123,30 +142,30 @@ class ServiceDetailPage extends Component {
                                 <p>{'Total Sold: ' + this.state.service_details.total_sold}</p>
                                 <p>{'Description: ' + this.state.service_details.description}</p>
                             </div>
-                            <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent' }} id={styles['comments']}>
-                                <div>
-                                    {this.state.customer_reviews?.map(r =>
-                                        <div id={styles['review_text']}>
-                                            <div>
-                                                {r.username}
-                                                <Rate disabled style={{paddingLeft: 10}} defaultValue={0} value={r.rating} />
-                                            </div>
-                                            <div>{'Content: '+ r.content}</div>
-                                        </div>
-                                    )}
-                                </div>
-                            </Card>
-                            {cookie.load('role') === "business" ?
-                                <button id={styles["AddServices"]} className="yellowButton" type="submit"
+
+                            {cookie.load('role') === "business" || cookie.load('role') === "customer" ?
+                                <button id={styles["AddServices"]} className={generalStyles.blackButton} type="submit"
                                         onClick={() => { this.changeFormDisplay() }}
                                 >
-                                    + Edit Services
+                                    {cookie.load('role') === "business" ? "+ Edit Services" : "Make Booking"}
                                 </button> : null
                             }
                         </Col>
                     </Row>
                 </Card>
-
+                <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent' }} id={styles['comments']}>
+                    <div>
+                        {this.state.customer_reviews?.map(r =>
+                            <div id={styles['review_text']}>
+                                <div>
+                                    {r.username}
+                                    <Rate disabled style={{paddingLeft: 10}} defaultValue={0} value={r.rating} />
+                                </div>
+                                <div>{'Content: '+ r.content}</div>
+                            </div>
+                        )}
+                    </div>
+                </Card>
             </div>
         );
     }

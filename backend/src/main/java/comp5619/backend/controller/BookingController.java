@@ -4,12 +4,14 @@ import comp5619.backend.models.Booking;
 import comp5619.backend.repository.BookingRepository;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.buf.StringCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +55,29 @@ public class BookingController {
         bookingRepository.deleteBookingById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
+
+    @PostMapping(path = "/add")
+    public @ResponseBody ResponseEntity<Map<String, Object>> addService(@RequestBody Map<String, String> params) {
+        Map<String, Object> response = new HashMap<>();
+
+        SimpleDateFormat source = new SimpleDateFormat("YYYY-MM-DD HH:mm");
+
+        Booking newBooking = new Booking();
+        newBooking.setPickUp(Integer.parseInt(params.get("pickup")));
+        newBooking.setService_id(Integer.parseInt(params.get("service_id")));
+        newBooking.setShopId(Integer.parseInt(params.get("shop_id")));
+        newBooking.setUserId(Integer.parseInt(params.get("user_id")));
+        try {
+            newBooking.setTime(new Timestamp(source.parse(params.get("time")).getTime()));
+        } catch (Exception e) {
+            response.put("Message", "Invalid Time");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        bookingRepository.save(newBooking);
+
+        response.put("Message", "Make Booking Success");
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

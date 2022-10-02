@@ -4,6 +4,7 @@ import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 
 import styles from '../css/manageShopPage.module.css'
+import generalStyles from '../css/generalComponents.module.css';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import AddEditServiceForm from './AddEditServiceForm';
@@ -115,7 +116,7 @@ class ShopDetailPage extends Component {
                     availableTime={this.state.data.start_time + " - " + this.state.data.end_time}
                 />
                 {cookie.load('role') === "business" ?
-                    <button className="yellowButton" onClick={this.changeEditShopFormDisplay}>
+                    <button className={generalStyles.yellowButton} onClick={this.changeEditShopFormDisplay}>
                         Edit shop
                     </button> : null
                 }
@@ -213,7 +214,7 @@ class Services extends Component {
                 <div className={styles.title}>
                     <p style={{ display: "inline-block" }}>Available Services</p>
                     {cookie.load('role') === "business" ?
-                        <button id={styles["AddServices"]} className="yellowButton" type="submit" style={{ display: "inline-block", float: 'right' }}
+                        <button id={styles["AddServices"]} className={generalStyles.yellowButton} type="submit" style={{ display: "inline-block", float: 'right' }}
                             onClick={() => { this.props.changeFormDisplay() }}
                         >
                             + Add Services
