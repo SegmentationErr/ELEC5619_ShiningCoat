@@ -14,8 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface BookingRepository extends CrudRepository<Booking, Integer> {
 
-    @Query(value = "select b.id, b.user_id, b.service_id, b.shop_id, b.time,b.pick_up, ser.service_name, ser.price, ser.available from bookings b left join services ser on b.service_id = ser.id where (b.user_id = :user_id and ser.available = true)", nativeQuery = true)
+    @Query(value = "select b.id, b.user_id, b.service_id, b.shop_id, b.time,b.pick_up, ser.service_name, ser.price, ser.available from bookings b left join services ser on b.service_id = ser.id where b.user_id = :user_id", nativeQuery = true)
     List<Map<String, Object>> getAllBookingByUserId(@Param("user_id") String user_id);
+
+    @Query(value = "select b.id, u.username, b.user_id, b.service_id, b.shop_id, b.time,b.pick_up, ser.service_name, ser.price, ser.available from bookings b left join services ser on b.service_id = ser.id left join users u on u.id = b.user_id where b.shop_id = :shop_id", nativeQuery = true)
+    List<Map<String, Object>> getAllBookingsByShopId(@Param("shop_id") String shop_id);
 
     @Transactional
     @Modifying

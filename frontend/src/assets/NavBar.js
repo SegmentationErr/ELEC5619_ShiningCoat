@@ -68,7 +68,7 @@ class NavBar extends Component {
         cookie.remove('id');
         cookie.remove('role');
         this.props.navigate('/');
-        window.location.reload(false);
+        // window.location.reload(false);
     }
 
     setKeyword = (e) => {
@@ -84,7 +84,7 @@ class NavBar extends Component {
 
         let userId = cookie.load('id');
         if (userId !== undefined) {
-            this.props.navigate('/user/getAllBookings/' + userId);
+            this.props.navigate('/user/getAllBookings');
         }
         else {
             showAlert('warning', "Invalid login session", "Please login first");

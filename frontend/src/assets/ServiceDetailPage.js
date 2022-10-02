@@ -153,7 +153,7 @@ class ServiceDetailPage extends Component {
                         </Col>
                     </Row>
                 </Card>
-                <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent' }} id={styles['comments']}>
+                <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent', borderBottomColor: '#ffa500' }} id={styles['comments']}>
                     <div>
                         {this.state.customer_reviews?.map(r =>
                             <div id={styles['review_text']}>
