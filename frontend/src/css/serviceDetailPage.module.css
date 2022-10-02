@@ -27,5 +27,6 @@
     block: false;
 }
 #map{
-    margin: 20px
+    margin: 20px;
+    background: #FFA500;
 }
