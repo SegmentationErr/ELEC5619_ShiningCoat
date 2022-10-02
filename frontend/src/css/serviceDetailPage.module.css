@@ -2,13 +2,15 @@
     background-color: transparent;
     box-shadow: none;
     bordered: false;
+    border-color: transparent;
 }
 #comments{
     background-color: transparent;
     box-shadow: none;
     bordered: false;
     overflow-y:auto;
-    max-height: 200px;
+
+    border-color: transparent;
 }
 #details_text{
     padding-top: 75px;
@@ -18,7 +20,7 @@
 #review_text{
     padding-top: 10px;
     padding-bottom: 10px;
-    border-bottom:1px solid whitesmoke;
+    border-bottom:1px solid #FFA500;
 }
 #heart{
     padding: 5px 0;
@@ -27,5 +29,6 @@
     block: false;
 }
 #map{
-    margin: 20px
+    margin: 20px;
+    background: #FFA500;
 }

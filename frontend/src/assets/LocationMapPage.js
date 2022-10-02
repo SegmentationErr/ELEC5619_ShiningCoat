@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from './withRouter';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import axios from "axios";
+import {Button} from "antd";
+import { PoweroffOutlined } from '@ant-design/icons';
+import styles from "../css/locationMapPage.module.css";
 
 export class LocationMapPage extends Component {
     constructor(props) {
@@ -29,13 +32,24 @@ export class LocationMapPage extends Component {
         })
     }
 
+    backToDetails = (e) => {
+        this.props.navigate('/serviceDetailPage/' + this.state.id);
+    }
+
     render() {
         return (
             <Map
-              google={this.props.google}
-              zoom={11}
-              initialCenter={{ lat: -33.82853551936511, lng: 151.22307859455668}}
+                google={this.props.google}
+                zoom={11}
+                initialCenter={{ lat: -33.82853551936511, lng: 151.22307859455668}}
             >
+                <Button
+                    id={styles['exit']}
+                    type="primary"
+                    icon={<PoweroffOutlined />}
+                    size={"large"}
+                    onClick={this.backToDetails.bind(this)}
+                >Exit Map</Button>
                 <Marker position={{ lat: this.state.lat, lng: this.state.lng}} />
             </Map>
         );
@@ -43,5 +57,5 @@ export class LocationMapPage extends Component {
 }
 
 export default withRouter(GoogleApiWrapper({
-  apiKey: 'AIzaSyBt7S96F1cWsrNxFThKk2E6Q5a7b132G6Y'
+    apiKey: 'AIzaSyBt7S96F1cWsrNxFThKk2E6Q5a7b132G6Y'
 })(LocationMapPage));
