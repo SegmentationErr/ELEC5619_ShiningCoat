@@ -123,7 +123,7 @@ class ServiceDetailPage extends Component {
                                 <p>{'Total Sold: ' + this.state.service_details.total_sold}</p>
                                 <p>{'Description: ' + this.state.service_details.description}</p>
                             </div>
-                            <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent' }} id={styles['comments']}>
+                            <Card type="inner" title="Customer Reviews" headStyle={{ backgroundColor: 'transparent', borderBottomColor: '#ffa500' }} id={styles['comments']}>
                                 <div>
                                     {this.state.customer_reviews?.map(r =>
                                         <div id={styles['review_text']}>
