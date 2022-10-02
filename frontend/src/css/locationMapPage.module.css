@@ -1,0 +1,9 @@
+#exit{
+    color: #FFA500;
+    background: white;
+    border: transparent;
+    position: absolute;
+    right: 40px;
+    top: 0px;
+    margin-top: 10px;
+}
