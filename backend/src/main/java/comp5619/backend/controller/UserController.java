@@ -103,4 +103,21 @@ public class UserController {
     public @ResponseBody Iterable<User> testGetAllUser() {
         return userRepository.findAll();
     }
+
+    //This is a test only function, only used to wipe out the users created during the test session.
+    @PostMapping(path = "/deleteUser")
+    public @ResponseBody ResponseEntity<Object> deleteBookingById(@RequestBody Map<String, String> params) {
+
+        String id = params.get("id");
+
+        Map<String,Object> result = userRepository.getUserProfileById(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        userRepository.deleteUser(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete User "+id+" Success");
+    }
 }

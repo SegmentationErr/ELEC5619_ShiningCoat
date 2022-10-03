@@ -34,4 +34,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM users WHERE email=:email and password=:password", nativeQuery = true)
     Map<String, Object> getUserByEmailandPassword(@Param("email") String email, @Param("password") String password);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM users WHERE id=:id", nativeQuery = true)
+    void deleteUser(@Param("id") String id);
 }
