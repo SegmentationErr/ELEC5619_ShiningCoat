@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,17 +21,7 @@ import static org.hamcrest.Matchers.*;
 //This class is only for the demo of the basic tests for GET and POST actions for backend
 public class SampleTest{
 
-    public static String asJsonString(final Object obj) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
+    @Test
     public void sampleTestGetMethod(MockMvc mockMvc) throws Exception {
 
         mockMvc.perform(get("/users/profile/1"))
@@ -39,7 +30,7 @@ public class SampleTest{
                 .andExpect(jsonPath("$.role", is("business")));
     }
 
-
+    @Test
     public void sampleTestPostMethod(MockMvc mockMvc) throws Exception {
 
         Map<String,String> data = new HashMap<>();
@@ -47,7 +38,7 @@ public class SampleTest{
         data.put("password","123456789");
 
         mockMvc.perform(post("/users/checkSignIn")
-                        .content(asJsonString(data))
+                        .content(TestHelper.asJsonString(data))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

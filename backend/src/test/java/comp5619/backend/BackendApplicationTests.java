@@ -24,12 +24,18 @@ class BackendApplicationTests {
     public MockMvc mockMvc;
 
     //Remove the SampleTests related codes when finish the final implementation
-    private final SampleTest sampleTest = new SampleTest();
+    private final UserTests userTests = new UserTests();
+
+    private final ShopTests shopTests = new ShopTests();
 
     @Test
-    public void runAllSampleTestCases() throws Exception{
-        sampleTest.sampleTestGetMethod(mockMvc);
-        sampleTest.sampleTestPostMethod(mockMvc);
+    public void runAllUserTests() throws Exception{
+        userTests.runAll(mockMvc);
+    }
+
+    @Test
+    public void runAllShopTests() throws Exception{
+        shopTests.runAll(mockMvc);
     }
 
 }
