@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -19,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+
+import org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,13 +96,66 @@ public class ShopTests {
 
     @Test
     public void testGetShopDetail(MockMvc mockMvc) throws Exception{
-        Map<String,String> data = new HashMap<>();
-        data.put("id",this.idNewShop);
+        System.out.println("Run Test Get Shop Profile");
 
         mockMvc.perform(get("/shops/getShopDetail/"+this.idNewShop))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.shop_name", is("test new shop name 1")))
                 .andExpect(jsonPath("$.user_id", is(Integer.parseInt(this.idNewUser))));
+
+        System.out.println("Done Test Get Shop Profile");
+    }
+    @Test
+    public void testSearchShop(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Search Shop");
+
+        String searchName = "BUSINESS USER USED FOR TEST";
+
+        MvcResult resultActions = mockMvc.perform(get("/shops/search/"+searchName))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = resultActions.getResponse().getContentAsString();
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        List<Map<String,Object>> results = mapper.readValue(contentAsString, ArrayList.class);
+
+        Assert.assertEquals(results.size(),1);
+
+        Assert.assertEquals(results.get(0).get("id"),this.idNewShop);
+
+        System.out.println("Done Test Search Shop");
+    }
+
+    @Test
+    public void testUpdateShop(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Update Shop");
+
+        Map<String,String> data = new HashMap<>();
+        data.put("shopName", "test new shop name 1 new name");
+        data.put("contactNumber","123456789");
+        data.put("startTime","09:00");
+        data.put("endTime","21:00");
+        data.put("shopAddress","330 church street, parramatta, sydney, NSW");
+        data.put("shopDescription","this is test shop 1 new description");
+        data.put("userId",this.idNewShop);
+        data.put("lat","-50.0");
+        data.put("lng","50.0");
+
+        mockMvc.perform(post("/shops/updateShop")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/shops/getShopDetail/"+this.idNewShop))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(Integer.parseInt(this.idNewShop))))
+                .andExpect(jsonPath("$.shop_name", is("test new shop name 1 new name")))
+                .andExpect(jsonPath("$.description", is("this is test shop 1 new description")));
+
+        System.out.println("Done Test Update Shop");
     }
 
     @AfterAll
@@ -115,6 +171,8 @@ public class ShopTests {
         testAddNewShop(mockMvc);
 
         testGetShopDetail(mockMvc);
+
+        testUpdateShop(mockMvc);
 
         clearTestUserFromDb(mockMvc);
     }
