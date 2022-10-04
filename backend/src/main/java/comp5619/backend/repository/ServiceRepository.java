@@ -43,4 +43,9 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
             "    on ser.id = com.service_id\n" +
             "    set ser.rating = com.averagerating", nativeQuery = true)
     void updateServiceRating(@Param("id") String id);
+
+
+    @Query(value =
+            "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id WHERE se.available = true ORDER BY se.rating DESC LIMIT 12   ", nativeQuery = true)
+    List<Map<String, Object>> getAllServicesByRating();
 }

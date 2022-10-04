@@ -61,6 +61,16 @@ public class ServiceController {
 
     }
 
+    @GetMapping(path = "/getAllServicesByRating")
+    public @ResponseBody ResponseEntity<List<Map<String, Object>>> getAllServicesByRating() {
+        List<Map<String, Object>> result = serviceRepository.getAllServicesByRating();
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
+    }
+
     @PostMapping(path = "/add")
     public @ResponseBody ResponseEntity<Map<String, Object>> addService(@RequestBody Map<String, Object> params) {
         Map<String, Object> response = new HashMap<>();
@@ -103,4 +113,5 @@ public class ServiceController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
+
 }

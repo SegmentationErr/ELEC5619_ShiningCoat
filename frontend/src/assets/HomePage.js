@@ -17,114 +17,70 @@ class HomePage extends Component {
             if (cookie.load('role') === "business") {
                 this.props.navigate('/business/profile')
             }
+            else {
+                //TODO: update this function to handle liked service
+                this.fetchAllServices();
+            }
+        }
+        else {
+            this.fetchAllServices();
         }
     }
 
     state = {
         isModalVisible: false,
-        data: [
-            {
-                name: "service1",
-                location: "service1 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service2",
-                location: "service2 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service3",
-                location: "service3 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service4",
-                location: "service4 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            },
-            {
-                name: "service5",
-                location: "service1 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service6",
-                location: "service2 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service7",
-                location: "service3 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId", rating: 4,
-                isService: true
-            },
-            {
-                name: "service8",
-                location: "service4 location",
-                startTime: "9:00",
-                endTime: "21:00",
-                imgSrc: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-                _id: "serviceTestId",
-                rating: 4,
-                isService: true
-            }
-        ],
+        loading: true,
+        data: [],
+    }
+
+    fetchUserInfo() {
+
+    }
+
+    fetchAllServices = () => {
+        axios.get('http://localhost:8080/services/getAllServicesByRating')
+            .then((res) => {
+                // console.log(res.data)
+                if (res.status === 200) {
+                    console.log(res);
+
+                    let data = res.data;
+
+                    this.setState({ data: data, loading: false });
+                }
+                else {
+                    console.log(res);
+                    showAlert('Error', 'Something went wrong');
+                }
+            }).catch((error) => {
+                console.log(error);
+                showAlert('Error', 'Something went wrong');
+            })
     }
 
     render() {
         return (
             <div className={homePageStyle.homePageMainDiv}>
-                <Row className={homePageStyle.homePageMainRow}>
+                {this.state.loading === false ? <Row className={homePageStyle.homePageMainRow}>
                     {this.state.data.map((service, key) => {
                         return (
                             <Col span={6} key={key}>
                                 <ResultCard
                                     key={key}
-                                    name={service.name}
-                                    imgSrc={service.imgSrc}
-                                    id={service._id}
-                                    startTime={service.startTime}
-                                    endTime={service.endTime}
+                                    name={service.service_name}
+                                    imgSrc={service.image}
+                                    id={service.id}
                                     rating={service.rating}
-                                    isService={service.isService}
+                                    isService={true}
+                                    startTime={service.start_time}
+                                    endTime={service.end_time}
+                                    location={service.address}
                                     history={this.props.history}
                                 />
                             </Col>
                         )
                     })}
-                </Row>
+                </Row> : <p>Loading</p>}
             </div>
         );
     }
