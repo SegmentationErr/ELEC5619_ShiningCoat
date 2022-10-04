@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,7 @@ public class BookingController {
     public @ResponseBody ResponseEntity<Map<String, Object>> addService(@RequestBody Map<String, String> params) {
         Map<String, Object> response = new HashMap<>();
 
-        SimpleDateFormat source = new SimpleDateFormat("YYYY-MM-DD HH:mm");
+//        SimpleDateFormat source = new SimpleDateFormat("YYYY-MM-DD HH:mm");
 
         Booking newBooking = new Booking();
         newBooking.setPickUp(Integer.parseInt(params.get("pickup")));
@@ -78,8 +79,13 @@ public class BookingController {
         newBooking.setShopId(Integer.parseInt(params.get("shop_id")));
         newBooking.setUserId(Integer.parseInt(params.get("user_id")));
         try {
-            newBooking.setTime(new Timestamp(source.parse(params.get("time")).getTime()));
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            Date parsedDate = dateFormat.parse(params.get("time"));
+            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+
+            newBooking.setTime(timestamp);
         } catch (Exception e) {
+            System.out.println(e);
             response.put("Message", "Invalid Time");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
