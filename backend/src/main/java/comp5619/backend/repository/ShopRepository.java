@@ -55,4 +55,9 @@ public interface ShopRepository extends CrudRepository<Shop, Integer>{
                           @Param("end_time") Time end_time,
                           @Param("image") String image);
 
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM shops WHERE user_id=:id", nativeQuery = true)
+    void deleteShopsOnUserId(@Param("id") String id);
+
 }

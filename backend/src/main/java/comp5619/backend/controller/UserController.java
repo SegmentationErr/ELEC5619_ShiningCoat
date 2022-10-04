@@ -106,7 +106,7 @@ public class UserController {
 
     //This is a test only function, only used to wipe out the users created during the test session.
     @PostMapping(path = "/deleteUser")
-    public @ResponseBody ResponseEntity<Object> deleteBookingById(@RequestBody Map<String, String> params) {
+    public @ResponseBody ResponseEntity<Object> deleteUserById(@RequestBody Map<String, String> params) {
 
         String id = params.get("id");
 

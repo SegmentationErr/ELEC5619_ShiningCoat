@@ -148,4 +148,20 @@ public class ShopController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
+
+    @PostMapping(path = "/deleteShops")
+    public @ResponseBody ResponseEntity<Object> deleteShopsByUserId(@RequestBody Map<String, String> params) {
+
+        String id = params.get("id");
+
+        List<Map<String,Object>> result = shopRepository.getAllShopsByUserId(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        shopRepository.deleteShopsOnUserId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete Shops On User ID: "+id+" Success");
+    }
 }
