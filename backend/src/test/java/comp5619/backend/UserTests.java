@@ -30,8 +30,8 @@ import static org.hamcrest.Matchers.*;
 @SpringBootTest
 public class UserTests{
 
-    private final String userNameNewUser = "Users Used For Test";
-    private final String emailNewUser = "testUserEmail@test.com";
+    private String userNameNewUser = "Users Used For Test";
+    private String emailNewUser = "testUserEmail@test.com";
     private final String roleNewUser = "customer";
     private final String passwordNewUser = "123456789";
 
@@ -39,6 +39,8 @@ public class UserTests{
 
     @Test
     public void testCreateNewUser(MockMvc mockMvc) throws Exception {
+
+        System.out.println("Run Test Create User");
 
         Map<String,String> data = new HashMap<>();
         data.put("username",userNameNewUser);
@@ -51,10 +53,14 @@ public class UserTests{
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+        System.out.println("Done Test Create User");
     }
 
     @Test
     public void testSignIn(MockMvc mockMvc) throws Exception {
+
+        System.out.println("Run Test Sign In");
 
         Map<String,String> data = new HashMap<>();
         data.put("email",emailNewUser);
@@ -64,7 +70,7 @@ public class UserTests{
                 .content(TestHelper.asJsonString(data))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+//                .andDo(print())
                 .andExpect(status().isOk());
 
         MvcResult result = resultActions.andReturn();
@@ -75,29 +81,82 @@ public class UserTests{
         Map<String,Object> map = mapper.readValue(contentAsString, HashMap.class);
 
         idNewUser = String.valueOf(map.get("id"));
+
+        System.out.println("Done Test Sign In");
     }
 
     @Test
     public void testGetUserProfileById(MockMvc mockMvc) throws Exception {
+
+        System.out.println("Run Test Get User Profile");
 
         mockMvc.perform(get("/users/profile/"+this.idNewUser))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.role", is(this.roleNewUser)))
                 .andExpect(jsonPath("$.email", is(this.emailNewUser)))
                 .andExpect(jsonPath("$.username", is(this.userNameNewUser)));
+
+        System.out.println("Done Test Get User Profile");
     }
 
     @Test
-    public static void clearTestUserFromDb(MockMvc mockMvc) throws Exception{
+    public void testUpdateUserProfile(MockMvc mockMvc) throws Exception {
 
+        System.out.println("Run Test Update User Profile");
+
+        Map<String,String> data = new HashMap<>();
+        data.put("id",idNewUser);
+
+        this.userNameNewUser = "updated test user name";
+        data.put("username",userNameNewUser);
+
+        this.emailNewUser = "testUpdatedUserEmail@test.com";
+        data.put("email",emailNewUser);
+
+        data.put("currPassword",passwordNewUser);
+        data.put("newPassword",passwordNewUser);
+
+        mockMvc.perform(post("/users/update")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/users/profile/"+this.idNewUser))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.role", is(this.roleNewUser)))
+                .andExpect(jsonPath("$.email", is(this.emailNewUser)))
+                .andExpect(jsonPath("$.username", is(this.userNameNewUser)));
+
+        System.out.println("Done Test Update User Profile");
+    }
+
+    @Test
+    public void clearTestUserFromDb(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Delete Test User");
+
+        Map<String,String> data = new HashMap<>();
+        data.put("id",idNewUser);
+
+        mockMvc.perform(post("/users/deleteUser")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/users/profile/"+this.idNewUser))
+                .andExpect(status().isNoContent());
+
+        System.out.println("Done Test Delete Test User");
     }
 
     @Test
     public void runAll(MockMvc mockMvc) throws Exception{
-
-//        testCreateNewUser(mockMvc);
+        testCreateNewUser(mockMvc);
         testSignIn(mockMvc);
         testGetUserProfileById(mockMvc);
-        //clearTestUserFromDb(mockMvc);
+        testUpdateUserProfile(mockMvc);
+        clearTestUserFromDb(mockMvc);
     }
 }
