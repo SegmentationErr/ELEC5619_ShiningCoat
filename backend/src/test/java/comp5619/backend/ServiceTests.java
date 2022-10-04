@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -76,18 +77,55 @@ public class ServiceTests {
         System.out.println("Done Set Up For Services Tests");
     }
 
+    @Test
+    public void testAddService(MockMvc mockMvc) throws Exception{
+
+        System.out.println("Test Add Service");
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("available",1);
+        data.put("serviceDescription","this is test service description");
+        data.put("image",null);
+        data.put("pickup",1);
+        data.put("price","123");
+        data.put("serviceName","This is test service name");
+        data.put("shop_id",Integer.parseInt(this.idNewShop));
+
+        mockMvc.perform(post("/services/add")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        MvcResult resultActions = mockMvc.perform(get("/services/getServices/"+this.idNewShop))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = resultActions.getResponse().getContentAsString();
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        List<Map<String,Object>> map = mapper.readValue(contentAsString, ArrayList.class);
+
+        this.idNewService = String.valueOf(map.get(0).get("id"));
+
+        System.out.println("Done Test Add Service");
+    }
+
 
     @AfterAll
     public void cleanUpAfterTests(MockMvc mockMvc) throws Exception{
         TestHelper.clearTestUserFromDb(mockMvc,this.idNewUser);
         TestHelper.clearTestShopsFromDb(mockMvc,this.idNewUser);
-        //TestHelper.clearTestServicesFromDb(mockMvc,this.idNewShop);
+        TestHelper.clearTestServicesFromDb(mockMvc,this.idNewShop);
     }
 
 
     @Test
     public void runAll(MockMvc mockMvc) throws Exception{
         setUpForTests(mockMvc);
+
+        testAddService(mockMvc);
 
         cleanUpAfterTests(mockMvc);
     }

@@ -116,7 +116,7 @@ public class TestHelper {
         Map<String,String> data = new HashMap<>();
         data.put("id",idNewShop);
 
-        mockMvc.perform(post("/services/deleteShops")
+        mockMvc.perform(post("/services/deleteServices")
                         .content(TestHelper.asJsonString(data))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
