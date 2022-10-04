@@ -149,6 +149,7 @@ public class ShopController {
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 
+    //This method is used for tests
     @PostMapping(path = "/deleteShops")
     public @ResponseBody ResponseEntity<Object> deleteShopsByUserId(@RequestBody Map<String, String> params) {
 

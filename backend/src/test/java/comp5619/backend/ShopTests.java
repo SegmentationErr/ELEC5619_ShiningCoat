@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -46,6 +47,7 @@ public class ShopTests {
 
     private String idNewShop = "";
 
+    @BeforeAll
     public void createTestBusinessUser(MockMvc mockMvc) throws Exception{
         Map<String,String> data = new HashMap<>();
         data.put("username",userNameNewUser);
