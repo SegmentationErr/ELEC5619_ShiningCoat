@@ -46,7 +46,6 @@ public class ShopTests {
 
     private String idNewShop = "";
 
-    @Before
     public void createTestBusinessUser(MockMvc mockMvc) throws Exception{
         Map<String,String> data = new HashMap<>();
         data.put("username",userNameNewUser);
