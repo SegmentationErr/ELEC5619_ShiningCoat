@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ServiceRepository extends CrudRepository<Service, Integer> {
-    @Query(value = "select se.service_name, se.description, se.available, se.pick_up, se.price, se.total_sold, se.image, sh.shop_name, sh.address, sh.lat, sh.lng, sh.start_time, sh.end_time, sh.id as shop_id from services se left join shops sh on sh.id=se.shop_id where se.id =:id", nativeQuery = true)
+    @Query(value = "select se.rating, se.service_name, se.description, se.available, se.pick_up, se.price, se.total_sold, se.image, sh.shop_name, sh.address, sh.lat, sh.lng, sh.start_time, sh.end_time, sh.id as shop_id from services se left join shops sh on sh.id=se.shop_id where se.id =:id", nativeQuery = true)
     Map<String, Object> getServiceDetailById(@Param("id") String id);
 
     @Query(value = "select sh.lat, sh.lng from shops sh where sh.id=(select shop_id from services where id=:id)", nativeQuery = true)
@@ -45,7 +45,19 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
     void updateServiceRating(@Param("id") String id);
 
 
+    @Transactional
+    @Modifying
+    @Query(value = "update services set total_sold = total_sold + 1 where id=:id", nativeQuery = true)
+    void updateServiceTotalSold(@Param("id") String id);
+
+
     @Query(value =
             "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id WHERE se.available = true ORDER BY se.rating DESC LIMIT 12   ", nativeQuery = true)
     List<Map<String, Object>> getAllServicesByRating();
+
+    //This method is used for tests
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM services WHERE shop_id=:id", nativeQuery = true)
+    void deleteServicesOnShopId(@Param("id") String id);
 }

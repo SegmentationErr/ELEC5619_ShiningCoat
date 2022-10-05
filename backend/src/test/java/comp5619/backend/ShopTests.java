@@ -13,6 +13,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -46,6 +47,7 @@ public class ShopTests {
 
     private String idNewShop = "";
 
+    @BeforeAll
     public void createTestBusinessUser(MockMvc mockMvc) throws Exception{
         Map<String,String> data = new HashMap<>();
         data.put("username",userNameNewUser);
@@ -167,11 +169,16 @@ public class ShopTests {
     public void runAll(MockMvc mockMvc) throws Exception{
         createTestBusinessUser(mockMvc);
 
-        testAddNewShop(mockMvc);
+        try{
+            testAddNewShop(mockMvc);
 
-        testGetShopDetail(mockMvc);
+            testGetShopDetail(mockMvc);
 
-        testUpdateShop(mockMvc);
+            testUpdateShop(mockMvc);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
 
         clearTestUserFromDb(mockMvc);
     }

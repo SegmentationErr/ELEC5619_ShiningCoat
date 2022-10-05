@@ -114,4 +114,29 @@ public class ServiceController {
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 
+    @PostMapping(path = "/updateTotalSold")
+    public @ResponseBody ResponseEntity<Object> updateServiceTotalSold(@RequestBody Map<String, String> params) {
+
+        serviceRepository.updateServiceTotalSold(params.get("id"));
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
+
+    //this method is used for test only
+    @PostMapping(path = "/deleteServices")
+    public @ResponseBody ResponseEntity<Object> deleteShopsByUserId(@RequestBody Map<String, String> params) {
+
+        String id = params.get("id");
+
+        List<Map<String,Object>> result = serviceRepository.getServices(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        serviceRepository.deleteServicesOnShopId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete Services On Shop ID: "+id+" Success");
+    }
+
 }

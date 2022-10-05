@@ -8,11 +8,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,6 +25,26 @@ public class TestHelper {
             final ObjectMapper mapper = new ObjectMapper();
             final String jsonContent = mapper.writeValueAsString(obj);
             return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<Map<String,Object>> getListResponses(MockMvc mockMvc, String url){
+        try {
+
+            MvcResult resultActions = mockMvc.perform(get(url))
+                    .andExpect(status().isOk())
+//                    .andDo(print())
+                    .andReturn();
+
+            String contentAsString = resultActions.getResponse().getContentAsString();
+
+            final ObjectMapper mapper = new ObjectMapper();
+
+            List<Map<String,Object>> map = mapper.readValue(contentAsString, ArrayList.class);
+
+            return map;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -57,6 +80,26 @@ public class TestHelper {
         return String.valueOf(map.get("id"));
     }
 
+    public static String createTestShop(MockMvc mockMvc,Map<String, String> data) throws Exception{
+        mockMvc.perform(post("/shops/addShop")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        MvcResult resultActions = mockMvc.perform(get("/shops/getAllShopsById/"+data.get("userId")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = resultActions.getResponse().getContentAsString();
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        List<Map<String,Object>> map = mapper.readValue(contentAsString, ArrayList.class);
+
+        return String.valueOf(map.get(0).get("id"));
+    }
+
     public static void clearTestUserFromDb(MockMvc mockMvc, String idNewUser) throws Exception{
 
         Map<String,String> data = new HashMap<>();
@@ -86,6 +129,22 @@ public class TestHelper {
 
 
         mockMvc.perform(get("/shops/getAllShopsById/"+idNewUser))
+                .andExpect(status().isNoContent());
+    }
+
+    public static void clearTestServicesFromDb(MockMvc mockMvc, String idNewShop) throws Exception{
+
+        Map<String,String> data = new HashMap<>();
+        data.put("id",idNewShop);
+
+        mockMvc.perform(post("/services/deleteServices")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/services/getServices/"+idNewShop))
                 .andExpect(status().isNoContent());
     }
 }
