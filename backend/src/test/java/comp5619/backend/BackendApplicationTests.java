@@ -32,6 +32,8 @@ class BackendApplicationTests {
 
     private final CommentTests commentTests = new CommentTests();
 
+    private final BookingTests bookingTests = new BookingTests();
+
     @Test
     public void runAllUserTests() throws Exception{
         userTests.runAll(mockMvc);
@@ -50,6 +52,11 @@ class BackendApplicationTests {
     @Test
     public void runAllCommentTests() throws Exception{
         commentTests.runAll(mockMvc);
+    }
+
+    @Test
+    public void runAllBookingTests() throws Exception{
+        bookingTests.runAll(mockMvc);
     }
 
 }

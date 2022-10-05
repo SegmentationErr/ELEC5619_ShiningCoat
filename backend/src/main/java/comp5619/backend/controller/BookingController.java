@@ -95,4 +95,22 @@ public class BookingController {
         response.put("Message", "Make Booking Success");
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
+    //This method is used for tests, delete comments on service id
+    @PostMapping(path = "/deleteBookingsOnUserId")
+    public @ResponseBody ResponseEntity<Object> deleteBookingsOnUserId(@RequestBody Map<String, String> params) {
+
+        String id = params.get("user_id");
+
+        List<Map<String,Object>> result = bookingRepository.getAllBookingByUserId(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        bookingRepository.deleteBookingsOnUserId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete Bookings On User ID: "+id+" Success");
+    }
 }

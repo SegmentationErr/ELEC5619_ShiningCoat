@@ -185,4 +185,20 @@ public class TestHelper {
         mockMvc.perform(get("/comments/getCommentsById/"+idNewService))
                 .andExpect(status().isNoContent());
     }
+
+    public static void clearTestBookingsFromDb(MockMvc mockMvc, String idNewUser) throws Exception{
+
+        Map<String,String> data = new HashMap<>();
+        data.put("user_id",idNewUser);
+
+        mockMvc.perform(post("/bookings/deleteBookingsOnUserId")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/bookings/getAllBookings/"+idNewUser))
+                .andExpect(status().isNoContent());
+    }
 }
