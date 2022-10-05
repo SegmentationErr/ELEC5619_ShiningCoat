@@ -35,7 +35,7 @@ public class TestHelper {
 
             MvcResult resultActions = mockMvc.perform(get(url))
                     .andExpect(status().isOk())
-                    .andDo(print())
+//                    .andDo(print())
                     .andReturn();
 
             String contentAsString = resultActions.getResponse().getContentAsString();

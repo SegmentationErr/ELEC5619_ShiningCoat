@@ -30,15 +30,15 @@ class BackendApplicationTests {
 
     private final ServiceTests serviceTests = new ServiceTests();
 
-//    @Test
-//    public void runAllUserTests() throws Exception{
-//        userTests.runAll(mockMvc);
-//    }
-//
-//    @Test
-//    public void runAllShopTests() throws Exception{
-//        shopTests.runAll(mockMvc);
-//    }
+    @Test
+    public void runAllUserTests() throws Exception{
+        userTests.runAll(mockMvc);
+    }
+
+    @Test
+    public void runAllShopTests() throws Exception{
+        shopTests.runAll(mockMvc);
+    }
 
     @Test
     public void runAllServiceTests() throws Exception{

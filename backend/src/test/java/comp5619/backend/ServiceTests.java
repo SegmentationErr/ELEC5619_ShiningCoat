@@ -151,19 +151,53 @@ public class ServiceTests {
 
         Assert.assertEquals(res.get(0).get("id"),Integer.parseInt(this.idNewService));
 
-        System.out.println(res.get(0).get("id"));
-
         System.out.println("Done Test Get All Services");
     }
 
     @Test
     public void testSearchService(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Search Service");
 
+        String searchName = "THIS IS TEST Service";
+
+        List<Map<String,Object>> res = TestHelper.getListResponses(mockMvc,"/services/search/"+searchName);
+
+        Assert.assertEquals(res.size(),1);
+
+        Assert.assertEquals(res.get(0).get("id"),Integer.parseInt(this.idNewService));
+
+        System.out.println("Done Test Search Service");
     }
 
     @Test
     public void testUpdateService(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Update Service");
 
+        Map<String,String> data = new HashMap<>();
+        data.put("service_id", this.idNewService);
+        data.put("serviceName","test service new name");
+        data.put("serviceDescription","test service new description");
+        data.put("available","0");
+        data.put("pickup","0");
+        data.put("price","1234");
+        data.put("image",null);
+
+        mockMvc.perform(post("/services/update")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/services/getServiceDetailById/"+this.idNewService))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.shop_id", is(Integer.parseInt(this.idNewShop))))
+                .andExpect(jsonPath("$.service_name", is("test service new name")))
+                .andExpect(jsonPath("$.available", is(false)))
+                .andExpect(jsonPath("$.pick_up", is(false)))
+                .andExpect(jsonPath("$.price", is(1234.0)))
+                .andExpect(jsonPath("$.description", is("test service new description")));
+
+        System.out.println("Done Test Update Service");
     }
 
 
@@ -184,6 +218,8 @@ public class ServiceTests {
             testGetServiceById(mockMvc);
             testGetMapInfoById(mockMvc);
             testGetAllServices(mockMvc);
+            testSearchService(mockMvc);
+            testUpdateService(mockMvc);
         }
         catch (Exception e){
             System.out.println(e);
