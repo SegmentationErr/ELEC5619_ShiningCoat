@@ -169,11 +169,16 @@ public class ShopTests {
     public void runAll(MockMvc mockMvc) throws Exception{
         createTestBusinessUser(mockMvc);
 
-        testAddNewShop(mockMvc);
+        try{
+            testAddNewShop(mockMvc);
 
-        testGetShopDetail(mockMvc);
+            testGetShopDetail(mockMvc);
 
-        testUpdateShop(mockMvc);
+            testUpdateShop(mockMvc);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
 
         clearTestUserFromDb(mockMvc);
     }

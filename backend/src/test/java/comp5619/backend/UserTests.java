@@ -154,9 +154,14 @@ public class UserTests{
     @Test
     public void runAll(MockMvc mockMvc) throws Exception{
         testCreateNewUser(mockMvc);
-        testSignIn(mockMvc);
-        testGetUserProfileById(mockMvc);
-        testUpdateUserProfile(mockMvc);
+        try{
+            testSignIn(mockMvc);
+            testGetUserProfileById(mockMvc);
+            testUpdateUserProfile(mockMvc);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
         clearTestUserFromDb(mockMvc);
     }
 }

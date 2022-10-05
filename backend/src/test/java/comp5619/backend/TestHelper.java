@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -24,6 +25,26 @@ public class TestHelper {
             final ObjectMapper mapper = new ObjectMapper();
             final String jsonContent = mapper.writeValueAsString(obj);
             return jsonContent;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static List<Map<String,Object>> getListResponses(MockMvc mockMvc, String url){
+        try {
+
+            MvcResult resultActions = mockMvc.perform(get(url))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn();
+
+            String contentAsString = resultActions.getResponse().getContentAsString();
+
+            final ObjectMapper mapper = new ObjectMapper();
+
+            List<Map<String,Object>> map = mapper.readValue(contentAsString, ArrayList.class);
+
+            return map;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

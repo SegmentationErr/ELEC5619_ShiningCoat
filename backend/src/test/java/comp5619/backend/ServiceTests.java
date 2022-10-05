@@ -112,6 +112,60 @@ public class ServiceTests {
         System.out.println("Done Test Add Service");
     }
 
+    @Test
+    public void testGetServiceById(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Get Service Detail");
+
+        mockMvc.perform(get("/services/getServiceDetailById/"+this.idNewService))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.shop_id", is(Integer.parseInt(this.idNewShop))))
+                .andExpect(jsonPath("$.service_name", is("This is test service name")))
+                .andExpect(jsonPath("$.description", is("this is test service description")))
+                .andExpect(jsonPath("$.available", is(true)))
+                .andExpect(jsonPath("$.price", is(123.0)))
+                .andExpect(jsonPath("$.rating", is(0)));
+
+        System.out.println("Done Test Get Service Detail");
+    }
+
+
+    @Test
+    public void testGetMapInfoById(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Get Service Map Info");
+
+        mockMvc.perform(get("/services/getMapInfoById/"+this.idNewService))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.lat", is(-50.0)))
+                .andExpect(jsonPath("$.lng", is(50.0)));
+
+        System.out.println("Done Test Get Service Map Info");
+    }
+
+    @Test
+    public void testGetAllServices(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Get All Service");
+
+        List<Map<String,Object>> res = TestHelper.getListResponses(mockMvc,"/services/getServices/"+this.idNewShop);
+
+        Assert.assertEquals(res.size(),1);
+
+        Assert.assertEquals(res.get(0).get("id"),Integer.parseInt(this.idNewService));
+
+        System.out.println(res.get(0).get("id"));
+
+        System.out.println("Done Test Get All Services");
+    }
+
+    @Test
+    public void testSearchService(MockMvc mockMvc) throws Exception{
+
+    }
+
+    @Test
+    public void testUpdateService(MockMvc mockMvc) throws Exception{
+
+    }
+
 
     @AfterAll
     public void cleanUpAfterTests(MockMvc mockMvc) throws Exception{
@@ -125,7 +179,15 @@ public class ServiceTests {
     public void runAll(MockMvc mockMvc) throws Exception{
         setUpForTests(mockMvc);
 
-        testAddService(mockMvc);
+        try{
+            testAddService(mockMvc);
+            testGetServiceById(mockMvc);
+            testGetMapInfoById(mockMvc);
+            testGetAllServices(mockMvc);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
 
         cleanUpAfterTests(mockMvc);
     }
