@@ -30,6 +30,8 @@ class BackendApplicationTests {
 
     private final ServiceTests serviceTests = new ServiceTests();
 
+    private final CommentTests commentTests = new CommentTests();
+
     @Test
     public void runAllUserTests() throws Exception{
         userTests.runAll(mockMvc);
@@ -43,6 +45,11 @@ class BackendApplicationTests {
     @Test
     public void runAllServiceTests() throws Exception{
         serviceTests.runAll(mockMvc);
+    }
+
+    @Test
+    public void runAllCommentTests() throws Exception{
+        commentTests.runAll(mockMvc);
     }
 
 }

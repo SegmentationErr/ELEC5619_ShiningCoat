@@ -69,4 +69,22 @@ public class CommentsController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+
+    //This method is used for tests, delete comments on service id
+    @PostMapping(path = "/deleteComments")
+    public @ResponseBody ResponseEntity<Object> deleteCommentsOnServiceId(@RequestBody Map<String, String> params) {
+
+        String id = params.get("service_id");
+
+        List<Map<String,Object>> result = commentRepository.getCommentsById(id);
+
+        if (result.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
+        }
+
+        commentRepository.deleteCommentsOnServiceId(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete Comments On Service ID: "+id+" Success");
+    }
 }
