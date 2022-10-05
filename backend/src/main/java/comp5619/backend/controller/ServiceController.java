@@ -114,6 +114,14 @@ public class ServiceController {
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }
 
+    @PostMapping(path = "/updateTotalSold")
+    public @ResponseBody ResponseEntity<Object> updateServiceTotalSold(@RequestBody Map<String, String> params) {
+
+        serviceRepository.updateServiceTotalSold(params.get("id"));
+
+        return ResponseEntity.status(HttpStatus.OK).body("Update Success");
+    }
+
     //this method is used for test only
     @PostMapping(path = "/deleteServices")
     public @ResponseBody ResponseEntity<Object> deleteShopsByUserId(@RequestBody Map<String, String> params) {
