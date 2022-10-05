@@ -117,7 +117,7 @@ public class ServiceController {
     @PostMapping(path = "/updateTotalSold")
     public @ResponseBody ResponseEntity<Object> updateServiceTotalSold(@RequestBody Map<String, String> params) {
 
-        serviceRepository.updateServiceTotalSold(params.get("id"));
+        serviceRepository.updateServiceTotalSold(params.get("id"),params.get("value"));
 
         return ResponseEntity.status(HttpStatus.OK).body("Update Success");
     }

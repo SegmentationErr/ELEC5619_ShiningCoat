@@ -233,6 +233,19 @@ class AllBookingsPage extends Component {
         });
     }
 
+    handleUpdateServiceTotalSold(service_id) {
+        let data = {
+            id: service_id,
+            value: -1
+        }
+        axios.post(`http://localhost:8080/services/updateTotalSold`, data)
+            .then(res => {
+                console.log(res);
+            }).catch((error) => {
+                console.log(error);
+            })
+    }
+
     confirmDeleteBooking = (e) => {
         console.log("confirm delete this booking");
         let service = this.state.pendingDelteService;
@@ -250,6 +263,7 @@ class AllBookingsPage extends Component {
                 .then(res => {
                     if (res.status === 200) {
                         showAlert('success', 'Successfully deleted this booking');
+                        this.handleUpdateServiceTotalSold(service.service_id);
                         this.setState({
                             openCancelConfirm: false,
                             pendingDelteService: null

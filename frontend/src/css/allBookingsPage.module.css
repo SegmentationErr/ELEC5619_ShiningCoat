@@ -23,7 +23,7 @@
 
 .serviceCard {
     width: 90%;
-    height: 110px;
+    min-height: 120px;
     border-radius: 25px;
     background-color: white;
     margin-bottom: 5%;
@@ -31,7 +31,7 @@
 
 .serviceCardUnavailable {
     width: 90%;
-    height: 110px;
+    min-height: 110px;
     border-radius: 25px;
     background-color: grey;
     margin-bottom: 5%;
@@ -39,7 +39,7 @@
 
 .serviceCardBusiness {
     width: 90%;
-    height: 150px;
+    min-height: 150px;
     border-radius: 25px;
     background-color: white;
     margin-bottom: 5%;

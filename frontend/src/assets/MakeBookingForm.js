@@ -29,7 +29,8 @@ class MakeBookingForm extends Component {
 
     handleUpdateServiceTotalSold(service_id) {
         let data = {
-            id: service_id
+            id: service_id,
+            value: 1
         }
         axios.post(`http://localhost:8080/services/updateTotalSold`, data)
             .then(res => {

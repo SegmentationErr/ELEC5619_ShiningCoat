@@ -47,9 +47,8 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "update services set total_sold = total_sold + 1 where id=:id", nativeQuery = true)
-    void updateServiceTotalSold(@Param("id") String id);
-
+    @Query(value = "update services set total_sold = total_sold + :value where id=:id", nativeQuery = true)
+    void updateServiceTotalSold(@Param("id") String id, @Param("value") String value);
 
     @Query(value =
             "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id WHERE se.available = true ORDER BY se.rating DESC LIMIT 12   ", nativeQuery = true)
