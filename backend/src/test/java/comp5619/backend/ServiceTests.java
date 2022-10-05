@@ -200,6 +200,27 @@ public class ServiceTests {
         System.out.println("Done Test Update Service");
     }
 
+    @Test
+    public void testUpdateServiceTotalSold(MockMvc mockMvc) throws Exception{
+        System.out.println("Run Test Update Service Total Sold");
+
+        Map<String,String> data = new HashMap<>();
+        data.put("id", this.idNewService);
+
+        mockMvc.perform(post("/services/updateTotalSold")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/services/getServiceDetailById/"+this.idNewService))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.shop_id", is(Integer.parseInt(this.idNewShop))))
+                .andExpect(jsonPath("$.total_sold", is(1)));
+
+        System.out.println("Done Test Update Service Total Sold");
+    }
+
 
     @AfterAll
     public void cleanUpAfterTests(MockMvc mockMvc) throws Exception{
@@ -220,6 +241,7 @@ public class ServiceTests {
             testGetAllServices(mockMvc);
             testSearchService(mockMvc);
             testUpdateService(mockMvc);
+            testUpdateServiceTotalSold(mockMvc);
         }
         catch (Exception e){
             System.out.println(e);
