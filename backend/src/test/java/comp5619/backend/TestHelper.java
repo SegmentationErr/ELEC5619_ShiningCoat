@@ -100,6 +100,27 @@ public class TestHelper {
         return String.valueOf(map.get(0).get("id"));
     }
 
+    public static String createTestService(MockMvc mockMvc, Map<String,Object> data) throws Exception{
+
+        mockMvc.perform(post("/services/add")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        MvcResult resultActions = mockMvc.perform(get("/services/getServices/"+data.get("shop_id")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = resultActions.getResponse().getContentAsString();
+
+        final ObjectMapper mapper = new ObjectMapper();
+
+        List<Map<String,Object>> map = mapper.readValue(contentAsString, ArrayList.class);
+
+        return String.valueOf(map.get(0).get("id"));
+    }
+
     public static void clearTestUserFromDb(MockMvc mockMvc, String idNewUser) throws Exception{
 
         Map<String,String> data = new HashMap<>();
@@ -145,6 +166,39 @@ public class TestHelper {
 
 
         mockMvc.perform(get("/services/getServices/"+idNewShop))
+                .andExpect(status().isNoContent());
+    }
+
+
+    public static void clearTestCommentsFromDb(MockMvc mockMvc, String idNewService) throws Exception{
+
+        Map<String,String> data = new HashMap<>();
+        data.put("service_id",idNewService);
+
+        mockMvc.perform(post("/comments/deleteComments")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/comments/getCommentsById/"+idNewService))
+                .andExpect(status().isNoContent());
+    }
+
+    public static void clearTestBookingsFromDb(MockMvc mockMvc, String idNewUser) throws Exception{
+
+        Map<String,String> data = new HashMap<>();
+        data.put("user_id",idNewUser);
+
+        mockMvc.perform(post("/bookings/deleteBookingsOnUserId")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/bookings/getAllBookings/"+idNewUser))
                 .andExpect(status().isNoContent());
     }
 }
