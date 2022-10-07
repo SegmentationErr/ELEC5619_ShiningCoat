@@ -76,7 +76,14 @@ class NavBar extends Component {
     }
 
     navToUserProfile = (e) => {
-        console.log("Nav to user profile page");
+        // console.log("Nav to user profile page");
+        let userId = cookie.load('id');
+        if (userId !== undefined) {
+            this.props.navigate('/user/profile');
+        }
+        else {
+            showAlert('warning', "Invalid login session", "Please login first");
+        }
     }
 
     navToUserBookings = (e) => {

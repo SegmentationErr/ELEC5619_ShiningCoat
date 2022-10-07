@@ -42,6 +42,7 @@ export default function App() {
         </Route>
         <Route path="/user/">
           <Route path="getAllBookings" element={<AllBookingsPage />} />
+          <Route path="profile" element={<ManageProfilePage />} />
         </Route>
         <Route path="/serviceDetailPage/" element={<ServiceDetailPage />}>
           <Route path=":id" element={<ServiceDetailPage />} />
