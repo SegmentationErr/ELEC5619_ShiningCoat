@@ -66,8 +66,8 @@ class ManageProfilePage extends Component {
             data.newPassword = input.currPassword
         }
 
-        data.id = "1"
-
+        data.id = this.state.id
+        console.log(data)
         this.setState({
             validation: false
         })
@@ -92,41 +92,36 @@ class ManageProfilePage extends Component {
                     <PasswordValidation changeDisplayValidation={this.changeDisplayValidation} updateProfile={this.updateProfile} /> :
                     null}
                 <Form
-                    name="normal_login"
-                    className="login-form"
                     onFinish={this.handleUpdateButton}
                     ref={(form) => this.formRef = form}
+                    labelCol={{ span: 10 }}
+                    wrapperCol={{ span: 5 }}
                 >
-                    <Form.Item name="username">
+                    <Form.Item name="username" label='Username'>
                         <Input
-                            style={{ width: 400, }}
                             prefix={<UserOutlined className="site-form-item-icon" />}
                             placeholder={this.state.profile.username}
                             allowClear
                         />
                     </Form.Item>
-                    <Form.Item name="email">
+                    <Form.Item name="email" label='Email'>
                         <Input
-                            style={{ width: 400, }}
                             prefix={<MailOutlined className="site-form-item-icon" />}
                             placeholder={this.state.profile.email}
                             allowClear
                         />
                     </Form.Item>
-                    <Form.Item name="newPassword">
+                    <Form.Item name="newPassword" label='New Password'>
                         <Input.Password
-                            style={{ width: 400, }}
                             prefix={<LockOutlined className="site-form-item-icon" />}
                             type="password"
                             placeholder="New Password"
                             allowClear
                         />
                     </Form.Item>
-                    <Form.Item>
-                        <button className={styles.blackButton} type="submit" style={{ marginTop: 100 }}>
-                            Update Profile
-                        </button>
-                    </Form.Item>
+                    <button className={styles.blackButton} type="submit" style={{ marginTop: 100 }}>
+                        Update Profile
+                    </button>
                 </Form>
             </div>
         );
