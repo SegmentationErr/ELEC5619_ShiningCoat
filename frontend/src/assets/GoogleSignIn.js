@@ -1,6 +1,9 @@
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import {useEffect, useState} from 'react'
+import axios from 'axios'
+import cookie from 'react-cookies';
+import { message } from 'antd';
 
 function GoogleSignIn() {
     const [profile, setProfile] = useState([]);
@@ -19,6 +22,45 @@ function GoogleSignIn() {
     const onSuccess = (res) => {
         setProfile(res.profileObj);
         console.log('success:', res);
+        let data = {"username": profile.name, "email": profile.email, "role": "customer", "password": null};
+        // axios.post(`http://localhost:8080/users/add`, data)
+        //     .then(res => {
+        //         if (res.status === 200) {
+        //             message.success('Successfully Sign In!')
+        //             cookie.save("id", res.data.id)
+        //             cookie.save("role", res.data.role)
+        //             if (res.data.role === "customer") {
+        //                 this.props.navigate('/')
+        //             } else {
+        //                 this.props.navigate('/business/profile')
+        //             }
+        //         } else {
+        //             message.error('Incorrect Email or Password.\nSign In Failed.')
+        //         }
+        //     }).catch((error) => {
+        //         message.error('Incorrect Email or Password.\nSign In Failed.')
+        //     })
+        axios.post(`http://localhost:8080/users/add`, data)
+        .then(res => {
+            if (res.status === 200) {
+                message.success('Successfully Create User!')
+                // console.log(res.data)
+                cookie.save("id", res.data.id)
+                cookie.save("role", res.data.role)
+                if (res.data.role === "customer") {
+                    this.props.navigate('/')
+                } else {
+                    this.props.navigate('/business/profile')
+                }
+            } else {
+                message.error('Username or Email Already Exists.\nCreation Failed.')
+            }
+        }).catch((error) => {
+            console.log(error);
+            message.error('Something went wrong.\nPlease Try Again.')
+
+            // message.error('Username or Email Already Exists.\nCreation Failed.')
+        })
     };
     const onFailure = (err) => {
         console.log('failed:', err);
