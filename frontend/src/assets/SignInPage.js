@@ -101,7 +101,7 @@ class SignInPage extends Component {
                         </button>
                     </Form.Item>
                 </Form>
-                <GoogleSignIn />
+                <GoogleSignIn navigate={this.props.navigate}/>
                 <button
                     className={generalStyles.blackButton}
                     id={signInPageStyle.backButton} onClick={() => this.props.navigate(-1)}>

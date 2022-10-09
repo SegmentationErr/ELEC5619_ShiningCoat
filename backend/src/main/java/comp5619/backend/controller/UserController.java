@@ -90,13 +90,13 @@ public class UserController {
 
     @PostMapping(path = "/googleSignIn")
     public @ResponseBody ResponseEntity<Map<String, Object>> googleSignIn(@RequestBody Map<String, String> params) {
+        Map<String, Object> response = new HashMap<>();
         String tokenId = params.get("tokenId");
-        System.out.println(tokenId);
-        
-        GoogleIdTokenVerifier verifier =
-            new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-            .setAudience(Collections.singletonList("594879814425-h18tqekm4p3vbujs85b4344mduajoi8g.apps.googleusercontent.com"))
-            .build();
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections
+                        .singletonList("594879814425-h18tqekm4p3vbujs85b4344mduajoi8g.apps.googleusercontent.com"))
+                .build();
 
         // (Receive idTokenString by HTTPS POST)
 
@@ -104,26 +104,33 @@ public class UserController {
         try {
             GoogleIdToken idToken = verifier.verify(tokenId);
             if (idToken != null) {
-            Payload payload = idToken.getPayload();
-    
-            // Print user identifier
-            String userId = payload.getSubject();
-            System.out.println("User ID: " + userId);
-    
-            // Get profile information from payload
-            String email = payload.getEmail();
-            // boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-            // String name = (String) payload.get("name");
-            // String pictureUrl = (String) payload.get("picture");
-            // String locale = (String) payload.get("locale");
-            // String familyName = (String) payload.get("family_name");
-            // String givenName = (String) payload.get("given_name");
-            System.out.println(email);
-            // Use or store profile information
-            // ...
-    
+                Payload payload = idToken.getPayload();
+
+                // Print user identifier
+                String userId = payload.getSubject();
+
+                // Get profile information from payload
+                String email = payload.getEmail();
+                String name = (String) payload.get("name");
+
+                List<Map<String, Object>> user = userRepository.getUserByNameOrEmail(name, email);
+                if (user.size() != 0) {
+                    return ResponseEntity.status(HttpStatus.OK).body(user.get(0));
+                } else {
+                    User newUser = new User();
+                    newUser.setUsername(name);
+                    newUser.setEmail(email);
+                    newUser.setPassword("googlesignincustomer");
+                    newUser.setRole("customer");
+
+                    userRepository.save(newUser);
+                    response.put("Message", "Create User Success");
+                    response.put("id", String.valueOf(newUser.getId()));
+                    response.put("role", String.valueOf(newUser.getRole()));
+                }
+
             } else {
-            System.out.println("Invalid ID token.");
+                System.out.println("Invalid ID token.");
             }
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
@@ -131,24 +138,6 @@ public class UserController {
             e.printStackTrace();
         }
 
-
-        Map<String, Object> response = new HashMap<>();
-
-        // if (userRepository.getUserByNameOrEmail(username, email).size() != 0) {
-        //     response.put("Message", "User Exists");
-        //     return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        // }
-
-        // User newUser = new User();
-        // newUser.setUsername(username);
-        // newUser.setEmail(email);
-        // newUser.setPassword(password);
-        // newUser.setRole(role);
-
-        // userRepository.save(newUser);
-        // response.put("Message", "Create User Success");
-        // response.put("id", String.valueOf(newUser.getId()));
-        // response.put("role", String.valueOf(newUser.getRole()));
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -171,19 +160,34 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping(path = "/ifGoogleUser/{id}")
+    public @ResponseBody ResponseEntity<Map<String, Object>> ifGoogleUser(@PathVariable(name = "id") String id) {
+        Map<String, Object> response = new HashMap<>();
+        // String id = params.get("id");
+
+        String password = userRepository.getPasswordById(id).get("password");
+        if (password.equals("googlesignincustomer")) {
+            response.put("isGoogleUser", true);
+        } else {
+            response.put("isGoogleUser", false);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     // test only
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<User> testGetAllUser() {
         return userRepository.findAll();
     }
 
-    //This is a test only function, only used to wipe out the users created during the test session.
+    // This is a test only function, only used to wipe out the users created during
+    // the test session.
     @PostMapping(path = "/deleteUser")
     public @ResponseBody ResponseEntity<Object> deleteUserById(@RequestBody Map<String, String> params) {
 
         String id = params.get("id");
 
-        Map<String,Object> result = userRepository.getUserProfileById(id);
+        Map<String, Object> result = userRepository.getUserProfileById(id);
 
         if (result.size() == 0) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
@@ -191,6 +195,6 @@ public class UserController {
 
         userRepository.deleteUser(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Delete User "+id+" Success");
+        return ResponseEntity.status(HttpStatus.OK).body("Delete User " + id + " Success");
     }
 }
