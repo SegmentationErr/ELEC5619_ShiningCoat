@@ -21,52 +21,48 @@ function GoogleSignIn() {
 
     const onSuccess = (res) => {
         setProfile(res.profileObj);
-        console.log('success:', res);
-        let data = {"username": profile.name, "email": profile.email, "role": "customer", "password": null};
-        // axios.post(`http://localhost:8080/users/add`, data)
-        //     .then(res => {
-        //         if (res.status === 200) {
-        //             message.success('Successfully Sign In!')
-        //             cookie.save("id", res.data.id)
-        //             cookie.save("role", res.data.role)
-        //             if (res.data.role === "customer") {
-        //                 this.props.navigate('/')
-        //             } else {
-        //                 this.props.navigate('/business/profile')
-        //             }
-        //         } else {
-        //             message.error('Incorrect Email or Password.\nSign In Failed.')
-        //         }
-        //     }).catch((error) => {
-        //         message.error('Incorrect Email or Password.\nSign In Failed.')
-        //     })
-        axios.post(`http://localhost:8080/users/add`, data)
+        console.log('success:', res.tokenId);
+        let data = {"tokenId": res.tokenId};
+
+        axios.post(`http://localhost:8080/users/googleSignIn`, data)
         .then(res => {
             if (res.status === 200) {
-                message.success('Successfully Create User!')
-                // console.log(res.data)
-                cookie.save("id", res.data.id)
-                cookie.save("role", res.data.role)
-                if (res.data.role === "customer") {
-                    this.props.navigate('/')
-                } else {
-                    this.props.navigate('/business/profile')
-                }
+                
             } else {
                 message.error('Username or Email Already Exists.\nCreation Failed.')
             }
         }).catch((error) => {
             console.log(error);
             message.error('Something went wrong.\nPlease Try Again.')
-
-            // message.error('Username or Email Already Exists.\nCreation Failed.')
         })
+        
+        // axios.post(`http://localhost:8080/users/add`, data)
+        // .then(res => {
+        //     if (res.status === 200) {
+        //         message.success('Successfully Create User!')
+        //         // console.log(res.data)
+        //         cookie.save("id", res.data.id)
+        //         cookie.save("role", res.data.role)
+        //         if (res.data.role === "customer") {
+        //             this.props.navigate('/')
+        //         } else {
+        //             this.props.navigate('/business/profile')
+        //         }
+        //     } else {
+        //         message.error('Username or Email Already Exists.\nCreation Failed.')
+        //     }
+        // }).catch((error) => {
+        //     console.log(error);
+        //     message.error('Something went wrong.\nPlease Try Again.')
+
+        //     // message.error('Username or Email Already Exists.\nCreation Failed.')
+        // })
     };
     const onFailure = (err) => {
         console.log('failed:', err);
     };
-    console.log("user name", profile.name);
-    console.log("user email", profile.email);
+    // console.log("user name", profile.name);
+    // console.log("user email", profile.email);
 
     return (
        <GoogleLogin
@@ -75,7 +71,7 @@ function GoogleSignIn() {
           onSuccess={onSuccess}
           onFailure={onFailure}
           cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
+        //   isSignedIn={true}
       />
   );
 }
