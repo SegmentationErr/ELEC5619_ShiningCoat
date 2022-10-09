@@ -29,7 +29,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
             @Param("email") String email,
             @Param("password") String password);
 
-    @Query(value = "SELECT * FROM users WHERE username=:username or email=:email", nativeQuery = true)
+    @Query(value = "SELECT id, role FROM users WHERE username=:username or email=:email", nativeQuery = true)
     List<Map<String, Object>> getUserByNameOrEmail(@Param("username") String username, @Param("email") String email);
 
     @Query(value = "SELECT * FROM users WHERE email=:email and password=:password", nativeQuery = true)
@@ -39,4 +39,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Modifying
     @Query(value = "DELETE FROM users WHERE id=:id", nativeQuery = true)
     void deleteUser(@Param("id") String id);
+
+    @Query(value = "SELECT password FROM users WHERE id=:id", nativeQuery = true)
+    Map<String, String> getPasswordById(@Param("id") String id);
+
 }

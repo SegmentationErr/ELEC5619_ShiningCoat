@@ -19,6 +19,7 @@ class ManageProfilePage extends Component {
             'username': 'Fetching Data...',
             'email': 'Fetching Data...',
         },
+        googleUser: true,
         newProfile: {},
         validation: false
     }
@@ -36,6 +37,19 @@ class ManageProfilePage extends Component {
             }).catch((error) => {
                 console.log(error)
             })
+        
+        axios.get('http://localhost:8080/users/ifGoogleUser/' + this.state.id)
+        .then((res) => {
+            if (res.status === 200) {
+                if (! res.data.isGoogleUser) {
+                    this.setState({
+                        googleUser: false
+                    })
+                }
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
     changeDisplayValidation = () => {
@@ -96,6 +110,7 @@ class ManageProfilePage extends Component {
                     ref={(form) => this.formRef = form}
                     labelCol={{ span: 10 }}
                     wrapperCol={{ span: 5 }}
+                    disabled={this.state.googleUser}
                 >
                     <Form.Item name="username" label='Username'>
                         <Input
@@ -111,17 +126,21 @@ class ManageProfilePage extends Component {
                             allowClear
                         />
                     </Form.Item>
-                    <Form.Item name="newPassword" label='New Password'>
-                        <Input.Password
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
-                            placeholder="New Password"
-                            allowClear
-                        />
-                    </Form.Item>
-                    <button className={styles.blackButton} type="submit" style={{ marginTop: 100 }}>
-                        Update Profile
-                    </button>
+                    {this.state.googleUser ? null :
+                        <Form.Item name="newPassword" label='New Password'>
+                            <Input.Password
+                                prefix={<LockOutlined className="site-form-item-icon" />}
+                                type="password"
+                                placeholder="New Password"
+                                allowClear
+                            />
+                        </Form.Item>
+                    }
+                    {this.state.googleUser ? null :
+                        <button className={styles.blackButton} type="submit" style={{ marginTop: 100 }}>
+                            Update Profile
+                        </button>
+                    }
                 </Form>
             </div>
         );

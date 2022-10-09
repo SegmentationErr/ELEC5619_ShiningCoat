@@ -3,6 +3,9 @@ package comp5619.backend.controller;
 import comp5619.backend.models.User;
 import comp5619.backend.repository.UserRepository;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/users")
@@ -79,6 +88,59 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PostMapping(path = "/googleSignIn")
+    public @ResponseBody ResponseEntity<Map<String, Object>> googleSignIn(@RequestBody Map<String, String> params) {
+        Map<String, Object> response = new HashMap<>();
+        String tokenId = params.get("tokenId");
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections
+                        .singletonList("594879814425-h18tqekm4p3vbujs85b4344mduajoi8g.apps.googleusercontent.com"))
+                .build();
+
+        // (Receive idTokenString by HTTPS POST)
+
+        // GoogleIdToken idToken;
+        try {
+            GoogleIdToken idToken = verifier.verify(tokenId);
+            if (idToken != null) {
+                Payload payload = idToken.getPayload();
+
+                // Print user identifier
+                String userId = payload.getSubject();
+
+                // Get profile information from payload
+                String email = payload.getEmail();
+                String name = (String) payload.get("name");
+
+                List<Map<String, Object>> user = userRepository.getUserByNameOrEmail(name, email);
+                if (user.size() != 0) {
+                    return ResponseEntity.status(HttpStatus.OK).body(user.get(0));
+                } else {
+                    User newUser = new User();
+                    newUser.setUsername(name);
+                    newUser.setEmail(email);
+                    newUser.setPassword("googlesignincustomer");
+                    newUser.setRole("customer");
+
+                    userRepository.save(newUser);
+                    response.put("Message", "Create User Success");
+                    response.put("id", String.valueOf(newUser.getId()));
+                    response.put("role", String.valueOf(newUser.getRole()));
+                }
+
+            } else {
+                System.out.println("Invalid ID token.");
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @PostMapping(path = "/checkSignIn")
     public @ResponseBody ResponseEntity<Map<String, Object>> checkEmailandPassword(
             @RequestBody Map<String, String> params) {
@@ -98,19 +160,34 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping(path = "/ifGoogleUser/{id}")
+    public @ResponseBody ResponseEntity<Map<String, Object>> ifGoogleUser(@PathVariable(name = "id") String id) {
+        Map<String, Object> response = new HashMap<>();
+        // String id = params.get("id");
+
+        String password = userRepository.getPasswordById(id).get("password");
+        if (password.equals("googlesignincustomer")) {
+            response.put("isGoogleUser", true);
+        } else {
+            response.put("isGoogleUser", false);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     // test only
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<User> testGetAllUser() {
         return userRepository.findAll();
     }
 
-    //This is a test only function, only used to wipe out the users created during the test session.
+    // This is a test only function, only used to wipe out the users created during
+    // the test session.
     @PostMapping(path = "/deleteUser")
     public @ResponseBody ResponseEntity<Object> deleteUserById(@RequestBody Map<String, String> params) {
 
         String id = params.get("id");
 
-        Map<String,Object> result = userRepository.getUserProfileById(id);
+        Map<String, Object> result = userRepository.getUserProfileById(id);
 
         if (result.size() == 0) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No Content Found");
@@ -118,6 +195,6 @@ public class UserController {
 
         userRepository.deleteUser(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body("Delete User "+id+" Success");
+        return ResponseEntity.status(HttpStatus.OK).body("Delete User " + id + " Success");
     }
 }

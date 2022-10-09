@@ -18,6 +18,7 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit:4.13'
+    implementation 'com.google.api-client:google-api-client:1.32.1'
 }
 
 tasks.named('test') {
