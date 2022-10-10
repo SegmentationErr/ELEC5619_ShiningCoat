@@ -15,6 +15,9 @@ public interface LikedServiceRepository extends CrudRepository<LikedService, Int
     @Query(value = "SELECT COUNT(*) FROM liked_services WHERE user_id=:user_id AND service_id=:service_id", nativeQuery = true)
     int getLikedServiceCount(@Param("user_id") String user_id, @Param("service_id") String service_id);
 
+    @Query(value = "SELECT se.id as service_id, se.service_name FROM services se LEFT JOIN liked_services l ON l.service_id=se.id WHERE l.user_id=:user_id", nativeQuery = true)
+    List<Map<String, String>> getLikedServicesById(@Param("user_id") String user_id);
+
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM liked_services WHERE user_id=:user_id AND service_id=:service_id", nativeQuery = true)

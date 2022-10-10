@@ -174,9 +174,9 @@ class ServiceDetailPage extends Component {
                                 src={this.state.service_details.image}
                             />
                             {this.state.like_service ? 
-                            <HeartFilled className={styles.outLinedHeart} onClick={()=>this.changeLikeState()}/>
-                            :
-                            <HeartOutlined className={styles.outLinedHeart} onClick={()=>this.changeLikeState()}/>
+                                <HeartFilled className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                                :
+                                <HeartOutlined className={styles.heart} onClick={()=>this.changeLikeState()}/>
                             }
                         </Col>
                         <Col span={12}>

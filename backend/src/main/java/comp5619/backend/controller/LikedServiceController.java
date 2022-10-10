@@ -3,6 +3,7 @@ package comp5619.backend.controller;
 import comp5619.backend.models.LikedService;
 import comp5619.backend.repository.LikedServiceRepository;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.tomcat.util.buf.StringCache;
@@ -34,6 +35,11 @@ public class LikedServiceController {
             return ResponseEntity.status(HttpStatus.OK).body(false);
         }
         return ResponseEntity.status(HttpStatus.OK).body(true);
+    }
+
+    @GetMapping(path = "/getLikedServicesById/{user_id}")
+    public @ResponseBody ResponseEntity<List<Map<String, String>>> getLikedServicesById(@PathVariable(name = "user_id") String user_id) {
+        return ResponseEntity.status(HttpStatus.OK).body(likedServiceRepository.getLikedServicesById(user_id));
     }
 
     @PostMapping(path = "/likeOrUnlike")

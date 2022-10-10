@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Menu, Input, Button, Select } from 'antd';
-import { UserOutlined, BookOutlined } from '@ant-design/icons';
+import { Menu, Input, Button, Select, Popover } from 'antd';
+import { UserOutlined, BookOutlined, HeartOutlined } from '@ant-design/icons';
 
 import cookie from 'react-cookies';
 import showAlert from './Alert';
+import axios from "axios";
 
 import navBarStyle from '../css/navBar.module.css';
 
 import { withRouter } from './withRouter';
+import LikedServiceCard from './LikedServiceCard';
 
 
 const { Search } = Input;
@@ -26,7 +28,8 @@ class NavBar extends Component {
 
 
     state = {
-        searchInput: ""
+        searchInput: "",
+        likedServices: []
     }
 
     handleBackToHomePage = (e) => {
@@ -99,7 +102,31 @@ class NavBar extends Component {
 
     }
 
+    fetchLikedServices = () => {
+        this.setState({
+            likedServices: []
+        })
+        axios.get('http://localhost:8080/likedServices/getLikedServicesById/' + cookie.load('id'))
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        likedServices: res.data
+                    })
+                }
+            }).catch((error) => {
+            console.log(error)
+        })
+    }
+
     render() {
+        let likedServices = (
+            <div id={navBarStyle.popoverContent}>
+                {this.state.likedServices.map((service, key) => {
+                    return <LikedServiceCard key={key} service_name={service.service_name} service_id={service.service_id}/>
+                })}
+            </div>
+        )
+
         return (
             <div id={navBarStyle.navBarDiv} >
                 <Menu id={navBarStyle.navbar} key="navBar" mode="horizontal" className='navbar'>
@@ -126,6 +153,27 @@ class NavBar extends Component {
                                 cookie.load('role') === "customer" ?
 
                                     <div>
+                                        <Popover
+                                            id={navBarStyle.popover}
+                                            content={likedServices}
+                                            title="All Liked Services">
+                                                <Button id={navBarStyle.profileButton}
+                                                    type="ghost"
+                                                    shape="circle"
+                                                    // onClick={this.navToLikedServices.bind(this)}
+                                                    onMouseEnter={() => {this.fetchLikedServices()}}
+                                                    icon={<HeartOutlined style={{ fontSize: '30px', color: 'black' }} />} />
+                                        </Popover>
+                                        <Button id={navBarStyle.bookingButton}
+                                            type="ghost"
+                                            shape="circle"
+                                            onClick={this.navToUserBookings.bind(this)}
+                                            icon={<BookOutlined style={{ fontSize: '30px', color: 'black' }} />} />
+                                        <Button id={navBarStyle.profileButton}
+                                            type="ghost"
+                                            shape="circle"
+                                            onClick={this.navToUserProfile.bind(this)}
+                                            icon={<UserOutlined style={{ fontSize: '30px', color: 'black' }} />} />
                                         <Button
                                             id={navBarStyle.logOutButton}
                                             type="ghost"
@@ -133,18 +181,6 @@ class NavBar extends Component {
                                             onClick={this.handleLogOut.bind(this)}>
                                             Log Out
                                         </Button>
-
-                                        <Button id={navBarStyle.bookingButton}
-                                            type="ghost"
-                                            shape="circle"
-                                            onClick={this.navToUserBookings.bind(this)}
-                                            icon={<BookOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
-                                        <Button id={navBarStyle.profileButton}
-                                            type="ghost"
-                                            shape="circle"
-                                            onClick={this.navToUserProfile.bind(this)}
-                                            icon={<UserOutlined className={navBarStyle.icon} style={{ fontSize: '30px', color: 'black' }} />} />
-
                                     </div>
                                     : <Button
                                         id={navBarStyle.logOutButton}
