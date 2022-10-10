@@ -22,13 +22,15 @@
     padding-bottom: 10px;
     border-bottom:1px solid #FFA500;
 }
-#heart{
-    padding: 5px 0;
-    padding-left: 190px;
-    width: 30px;
-    block: false;
-}
+
 #map{
     margin: 20px;
     background: #FFA500;
+}
+
+.heart {
+    font-size: 25px;
+    color: #eb2f96;
+    float: center;
+    margin: 10px;
 }

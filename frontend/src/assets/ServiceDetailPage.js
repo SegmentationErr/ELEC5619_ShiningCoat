@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Card, Row, Col, Button, Rate, message } from 'antd';
-import { HeartTwoTone } from '@ant-design/icons';
+import { HeartTwoTone, HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { withRouter } from './withRouter';
 import cookie from 'react-cookies';
 
@@ -16,6 +16,7 @@ class ServiceDetailPage extends Component {
         super(props);
         this.fetchServiceDetail()
         this.fetchReview()
+        this.fetchLikedService()
     }
 
     state = {
@@ -45,13 +46,15 @@ class ServiceDetailPage extends Component {
                 rating: null
             }
         ],
+        like_service: false,
+        liking: false,
     }
 
     fetchServiceDetail = () => {
         axios.get('http://localhost:8080/services/getServiceDetailById/' + this.state.id)
             .then((res) => {
                 if (res.status === 200) {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         service_details: res.data
                     })
@@ -67,6 +70,19 @@ class ServiceDetailPage extends Component {
                 if (res.status === 200) {
                     this.setState({
                         customer_reviews: res.data
+                    })
+                }
+            }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    fetchLikedService = () => {
+        axios.get('http://localhost:8080/likedServices/getLikedServiceCount/' + cookie.load('id') + '/' + this.state.id)
+            .then((res) => {
+                if (res.status === 200) {
+                    this.setState({
+                        like_service: res.data
                     })
                 }
             }).catch((error) => {
@@ -92,6 +108,37 @@ class ServiceDetailPage extends Component {
             showForm: !this.state.showForm
         })
         // console.log(this.state.service_details)
+    }
+
+    changeLikeState = () => {
+        if (this.state.liking) {
+            return
+        }
+
+        this.setState({
+            liking: true
+        })
+
+        let data = {
+            user_id: cookie.load('id'),
+            service_id: this.state.id
+        }
+
+        axios.post(`http://localhost:8080/likedServices/likeOrUnlike`, data)
+            .then(res => {
+                if (res.status === 200) {
+                    message.success(res.data)
+                    this.setState({
+                        like_service: !this.state.like_service,
+                        liking: false
+                    })
+                }
+            }).catch((error) => {
+                this.setState({
+                    liking: false
+                })
+                message.error('Like/Unlike Failed')
+            })
     }
 
     render() {
@@ -120,13 +167,17 @@ class ServiceDetailPage extends Component {
 
                 <Card id={styles['service_detail']}>
                     <Row>
-                        <Col span={12}>
+                        <Col span={12} style={{textAlign: 'center'}}>
                             <Image
                                 preview={false}
                                 style={{ margin: 50, width: 400, height: 450, borderRadius: 50 }}
                                 src={this.state.service_details.image}
                             />
-                            <Button id={styles['heart']} type='text'><HeartTwoTone twoToneColor="#eb2f96" /></Button>
+                            {this.state.like_service ? 
+                                <HeartFilled className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                                :
+                                <HeartOutlined className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                            }
                         </Col>
                         <Col span={12}>
                             <div id={styles['details_text']}>

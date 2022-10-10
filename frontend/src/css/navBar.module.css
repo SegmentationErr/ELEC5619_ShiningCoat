@@ -4,7 +4,7 @@
 
 #navbar {
     background-color: #FFA500;
-    height: 100px;
+    height: 80px;
     position: relative;
     width: 100%;
 }
@@ -22,7 +22,7 @@
 
 #search {
     top: 50%;
-    left: 40%;
+    left: 30%;
     margin: 0;
     position: absolute;
     -ms-transform: translateY(-50%);
@@ -50,7 +50,7 @@
     font-weight: bold;
     font-size: 20px;
     top: 45%;
-    left: 80%;
+    right: 0;
     margin: 0;
     position: absolute;
     -ms-transform: translateY(50%);
@@ -63,25 +63,35 @@
 } */
 
 #bookingButton {
-    padding: 0;
     border: none;
     background: none;
-    height: 60px;
-    /* width: 60px; */
+    margin: 15px 40px 0px 0px;
 }
 
 #profileButton {
-    padding: 0;
     border: none;
     background: none;
-    height: 60px;
-    /* width: 60px; */
+    margin: 15px 40px 0px 0px;
+}
+
+#likedButton {
+    border: none;
+    background: none;
+    margin: 15px 40px 0px 0px;
 }
 
 #logOutButton {
-    padding: 0;
     border: none;
     background: none;
-    height: 60px;
-    /* width: 60px; */
+    margin: 15px 40px 0px 0px;
+}
+
+#popover {
+    background-color: #ffc073;
+    border-radius: 15px;
+}
+
+#popoverContent {
+    max-height: 250px;
+    overflow: auto;
 }
