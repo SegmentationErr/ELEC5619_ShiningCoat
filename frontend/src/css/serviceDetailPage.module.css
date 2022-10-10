@@ -32,3 +32,10 @@
     margin: 20px;
     background: #FFA500;
 }
+
+.outLinedHeart {
+    font-size: 25px;
+    color: #eb2f96;
+    float: center;
+    margin: 10px;
+}
