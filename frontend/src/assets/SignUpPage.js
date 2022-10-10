@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import cookie from 'react-cookies'
 import signUpPageStyle from '../css/signUpPage.module.css';
 import generalStyles from '../css/generalComponents.module.css';
+import sha256 from 'crypto-js/sha256';
 
 import {
     Form,
@@ -30,6 +31,7 @@ class SignUpPage extends Component {
     }
 
     handleSignUp = data => {
+        data.password = sha256(data.password).toString()
         axios.post(`http://localhost:8080/users/add`, data)
             .then(res => {
                 if (res.status === 200) {

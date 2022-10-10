@@ -7,7 +7,7 @@ import { withRouter } from './withRouter';
 import GoogleSignIn from './GoogleSignIn';
 import signInPageStyle from '../css/signInPage.module.css';
 import generalStyles from '../css/generalComponents.module.css';
-
+import sha256 from 'crypto-js/sha256';
 
 class SignInPage extends Component {
 
@@ -24,6 +24,7 @@ class SignInPage extends Component {
     }
 
     handleSignIn = data => {
+        data.password = sha256(data.password).toString()
         axios.post(`http://localhost:8080/users/checkSignIn`, data)
             .then(res => {
                 if (res.status === 200) {
