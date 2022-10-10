@@ -61,4 +61,13 @@ public class LikedServiceController {
         return ResponseEntity.status(HttpStatus.OK).body("Like Service Success");
     }
 
+
+    @PostMapping(path = "/deleteLikedTestLikedServices")
+    public @ResponseBody ResponseEntity<Object> deleteLikedTestLikedServices(@RequestBody Map<String, String> params) {
+
+        likedServiceRepository.deleteLikedTestLikedServices(params.get("user_id"));
+
+        return ResponseEntity.status(HttpStatus.OK).body("Delete Test Liked Service Success");
+    }
+
 }
