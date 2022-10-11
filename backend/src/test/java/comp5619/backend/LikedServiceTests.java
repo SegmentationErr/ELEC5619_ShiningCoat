@@ -126,40 +126,41 @@ public class LikedServiceTests {
         System.out.println("Done Test Like A Service");
     }
 
+
+    @Test
+    public void testUnLikeService(MockMvc mockMvc) throws Exception{
+        System.out.println("Test Unlike A Service");
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("user_id",this.idNewCustomerUser);
+        data.put("service_id",this.idNewService);
+
+
+        mockMvc.perform(post("/likedServices/likeOrUnlike")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Unlike Service Success")));
+
+        System.out.println("Done Test Unlike A Service");
+    }
+
+
     @Test
     public void testGetLikedServiceById(MockMvc mockMvc) throws Exception{
         System.out.println("Test Get Liked Service By User Id");
 
-        mockMvc.perform(get("/likedServices/getLikedServicesById/"+this.idNewCustomerUser))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.user_id", is(Integer.parseInt(this.idNewCustomerUser))))
-                .andExpect(jsonPath("$.service_id", is(Integer.parseInt(this.idNewService))));
+        List<Map<String,Object>> res = TestHelper.getListResponses(mockMvc,"/likedServices/getLikedServicesById/"+this.idNewCustomerUser);
+
+        Assert.assertEquals(res.size(),1);
+
+        Assert.assertEquals(res.get(0).get("service_name"),"This is test service name");
+
+        Assert.assertEquals(res.get(0).get("service_id"),Integer.parseInt(this.idNewService));
 
         System.out.println("Done Test Get Liked Service By User Id");
     }
-
-
-//    @Test
-//    public void testGetLikedServiceCount(MockMvc mockMvc) throws Exception{
-//        System.out.println("Test Get Liked Service Count By User Id");
-//
-//        Map<String,Object> data = new HashMap<>();
-//        data.put("user_id",this.idNewCustomerUser);
-//        data.put("service_id",this.idNewService);
-//
-//        mockMvc.perform(post("/likedServices/likeOrUnlike")
-//                        .content(TestHelper.asJsonString(data))
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//
-//        mockMvc.perform(get("/likedServices/getLikedServiceCount/"+this.idNewCustomerUser+"/"+this.idNewService))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.user_id", is(Integer.parseInt(this.idNewCustomerUser))))
-//                .andExpect(jsonPath("$.service_id", is(Integer.parseInt(this.idNewService))));
-//
-//        System.out.println("Done Test Get Liked Service Count By User Id");
-//    }
 
     @AfterAll
     public void cleanUpAfterTests(MockMvc mockMvc) throws Exception{
@@ -176,7 +177,9 @@ public class LikedServiceTests {
         setUpForTests(mockMvc);
 
         try{
-
+            testLikeService(mockMvc);
+            testGetLikedServiceById(mockMvc);
+            testUnLikeService(mockMvc);
         }
         catch (Exception e){
             System.out.println(e);
