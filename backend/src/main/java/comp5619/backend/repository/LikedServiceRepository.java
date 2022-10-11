@@ -33,7 +33,7 @@ public interface LikedServiceRepository extends CrudRepository<LikedService, Int
     void deleteLikedTestLikedServices(@Param("user_id") String user_id);
 
 
-    @Query(value = "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id LEFT JOIN liked_services l ON l.service_id=se.id WHERE l.user_id IN (:idList)", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id LEFT JOIN liked_services l ON l.service_id=se.id WHERE l.user_id IN (:idList)", nativeQuery = true)
     List<Map<String, String>> getServicesByIdList(@Param("idList") List<String> idList);
 
 }

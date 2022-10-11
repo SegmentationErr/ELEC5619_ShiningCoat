@@ -125,11 +125,7 @@ public class RecommendationController {
             }
         }
 
-        System.out.println("Distance Map");
-
         System.out.println(distanceMap);
-
-        System.out.println("Distance Map Done");
 
         if(distanceMap.size()==0){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
@@ -147,7 +143,9 @@ public class RecommendationController {
 
         List<String> idLists = new ArrayList<>(topK.keySet());
 
-        return ResponseEntity.status(HttpStatus.OK).body(likedServiceRepository.getServicesByIdList(idLists));
+        List<Map<String,String>> result = likedServiceRepository.getServicesByIdList(idLists);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
 
     }
 
