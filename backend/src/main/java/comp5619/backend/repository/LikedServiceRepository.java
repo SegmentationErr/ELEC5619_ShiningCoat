@@ -22,4 +22,10 @@ public interface LikedServiceRepository extends CrudRepository<LikedService, Int
     @Modifying
     @Query(value = "DELETE FROM liked_services WHERE user_id=:user_id AND service_id=:service_id", nativeQuery = true)
     void unLikeService(@Param("user_id") String user_id, @Param("service_id") String service_id);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM liked_services WHERE user_id=:user_id", nativeQuery = true)
+    void deleteLikedTestLikedServices(@Param("user_id") String user_id);
 }

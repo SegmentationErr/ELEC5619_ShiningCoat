@@ -201,4 +201,18 @@ public class TestHelper {
         mockMvc.perform(get("/bookings/getAllBookings/"+idNewUser))
                 .andExpect(status().isNoContent());
     }
+
+
+    public static void clearTestLikedServiceFromDb(MockMvc mockMvc, String idNewUser) throws Exception{
+
+        Map<String,String> data = new HashMap<>();
+        data.put("user_id",idNewUser);
+
+        mockMvc.perform(post("/likedServices/deleteLikedTestLikedServices")
+                        .content(TestHelper.asJsonString(data))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+    }
 }
