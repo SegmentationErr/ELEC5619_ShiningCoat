@@ -43,4 +43,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT password FROM users WHERE id=:id", nativeQuery = true)
     Map<String, String> getPasswordById(@Param("id") String id);
 
+
+    @Query(value = "SELECT * FROM users WHERE id <> :id", nativeQuery = true)
+    List<Map<String, Object>> getAllUsersExpectTargetUser(@Param("id") String id);
+
 }
