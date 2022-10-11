@@ -71,7 +71,7 @@ class NavBar extends Component {
         cookie.remove('id');
         cookie.remove('role');
         this.props.navigate('/');
-        // window.location.reload(false);
+        window.location.reload(false);
     }
 
     setKeyword = (e) => {
@@ -114,15 +114,15 @@ class NavBar extends Component {
                     })
                 }
             }).catch((error) => {
-            console.log(error)
-        })
+                console.log(error)
+            })
     }
 
     render() {
         let likedServices = (
             <div id={navBarStyle.popoverContent}>
                 {this.state.likedServices.map((service, key) => {
-                    return <LikedServiceCard key={key} service_name={service.service_name} service_id={service.service_id}/>
+                    return <LikedServiceCard key={key} service_name={service.service_name} service_id={service.service_id} />
                 })}
             </div>
         )
@@ -157,12 +157,12 @@ class NavBar extends Component {
                                             id={navBarStyle.popover}
                                             content={likedServices}
                                             title="All Liked Services">
-                                                <Button id={navBarStyle.profileButton}
-                                                    type="ghost"
-                                                    shape="circle"
-                                                    // onClick={this.navToLikedServices.bind(this)}
-                                                    onMouseEnter={() => {this.fetchLikedServices()}}
-                                                    icon={<HeartOutlined style={{ fontSize: '30px', color: 'black' }} />} />
+                                            <Button id={navBarStyle.profileButton}
+                                                type="ghost"
+                                                shape="circle"
+                                                // onClick={this.navToLikedServices.bind(this)}
+                                                onMouseEnter={() => { this.fetchLikedServices() }}
+                                                icon={<HeartOutlined style={{ fontSize: '30px', color: 'black' }} />} />
                                         </Popover>
                                         <Button id={navBarStyle.bookingButton}
                                             type="ghost"

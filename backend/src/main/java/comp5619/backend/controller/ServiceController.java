@@ -3,10 +3,13 @@ package comp5619.backend.controller;
 import comp5619.backend.models.Service;
 import comp5619.backend.repository.ServiceRepository;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import comp5619.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -68,7 +71,6 @@ public class ServiceController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
         }
         return ResponseEntity.status(HttpStatus.OK).body(result);
-
     }
 
     @PostMapping(path = "/add")

@@ -19,7 +19,7 @@ class HomePage extends Component {
             }
             else {
                 //TODO: update this function to handle liked service
-                this.fetchAllServices();
+                this.fetchRecommendation();
             }
         }
         else {
@@ -33,8 +33,28 @@ class HomePage extends Component {
         data: [],
     }
 
-    fetchUserInfo() {
+    fetchRecommendation() {
+        axios.get('http://localhost:8080/recommendation/getServicesByRecommendation/' + cookie.load('id'))
+            .then((res) => {
+                // console.log(res.data)
+                if (res.status === 200) {
+                    console.log(res);
 
+                    let data = res.data;
+
+                    this.setState({ data: data, loading: false });
+                }
+                //when no liked service
+                else if (res.status === 204) {
+                    this.fetchAllServices();
+                }
+                else {
+                    showAlert('Error', 'Something went wrong');
+                }
+            }).catch((error) => {
+                console.log(error);
+                showAlert('Error', 'Something went wrong');
+            })
     }
 
     fetchAllServices = () => {

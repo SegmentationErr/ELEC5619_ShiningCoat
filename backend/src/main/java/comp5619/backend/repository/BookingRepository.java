@@ -33,5 +33,9 @@ public interface BookingRepository extends CrudRepository<Booking, Integer> {
     @Modifying
     @Query(value = "DELETE FROM bookings WHERE user_id=:id", nativeQuery = true)
     void deleteBookingsOnUserId(@Param("id") String id);
+
+
+    @Query(value = "select b.user_id, b.service_id, ser.service_name from bookings b left join services ser on b.service_id = ser.id", nativeQuery = true)
+    List<Map<String, Object>> getAllBookings();
 }
 

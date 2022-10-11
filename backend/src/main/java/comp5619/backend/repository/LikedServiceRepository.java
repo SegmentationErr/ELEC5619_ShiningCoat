@@ -18,6 +18,9 @@ public interface LikedServiceRepository extends CrudRepository<LikedService, Int
     @Query(value = "SELECT se.id as service_id, se.service_name FROM services se LEFT JOIN liked_services l ON l.service_id=se.id WHERE l.user_id=:user_id", nativeQuery = true)
     List<Map<String, String>> getLikedServicesById(@Param("user_id") String user_id);
 
+    @Query(value = "SELECT se.id as service_id, se.service_name , l.user_id FROM liked_services l  LEFT JOIN services se ON l.service_id=se.id", nativeQuery = true)
+    List<Map<String, Object>> getAllLikedServices();
+
     @Transactional
     @Modifying
     @Query(value = "DELETE FROM liked_services WHERE user_id=:user_id AND service_id=:service_id", nativeQuery = true)
@@ -28,4 +31,9 @@ public interface LikedServiceRepository extends CrudRepository<LikedService, Int
     @Modifying
     @Query(value = "DELETE FROM liked_services WHERE user_id=:user_id", nativeQuery = true)
     void deleteLikedTestLikedServices(@Param("user_id") String user_id);
+
+
+    @Query(value = "SELECT DISTINCT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id LEFT JOIN liked_services l ON l.service_id=se.id WHERE l.user_id IN (:idList)", nativeQuery = true)
+    List<Map<String, String>> getServicesByIdList(@Param("idList") List<String> idList);
+
 }
