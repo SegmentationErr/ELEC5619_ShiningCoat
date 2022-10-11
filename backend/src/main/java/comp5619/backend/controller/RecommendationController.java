@@ -106,7 +106,7 @@ public class RecommendationController {
         }
 
         for (String userId: allBookings.keySet()) {
-            if(!userId.equals(id)){
+            if(!userId.equals(id) && allBookings.get(id) != null ){
                 List<String> bookings = allBookings.get(id);
 
                 List<String> commonElementList = new ArrayList<>(currentUserBookings);
