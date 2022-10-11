@@ -59,4 +59,7 @@ public interface ServiceRepository extends CrudRepository<Service, Integer> {
     @Modifying
     @Query(value = "DELETE FROM services WHERE shop_id=:id", nativeQuery = true)
     void deleteServicesOnShopId(@Param("id") String id);
+
+//    @Query(value = "SELECT se.id, se.service_name,  se.rating, se.available, se.image, sh.address, sh.start_time, sh.end_time from services se left join shops sh on sh.id=se.shop_id WHERE se.available = true AND se.id IN (:idList)", nativeQuery = true)
+//    List<Map<String, String>> getServicesByIdList(@Param("idList") List<String> idList);
 }

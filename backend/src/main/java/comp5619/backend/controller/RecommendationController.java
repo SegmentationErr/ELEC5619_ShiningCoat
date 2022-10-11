@@ -125,12 +125,17 @@ public class RecommendationController {
             }
         }
 
+        System.out.println("Distance Map");
+
         System.out.println(distanceMap);
+
+        System.out.println("Distance Map Done");
 
         if(distanceMap.size()==0){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
 
+        //key: user id , value : distance
         Map<String,Double> topK =
                 distanceMap.entrySet().stream()
                         .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
@@ -142,7 +147,7 @@ public class RecommendationController {
 
         List<String> idLists = new ArrayList<>(topK.keySet());
 
-        return ResponseEntity.status(HttpStatus.OK).body(likedServiceRepository.getLikedServicesByIdList(idLists));
+        return ResponseEntity.status(HttpStatus.OK).body(likedServiceRepository.getServicesByIdList(idLists));
 
     }
 
