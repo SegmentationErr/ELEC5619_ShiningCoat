@@ -5,6 +5,7 @@ import axios from 'axios';
 import PasswordValidation from './PasswordValidation';
 import styles from '../css/generalComponents.module.css';
 import cookie from 'react-cookies';
+import sha256 from 'crypto-js/sha256';
 
 
 class ManageProfilePage extends Component {
@@ -85,6 +86,8 @@ class ManageProfilePage extends Component {
         this.setState({
             validation: false
         })
+
+        data.password = sha256(data.password).toString()
         axios.post(`http://localhost:8080/users/update`, data)
             .then(res => {
                 if (res.status === 200) {
