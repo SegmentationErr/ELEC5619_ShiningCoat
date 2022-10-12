@@ -19,17 +19,17 @@ class MakeBookingForm extends Component {
         start = start.split(':')[0]
         end = end.split(':')[0] - 1
 
-        let d = new Date();
-        if (d.getMinutes() >= 30) {
-            d.setHours(d.getHours() + 1);
-        }
-        d.setMinutes(0);
+        // let d = new Date();
+        // if (d.getMinutes() >= 30) {
+        //     d.setHours(d.getHours() + 1);
+        // }
+        // d.setMinutes(0);
 
-        let nextHour = d.getHours();
+        // let nextHour = d.getHours();
 
-        if (nextHour > start) {
-            start = nextHour;
-        }
+        // if (nextHour > start) {
+        //     start = nextHour;
+        // }
 
         let result = [];
         for (let i = 0; i < start; i++) {
