@@ -49,8 +49,6 @@ class ShopDetailPage extends Component {
                 var shopData = res.data
                 shopData["services"] = this.state.data["services"]
 
-                console.log(shopData)
-
                 if (res.status === 200) {
                     this.setState({
                         data: shopData,
@@ -69,8 +67,21 @@ class ShopDetailPage extends Component {
                 })
 
                 if (res.status === 200) {
-                    var updateData = this.state.data
+                    let updateData = this.state.data
                     updateData["services"] = res.data
+
+                    if (cookie.load('role') !== 'business') {
+                        let finalData = [];
+
+                        for (let ser of updateData["services"]) {
+                            if (ser.available) {
+                                finalData.push(ser);
+                            }
+                        }
+
+                        updateData["services"] = finalData;
+                    }
+
                     this.setState({
                         data: updateData,
                         // loading: false
