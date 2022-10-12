@@ -58,6 +58,12 @@ class AllBookingsPage extends Component {
 
             let formattedTime = time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + time.getDate() + "-" + time.getHours() + ":" + time.getMinutes();
 
+            let text = time.getMinutes().toString();
+
+            if (text.length === 1) {
+                formattedTime = formattedTime + "0";
+            }
+
             booking.time = formattedTime;
 
             if (currentTime > time) {
@@ -114,7 +120,6 @@ class AllBookingsPage extends Component {
             .then((res) => {
                 // console.log(res.data)
                 if (res.status === 200) {
-                    console.log(res);
 
                     let data = res.data;
 
@@ -357,7 +362,7 @@ class AllBookingsPage extends Component {
     render() {
 
         return (
-            <div id="mainContent">
+            <div id={allBookingPageStyle.mainContent}>
                 {this.state.openCancelConfirm ? this.cancelBookingConfirmationCard() : null}
                 {this.state.openLeaveCommentCard ? this.leaveCommentCard() : null}
                 {this.state.loading ?

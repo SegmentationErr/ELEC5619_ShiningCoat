@@ -1,3 +1,8 @@
+#mainContent {
+    height: 92vh;
+    overflow: scroll;
+}
+
 #mainContentRow {
     text-align: left;
 }
@@ -103,7 +108,7 @@
 }
 
 .cover {
-    top: 100px;
+    /* top: 100px; */
     width: 100vw;
     height: 100vh;
     position: fixed;
@@ -115,7 +120,7 @@
 .validationCardcCancelBooking {
     /* position: absolute; */
     width: 30%;
-    height: 22%;
+    min-height: 22%;
     background: #FAEDDE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -149,7 +154,7 @@
 
 .validationCardComment {
     width: 800px;
-    height: 65%;
+    min-height: 65%;
     background: #FAEDDE;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
@@ -184,7 +189,7 @@
 
 #commentInputTextArea {
     width: 80%;
-    height: 70%;
+    min-height: 70%;
 }
 
 #commentRatingRow {
@@ -206,7 +211,7 @@
 }
 
 .unavailableButton {
-    height: 50%;
+    min-height: 50%;
     background-color: grey;
     color: black;
     pointer-events: none;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, message, Radio, DatePicker } from 'antd';
 import axios from 'axios';
 import cookie from 'react-cookies';
+import showAlert from './Alert';
 
 
 import addEditFormStyle from '../css/addEditShopForm.module.css';
@@ -14,16 +15,30 @@ class MakeBookingForm extends Component {
     }
 
     generateRange = (start, end) => {
+
         start = start.split(':')[0]
-        end = end.split(':')[0]
+        end = end.split(':')[0] - 1
+
+        let d = new Date();
+        if (d.getMinutes() >= 30) {
+            d.setHours(d.getHours() + 1);
+        }
+        d.setMinutes(0);
+
+        let nextHour = d.getHours();
+
+        if (nextHour > start) {
+            start = nextHour;
+        }
 
         let result = [];
         for (let i = 0; i < start; i++) {
             result.push(i);
         }
-        for (let i = end; i < 24; i++) {
+        for (let i = end + 1; i < 24; i++) {
             result.push(i);
         }
+
         return result;
     }
 
@@ -46,21 +61,27 @@ class MakeBookingForm extends Component {
         data.shop_id = this.props.shop_id
         data.user_id = cookie.load('id')
 
-        axios.post(`http://localhost:8080/bookings/add`, data)
-            .then(res => {
-                if (res.status === 200) {
-                    message.success('Successfully Make Booking!');
-                    this.props.handleCancel();
-                    // update service total sold
-                    this.handleUpdateServiceTotalSold(data.service_id);
-                }
-                else {
-                    message.error("Something went wrong")
-                }
-            }).catch((error) => {
-                console.log(error);
-                message.error('Something went wrong.\nPlease Try Again.')
-            })
+        let tDate = new Date(data.time);
+        if (tDate < new Date()) {
+            showAlert('warning', 'Invalid Time', "");
+        }
+        else {
+            axios.post(`http://localhost:8080/bookings/add`, data)
+                .then(res => {
+                    if (res.status === 200) {
+                        message.success('Successfully Make Booking!');
+                        this.props.handleCancel();
+                        // update service total sold
+                        this.handleUpdateServiceTotalSold(data.service_id);
+                    }
+                    else {
+                        message.error("Something went wrong")
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    message.error('Something went wrong.\nPlease Try Again.')
+                })
+        }
     }
 
     render() {
