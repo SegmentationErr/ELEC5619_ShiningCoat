@@ -61,7 +61,6 @@ class ManageProfilePage extends Component {
 
     handleUpdateButton = (input) => {
         this.changeDisplayValidation()
-        input.password = sha256(input.password).toString()
         let newProfile = {}
         newProfile.username = input.username ? input.username : this.state.profile.username
         newProfile.email = input.email ? input.email : this.state.profile.email
@@ -87,7 +86,9 @@ class ManageProfilePage extends Component {
             validation: false
         })
 
-        data.password = sha256(data.password).toString()
+        data.currPassword = sha256(data.currPassword).toString()
+        data.newPassword = sha256(data.newPassword).toString()
+
         axios.post(`http://localhost:8080/users/update`, data)
             .then(res => {
                 if (res.status === 200) {
