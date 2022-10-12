@@ -61,7 +61,7 @@ class ManageProfilePage extends Component {
 
     handleUpdateButton = (input) => {
         this.changeDisplayValidation()
-
+        input.password = sha256(input.password).toString()
         let newProfile = {}
         newProfile.username = input.username ? input.username : this.state.profile.username
         newProfile.email = input.email ? input.email : this.state.profile.email
