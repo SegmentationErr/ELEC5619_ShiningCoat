@@ -1,6 +1,6 @@
 #mainContent {
     height: 92vh;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #mainContentRow {
