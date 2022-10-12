@@ -94,6 +94,10 @@ class ServiceDetailPage extends Component {
         this.props.navigate('/LocationMapPage/' + this.state.id);
     }
 
+    checkShop = (e) => {
+        this.props.navigate('/shopDetailPage/' + this.state.id);
+    }
+
     changeFormDisplay = () => {
         if (this.state.showForm) {
             document.body.style.overflow = "visible"
@@ -182,7 +186,10 @@ class ServiceDetailPage extends Component {
                         <Col span={12}>
                             <div id={styles['details_text']}>
                                 <p>{'Service Name: ' + this.state.service_details.service_name}</p>
-                                <p>{'Service Provider: ' + this.state.service_details.shop_name}</p>
+                                <p>
+                                    {'Service Provider: ' + this.state.service_details.shop_name}
+                                    <Button id={styles['map']} onClick={this.checkShop.bind(this)}>View Shop</Button>
+                                </p>
                                 <p>
                                     {'Location: ' + this.state.service_details.address}
                                     <Button id={styles['map']} onClick={this.checkDetail.bind(this)}>Map</Button>
