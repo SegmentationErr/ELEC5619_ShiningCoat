@@ -359,6 +359,13 @@ class AllBookingsPage extends Component {
         });
     }
 
+
+    handleViewServiceDetial = (e) => {
+        if (!this.state.isBusiness) {
+            this.props.navigate('/serviceDetailPage/' + e.id);
+        }
+    }
+
     render() {
 
         return (
@@ -373,7 +380,7 @@ class AllBookingsPage extends Component {
                             {this.state.incomingBookings.map((service, key) => {
                                 return (
                                     // this.state.isBusiness ? <p>Show Business Incoming Bookings Now</p> : this.customerIncomingBookingCard({ service }, { key })
-                                    <div className={service.pick_up && this.state.isBusiness ? allBookingPageStyle.serviceCardBusiness : allBookingPageStyle.serviceCard} key={key}>
+                                    <div className={service.pick_up && this.state.isBusiness ? allBookingPageStyle.serviceCardBusiness : allBookingPageStyle.serviceCard} key={key} onClick={(e) => this.handleViewServiceDetial(service)}>
                                         <Row >
                                             <Col span={7} className={allBookingPageStyle.nameCol}>
                                                 <p>{service.service_name}</p>
