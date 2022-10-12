@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Card, Row, Col, Button, Rate, message } from 'antd';
-import { HeartTwoTone, HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
 import { withRouter } from './withRouter';
 import cookie from 'react-cookies';
 

@@ -19,10 +19,6 @@ const { TextArea } = Input;
 
 
 class AddEditShopForm extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         addShop: this.props.addShop,
         shopName: this.props.shop_name,

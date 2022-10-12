@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import { Form, Input, message } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import cookie from 'react-cookies';

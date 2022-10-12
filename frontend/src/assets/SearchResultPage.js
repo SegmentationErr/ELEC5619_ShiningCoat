@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Row, Col, Input } from 'antd';
+import { Row, Col, Input } from 'antd';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { withRouter } from './withRouter';
