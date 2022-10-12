@@ -48,6 +48,26 @@ class AddEditShopForm extends Component {
         data.userId = this.props.shop_id;
         data.shopAddress = this.state.shopAddress;
 
+        let startHour = data.startTime.split(":")[0];
+        let endHour = data.endTime.split(":")[0];
+
+        if (parseInt(startHour) >= parseInt(endHour)) {
+
+            if (parseInt(startHour) === parseInt(endHour)) {
+                let startMinutes = data.startTime.split(":")[1];
+                let endMinutes = data.endTime.split(":")[1];
+
+                if (parseInt(startMinutes) >= parseInt(endMinutes)) {
+                    showAlert('warning', "Invalid Time", "Please choose a valid time range");
+                    return;
+                }
+            }
+            else {
+                showAlert('warning', "Invalid Time", "Please choose a valid time range");
+                return;
+            }
+        }
+
         if (this.state.lat === undefined || this.state.lng === undefined) {
             showAlert('warning', "Invalid Input", "Please choose a address");
             return;
