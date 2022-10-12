@@ -362,7 +362,7 @@ class AllBookingsPage extends Component {
 
     handleViewServiceDetial = (e) => {
         if (!this.state.isBusiness) {
-            this.props.navigate('/serviceDetailPage/' + e.id);
+            this.props.navigate('/serviceDetailPage/' + e.service_id);
         }
     }
 
@@ -380,9 +380,9 @@ class AllBookingsPage extends Component {
                             {this.state.incomingBookings.map((service, key) => {
                                 return (
                                     // this.state.isBusiness ? <p>Show Business Incoming Bookings Now</p> : this.customerIncomingBookingCard({ service }, { key })
-                                    <div className={service.pick_up && this.state.isBusiness ? allBookingPageStyle.serviceCardBusiness : allBookingPageStyle.serviceCard} key={key} onClick={(e) => this.handleViewServiceDetial(service)}>
+                                    <div className={service.pick_up && this.state.isBusiness ? allBookingPageStyle.serviceCardBusiness : allBookingPageStyle.serviceCard} key={key}>
                                         <Row >
-                                            <Col span={7} className={allBookingPageStyle.nameCol}>
+                                            <Col span={7} className={allBookingPageStyle.nameCol} onClick={(e) => this.handleViewServiceDetial(service)}>
                                                 <p>{service.service_name}</p>
                                                 <p>Price: {service.price}</p>
                                             </Col>
@@ -415,7 +415,7 @@ class AllBookingsPage extends Component {
                                     // this.state.isBusiness ? <p>Show Business Past Bookings Now</p> : this.customerPastBookingCard({ service }, { key })
                                     <div className={this.state.isBusiness ? allBookingPageStyle.serviceCard : service.available ? allBookingPageStyle.serviceCard : allBookingPageStyle.serviceCardUnavailable} key={key}>
                                         <Row >
-                                            <Col span={10} className={allBookingPageStyle.pastBookingNameCol}>
+                                            <Col span={10} className={allBookingPageStyle.pastBookingNameCol} onClick={(e) => this.handleViewServiceDetial(service)}>
                                                 <p>{service.service_name}</p>
                                                 <p>Price: {service.price}</p>
                                             </Col>

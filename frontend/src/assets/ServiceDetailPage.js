@@ -38,14 +38,7 @@ class ServiceDetailPage extends Component {
 
             showForm: false
         },
-        customer_reviews: [
-            {
-                username: null,
-                content: null,
-                time: null,
-                rating: null
-            }
-        ],
+        customer_reviews: [],
         like_service: false,
         liking: false,
     }
@@ -95,7 +88,7 @@ class ServiceDetailPage extends Component {
     }
 
     checkShop = (e) => {
-        this.props.navigate('/shopDetailPage/' + this.state.id);
+        this.props.navigate('/shopDetailPage/' + this.state.service_details.shop_id);
     }
 
     changeFormDisplay = () => {
@@ -177,10 +170,12 @@ class ServiceDetailPage extends Component {
                                 style={{ margin: 50, width: 400, height: 450, borderRadius: 50 }}
                                 src={this.state.service_details.image}
                             />
-                            {this.state.like_service ? 
-                                <HeartFilled className={styles.heart} onClick={()=>this.changeLikeState()}/>
-                                :
-                                <HeartOutlined className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                            {cookie.load('role') === 'customer' ? 
+                                    this.state.like_service ? 
+                                    <HeartFilled className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                                    :
+                                    <HeartOutlined className={styles.heart} onClick={()=>this.changeLikeState()}/>
+                                : null
                             }
                         </Col>
                         <Col span={12}>
