@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { Row, Col, Input } from 'antd';
+import { Row, Col } from 'antd';
 import cookie from 'react-cookies';
 import axios from 'axios';
 import { withRouter } from './withRouter';
 import ResultCard from './ResultCard';
 import searchResultPageStyle from '../css/searchResultPage.module.css';
 import showAlert from './Alert';
-
-
-
-const { Search } = Input;
 
 
 class SearchResultPage extends Component {
