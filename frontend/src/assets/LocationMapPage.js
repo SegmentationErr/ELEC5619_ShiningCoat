@@ -6,6 +6,11 @@ import {Button} from "antd";
 import { PoweroffOutlined } from '@ant-design/icons';
 import styles from "../css/locationMapPage.module.css";
 
+const mapStyles = {
+    width: '100%',
+    height: '90%',
+};
+
 export class LocationMapPage extends Component {
     constructor(props) {
         super(props);
@@ -41,6 +46,7 @@ export class LocationMapPage extends Component {
             <Map
                 google={this.props.google}
                 zoom={11}
+                style={mapStyles}
                 initialCenter={{ lat: -33.82853551936511, lng: 151.22307859455668}}
             >
                 <Button
