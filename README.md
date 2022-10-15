@@ -106,3 +106,9 @@ cd backend/
 * 'org.springframework.boot:spring-boot-starter-test'
 * 'junit:junit:4.13'
 * 'com.google.api-client:google-api-client:1.32.1'
+
+## Notice
+We provide both remote/local MySQL server for the backend. Due to the upload bandwith limitation, using remote MySQL is very slow. Therefore, local MySQL server is used by default.
+
+To switch between remote/local MySQL server, open the file
+```backend/src/main/resources/application.properties```, comment/uncomment the content below ```Remote MySQL Settings``` or ```Local MySQL Settings```
